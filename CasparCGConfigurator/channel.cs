@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ComponentModel;
 using System.Xml.Serialization;
 
@@ -10,7 +7,7 @@ namespace CasparCGConfigurator
     public class Channel : INotifyPropertyChanged
     {
         public Channel()
-        {            
+        {
             Consumers.ListChanged += new ListChangedEventHandler(Consumers_ListChanged);
         }
 
@@ -36,14 +33,14 @@ namespace CasparCGConfigurator
         public BindingList<AbstractConsumer> Consumers
         {
             get { return this.consumers; }
-            set { this.consumers = value; NotifyChanged("Consumers");}
+            set { this.consumers = value; NotifyChanged("Consumers"); }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged = delegate {};
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
         private void NotifyChanged(String info)
-        {        
-            PropertyChanged(this, new PropertyChangedEventArgs(info));            
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(info));
         }
     }
 }

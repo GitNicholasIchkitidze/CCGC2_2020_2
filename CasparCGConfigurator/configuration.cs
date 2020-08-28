@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ComponentModel;
 using System.Xml.Serialization;
 
@@ -11,14 +9,14 @@ namespace CasparCGConfigurator
     {
         public configuration()
         {
-            Channels.ListChanged +=new ListChangedEventHandler(Channels_ListChanged);
+            Channels.ListChanged += new ListChangedEventHandler(Channels_ListChanged);
         }
 
         private void Channels_ListChanged(object sender, ListChangedEventArgs e)
         {
             NotifyChanged("Channels");
         }
-        
+
         private Paths paths = new Paths();
         [XmlElement(ElementName = "paths")]
         public Paths Paths
@@ -140,7 +138,7 @@ namespace CasparCGConfigurator
 
         private void NotifyChanged(String info)
         {
-            PropertyChanged(this, new PropertyChangedEventArgs(info));            
+            PropertyChanged(this, new PropertyChangedEventArgs(info));
         }
     }
 }

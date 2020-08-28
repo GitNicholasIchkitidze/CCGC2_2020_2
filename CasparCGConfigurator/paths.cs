@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ComponentModel;
 using System.Xml.Serialization;
 
@@ -10,7 +7,7 @@ namespace CasparCGConfigurator
     public class Paths : INotifyPropertyChanged
     {
         public Paths()
-        {            
+        {
         }
 
         private string mediaPath = "media\\";
@@ -45,11 +42,11 @@ namespace CasparCGConfigurator
             set { this.templatePath = value; NotifyChanged("TemplatePath"); }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged = delegate {};
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
         private void NotifyChanged(String info)
-        {           
-            PropertyChanged(this, new PropertyChangedEventArgs(info));            
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(info));
         }
     }
 }

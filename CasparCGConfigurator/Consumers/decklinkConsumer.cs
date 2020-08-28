@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ComponentModel;
+using System.Linq;
 using System.Xml.Serialization;
 
 
@@ -19,7 +18,7 @@ namespace CasparCGConfigurator
             this.device = IDs.First();
         }
 
-        private String device ="1";
+        private String device = "1";
         [XmlElement(ElementName = "device")]
         public String Device
         {
@@ -76,7 +75,7 @@ namespace CasparCGConfigurator
 
         private void NotifyChanged(String info)
         {
-            PropertyChanged(this, new PropertyChangedEventArgs(info));            
+            PropertyChanged(this, new PropertyChangedEventArgs(info));
         }
     }
 }

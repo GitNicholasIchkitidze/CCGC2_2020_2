@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ComponentModel;
+using System.Linq;
 using System.Xml.Serialization;
 
 
@@ -52,7 +51,7 @@ namespace CasparCGConfigurator
 
         private void NotifyChanged(String info)
         {
-            PropertyChanged(this, new PropertyChangedEventArgs(info));            
+            PropertyChanged(this, new PropertyChangedEventArgs(info));
         }
     }
 }

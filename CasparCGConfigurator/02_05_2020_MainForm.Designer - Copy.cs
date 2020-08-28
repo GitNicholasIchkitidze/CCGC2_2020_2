@@ -40,7 +40,6 @@
             System.Windows.Forms.Label loglevelLabel;
             System.Windows.Forms.Label pipelineTokensLabel;
             System.Windows.Forms.Label label10;
-            System.Windows.Forms.Label label15;
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -52,7 +51,6 @@
             this.button9 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.datapathTextBox = new System.Windows.Forms.TextBox();
-            this.pathsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.logpathTextBox = new System.Windows.Forms.TextBox();
             this.mediapathTextBox = new System.Windows.Forms.TextBox();
             this.templatepathTextBox = new System.Windows.Forms.TextBox();
@@ -77,23 +75,14 @@
             this.button3 = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.AdvancedTabPage = new System.Windows.Forms.TabPage();
-            this.txtPauseValue = new System.Windows.Forms.TextBox();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.flashBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pipelineTokensComboBox = new System.Windows.Forms.ComboBox();
-            this.configurationBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.autodeinterlaceCheckBox = new System.Windows.Forms.CheckBox();
             this.autotranscodeCheckBox = new System.Windows.Forms.CheckBox();
             this.blendmodesCheckBox = new System.Windows.Forms.CheckBox();
             this.channelgridCheckBox = new System.Windows.Forms.CheckBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.splitContainerMidiSerial = new System.Windows.Forms.SplitContainer();
-            this.btnTestWorkingMidiOutDev = new System.Windows.Forms.Button();
-            this.btnSetWorkingMidiOutDev = new System.Windows.Forms.Button();
-            this.cboBMidiOutDevs = new System.Windows.Forms.ComboBox();
-            this.btnInitMIDIOutDev = new System.Windows.Forms.Button();
-            this.btnInitMIDIinDev = new System.Windows.Forms.Button();
             this.button12 = new System.Windows.Forms.Button();
             this.cbDebug = new System.Windows.Forms.CheckBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -104,29 +93,11 @@
             this.rtbLogs = new System.Windows.Forms.RichTextBox();
             this.CheckBox_MidiOutEnable = new System.Windows.Forms.CheckBox();
             this.CheckBox_MidiInEnable = new System.Windows.Forms.CheckBox();
-            this.gBoxSerai = new System.Windows.Forms.GroupBox();
-            this.rtxtDataArea = new System.Windows.Forms.RichTextBox();
-            this.btnConnectOrDisConnect = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.rbText = new System.Windows.Forms.RadioButton();
-            this.rbHex = new System.Windows.Forms.RadioButton();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.cmbStopBits = new System.Windows.Forms.ComboBox();
-            this.cmbDataBits = new System.Windows.Forms.ComboBox();
-            this.cmbParity = new System.Windows.Forms.ComboBox();
-            this.cmbBoudRate = new System.Windows.Forms.ComboBox();
-            this.cmbPortName = new System.Windows.Forms.ComboBox();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label41 = new System.Windows.Forms.Label();
-            this.label42 = new System.Windows.Forms.Label();
-            this.label43 = new System.Windows.Forms.Label();
-            this.label44 = new System.Windows.Forms.Label();
-            this.button16 = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.pnl_EliminateTasks = new System.Windows.Forms.Panel();
-            this.btnUseVeto = new System.Windows.Forms.Button();
             this.txtElimContScoreProcent1 = new System.Windows.Forms.TextBox();
             this.txtElimContScoreProcent0 = new System.Windows.Forms.TextBox();
+            this.lblCurrCont = new System.Windows.Forms.Label();
             this.btnAddWinnerToList = new System.Windows.Forms.Button();
             this.btnEliminateGo = new System.Windows.Forms.Button();
             this.btnEliminateCallsImport = new System.Windows.Forms.Button();
@@ -145,8 +116,6 @@
             this.ContestantDataGrid = new System.Windows.Forms.DataGridView();
             this.txtnominalPosDelta = new System.Windows.Forms.TextBox();
             this.grp1 = new System.Windows.Forms.GroupBox();
-            this.btnLoadPreviewsState = new System.Windows.Forms.Button();
-            this.btnSaveState = new System.Windows.Forms.Button();
             this.label36 = new System.Windows.Forms.Label();
             this.cBox_CGEliminateChannelLayer = new System.Windows.Forms.ComboBox();
             this.cBox_CGEliminateChannel = new System.Windows.Forms.ComboBox();
@@ -168,15 +137,6 @@
             this.btnLoadScene = new System.Windows.Forms.Button();
             this.btnAllIn = new System.Windows.Forms.Button();
             this.groupBox16 = new System.Windows.Forms.GroupBox();
-            this.btnConnectBackUpCG = new System.Windows.Forms.Button();
-            this.button17 = new System.Windows.Forms.Button();
-            this.txtBackUpCasparPort = new System.Windows.Forms.TextBox();
-            this.txtBackUpCasparServer = new System.Windows.Forms.TextBox();
-            this.label19 = new System.Windows.Forms.Label();
-            this.lblBackUpStatus = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
-            this.txtContestantCount1 = new System.Windows.Forms.ComboBox();
             this.txtContestantCount = new System.Windows.Forms.TextBox();
             this.label31 = new System.Windows.Forms.Label();
             this.btnConnectCG = new System.Windows.Forms.Button();
@@ -189,11 +149,6 @@
             this.label14 = new System.Windows.Forms.Label();
             this.groupBox15 = new System.Windows.Forms.GroupBox();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.btnAutoHiLite = new System.Windows.Forms.CheckBox();
-            this.cbox_AutoSaveSTATE = new System.Windows.Forms.CheckBox();
-            this.cBox_AutoBonusUpdate = new System.Windows.Forms.CheckBox();
-            this.cBox_AutoCallsProcentShow = new System.Windows.Forms.CheckBox();
-            this.txtAllTitleName = new System.Windows.Forms.TextBox();
             this.cBox_AutoTitleOnOFF = new System.Windows.Forms.CheckBox();
             this.btn_Looptitle_InOut = new System.Windows.Forms.Button();
             this.btn_title_InOut = new System.Windows.Forms.Button();
@@ -204,7 +159,6 @@
             this.txtScoreToBeAdded = new System.Windows.Forms.TextBox();
             this.lblCurrContestant = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.btn_showOutsiders = new System.Windows.Forms.Button();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.panel8 = new System.Windows.Forms.Panel();
@@ -214,8 +168,6 @@
             this.btnUpdateFromJudges = new System.Windows.Forms.Button();
             this.btnVoteStart = new System.Windows.Forms.Button();
             this.grBoxJiuri4 = new System.Windows.Forms.GroupBox();
-            this.btnRestartDudje5 = new System.Windows.Forms.Button();
-            this.btnKillDudje5 = new System.Windows.Forms.Button();
             this.btt_J_4_1 = new System.Windows.Forms.Button();
             this.btt_J_4_2 = new System.Windows.Forms.Button();
             this.btt_J_4_3 = new System.Windows.Forms.Button();
@@ -228,8 +180,6 @@
             this.btt_J_4_9 = new System.Windows.Forms.Button();
             this.txtJudgeValue4 = new System.Windows.Forms.TextBox();
             this.grBoxJiuri3 = new System.Windows.Forms.GroupBox();
-            this.btnRestartDudje4 = new System.Windows.Forms.Button();
-            this.btnKillDudje4 = new System.Windows.Forms.Button();
             this.btt_J_3_1 = new System.Windows.Forms.Button();
             this.btt_J_3_2 = new System.Windows.Forms.Button();
             this.btt_J_3_3 = new System.Windows.Forms.Button();
@@ -242,8 +192,6 @@
             this.btt_J_3_9 = new System.Windows.Forms.Button();
             this.txtJudgeValue3 = new System.Windows.Forms.TextBox();
             this.grBoxJiuri2 = new System.Windows.Forms.GroupBox();
-            this.btnRestartDudje3 = new System.Windows.Forms.Button();
-            this.btnKillDudje3 = new System.Windows.Forms.Button();
             this.btt_J_2_1 = new System.Windows.Forms.Button();
             this.btt_J_2_2 = new System.Windows.Forms.Button();
             this.btt_J_2_3 = new System.Windows.Forms.Button();
@@ -256,8 +204,6 @@
             this.btt_J_2_9 = new System.Windows.Forms.Button();
             this.txtJudgeValue2 = new System.Windows.Forms.TextBox();
             this.grBoxJiuri1 = new System.Windows.Forms.GroupBox();
-            this.btnRestartDudje2 = new System.Windows.Forms.Button();
-            this.btnKillDudje2 = new System.Windows.Forms.Button();
             this.btt_J_1_1 = new System.Windows.Forms.Button();
             this.btt_J_1_2 = new System.Windows.Forms.Button();
             this.btt_J_1_3 = new System.Windows.Forms.Button();
@@ -270,8 +216,6 @@
             this.btt_J_1_9 = new System.Windows.Forms.Button();
             this.txtJudgeValue1 = new System.Windows.Forms.TextBox();
             this.grBoxJiuri0 = new System.Windows.Forms.GroupBox();
-            this.btnRestartDudje1 = new System.Windows.Forms.Button();
-            this.btnKillDudje1 = new System.Windows.Forms.Button();
             this.btt_J_0_1 = new System.Windows.Forms.Button();
             this.btt_J_0_2 = new System.Windows.Forms.Button();
             this.btt_J_0_3 = new System.Windows.Forms.Button();
@@ -283,15 +227,24 @@
             this.btt_J_0_6 = new System.Windows.Forms.Button();
             this.btt_J_0_9 = new System.Windows.Forms.Button();
             this.txtJudgeValue0 = new System.Windows.Forms.TextBox();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.txtConsole = new System.Windows.Forms.RichTextBox();
+            this.btnGO_2_CG = new System.Windows.Forms.Button();
+            this.txtCmdBody = new System.Windows.Forms.TextBox();
+            this.cBoxAMPCcmd = new System.Windows.Forms.ComboBox();
+            this.btnSendCommand = new System.Windows.Forms.Button();
+            this.txtCmdPrefix = new System.Windows.Forms.TextBox();
             this.tabPage7 = new System.Windows.Forms.TabPage();
-            this.btnSendJudgesLogo = new System.Windows.Forms.Button();
-            this.btnSendJudgesSponsor1Logo = new System.Windows.Forms.Button();
-            this.cboxJudjesClientsIPs = new System.Windows.Forms.ComboBox();
             this.btn_loadRefreshJudges = new System.Windows.Forms.Button();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.txtDudgeName = new System.Windows.Forms.TextBox();
-            this.cboxDudgesIpList = new System.Windows.Forms.ComboBox();
+            this.button34 = new System.Windows.Forms.Button();
+            this.button32 = new System.Windows.Forms.Button();
+            this.button31 = new System.Windows.Forms.Button();
             this.button14 = new System.Windows.Forms.Button();
+            this.txt_IPJiuri3 = new System.Windows.Forms.TextBox();
+            this.txt_IPJiuri2 = new System.Windows.Forms.TextBox();
+            this.txt_IPJiuri1 = new System.Windows.Forms.TextBox();
+            this.txt_IPJiuri0 = new System.Windows.Forms.TextBox();
             this.textBoxMsg = new System.Windows.Forms.Label();
             this.richTextBoxReceivedMsg = new System.Windows.Forms.RichTextBox();
             this.btnClear = new System.Windows.Forms.Button();
@@ -323,14 +276,37 @@
             this.btnBonus_1 = new System.Windows.Forms.Button();
             this.btnBonus_0 = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.txtConsole = new System.Windows.Forms.RichTextBox();
-            this.btnGO_2_CG = new System.Windows.Forms.Button();
-            this.txtCmdBody = new System.Windows.Forms.TextBox();
-            this.cBoxAMPCcmd = new System.Windows.Forms.ComboBox();
-            this.btnSendCommand = new System.Windows.Forms.Button();
-            this.txtCmdPrefix = new System.Windows.Forms.TextBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.button17 = new System.Windows.Forms.Button();
+            this.cBox_BidLayer = new System.Windows.Forms.ComboBox();
             this.button15 = new System.Windows.Forms.Button();
-            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.txtBid = new System.Windows.Forms.TextBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.txtQ1 = new System.Windows.Forms.TextBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.cBoxMidiNote = new System.Windows.Forms.ComboBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.cBoxMidiChannel = new System.Windows.Forms.ComboBox();
+            this.cBox_AnswersLayer = new System.Windows.Forms.ComboBox();
+            this.cBox_QuestionLayer = new System.Windows.Forms.ComboBox();
+            this.cBox_AnsCount = new System.Windows.Forms.ComboBox();
+            this.button16 = new System.Windows.Forms.Button();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.btn4_1_undo = new System.Windows.Forms.Button();
+            this.btn4_1_correct = new System.Windows.Forms.Button();
+            this.rBtn_4_4 = new System.Windows.Forms.RadioButton();
+            this.rBtn_4_3 = new System.Windows.Forms.RadioButton();
+            this.rBtn_4_2 = new System.Windows.Forms.RadioButton();
+            this.rBtn_4_1 = new System.Windows.Forms.RadioButton();
+            this.txtAnsw4_4 = new System.Windows.Forms.TextBox();
+            this.txtAnsw4_3 = new System.Windows.Forms.TextBox();
+            this.txtAnsw4_2 = new System.Windows.Forms.TextBox();
+            this.txtAnsw4_1 = new System.Windows.Forms.TextBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.btnQ4_show = new System.Windows.Forms.Button();
+            this.txtQ = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label25 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
@@ -383,11 +359,13 @@
             this.button23 = new System.Windows.Forms.Button();
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
-            this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
+            this.txtAllTitleName = new System.Windows.Forms.TextBox();
+            this.pathsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.flashBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.configurationBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.channelBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.btn_showOutsiders = new System.Windows.Forms.Button();
             datapathLabel = new System.Windows.Forms.Label();
             logpathLabel = new System.Windows.Forms.Label();
             mediapathLabel = new System.Windows.Forms.Label();
@@ -399,24 +377,13 @@
             loglevelLabel = new System.Windows.Forms.Label();
             pipelineTokensLabel = new System.Windows.Forms.Label();
             label10 = new System.Windows.Forms.Label();
-            label15 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.PathsTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pathsBindingSource)).BeginInit();
             this.ChannelsTabPage.SuspendLayout();
             this.AdvancedTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.flashBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.configurationBindingSource)).BeginInit();
             this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerMidiSerial)).BeginInit();
-            this.splitContainerMidiSerial.Panel1.SuspendLayout();
-            this.splitContainerMidiSerial.Panel2.SuspendLayout();
-            this.splitContainerMidiSerial.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudMidiChannel)).BeginInit();
-            this.gBoxSerai.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.groupBox6.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.pnl_EliminateTasks.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -436,6 +403,7 @@
             this.grBoxJiuri2.SuspendLayout();
             this.grBoxJiuri1.SuspendLayout();
             this.grBoxJiuri0.SuspendLayout();
+            this.tabPage6.SuspendLayout();
             this.tabPage7.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.grpBonus.SuspendLayout();
@@ -443,14 +411,17 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridPhoneCalls)).BeginInit();
             this.groupBox9.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.ShowCntrlNew.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            this.tabPage4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pathsBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flashBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.configurationBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.channelBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -553,22 +524,13 @@
             label10.TabIndex = 15;
             label10.Text = "Flash Buffer Depth:";
             // 
-            // label15
-            // 
-            label15.AutoSize = true;
-            label15.Location = new System.Drawing.Point(339, 23);
-            label15.Name = "label15";
-            label15.Size = new System.Drawing.Size(67, 13);
-            label15.TabIndex = 18;
-            label15.Text = "Pause Value";
-            // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1771, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1675, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -607,7 +569,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 24);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1771, 1015);
+            this.tabControl1.Size = new System.Drawing.Size(1675, 1015);
             this.tabControl1.TabIndex = 2;
             // 
             // PathsTabPage
@@ -627,7 +589,7 @@
             this.PathsTabPage.Location = new System.Drawing.Point(4, 22);
             this.PathsTabPage.Name = "PathsTabPage";
             this.PathsTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.PathsTabPage.Size = new System.Drawing.Size(1763, 989);
+            this.PathsTabPage.Size = new System.Drawing.Size(1667, 989);
             this.PathsTabPage.TabIndex = 0;
             this.PathsTabPage.Text = "Paths";
             this.PathsTabPage.UseVisualStyleBackColor = true;
@@ -685,10 +647,6 @@
             this.datapathTextBox.Size = new System.Drawing.Size(398, 20);
             this.datapathTextBox.TabIndex = 1;
             // 
-            // pathsBindingSource
-            // 
-            this.pathsBindingSource.DataSource = typeof(CasparCGConfigurator.Paths);
-            // 
             // logpathTextBox
             // 
             this.logpathTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.pathsBindingSource, "logpath", true));
@@ -738,7 +696,7 @@
             this.ChannelsTabPage.Location = new System.Drawing.Point(4, 22);
             this.ChannelsTabPage.Name = "ChannelsTabPage";
             this.ChannelsTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.ChannelsTabPage.Size = new System.Drawing.Size(1763, 989);
+            this.ChannelsTabPage.Size = new System.Drawing.Size(1667, 989);
             this.ChannelsTabPage.TabIndex = 1;
             this.ChannelsTabPage.Text = "Channels";
             this.ChannelsTabPage.UseVisualStyleBackColor = true;
@@ -944,8 +902,6 @@
             // AdvancedTabPage
             // 
             this.AdvancedTabPage.AutoScroll = true;
-            this.AdvancedTabPage.Controls.Add(label15);
-            this.AdvancedTabPage.Controls.Add(this.txtPauseValue);
             this.AdvancedTabPage.Controls.Add(this.comboBox3);
             this.AdvancedTabPage.Controls.Add(label10);
             this.AdvancedTabPage.Controls.Add(this.pipelineTokensComboBox);
@@ -963,18 +919,10 @@
             this.AdvancedTabPage.Location = new System.Drawing.Point(4, 22);
             this.AdvancedTabPage.Name = "AdvancedTabPage";
             this.AdvancedTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.AdvancedTabPage.Size = new System.Drawing.Size(1763, 989);
+            this.AdvancedTabPage.Size = new System.Drawing.Size(1667, 989);
             this.AdvancedTabPage.TabIndex = 2;
             this.AdvancedTabPage.Text = "Advanced";
             this.AdvancedTabPage.UseVisualStyleBackColor = true;
-            // 
-            // txtPauseValue
-            // 
-            this.txtPauseValue.Location = new System.Drawing.Point(446, 20);
-            this.txtPauseValue.Name = "txtPauseValue";
-            this.txtPauseValue.Size = new System.Drawing.Size(100, 20);
-            this.txtPauseValue.TabIndex = 17;
-            this.txtPauseValue.Text = "800";
             // 
             // comboBox3
             // 
@@ -998,10 +946,6 @@
             this.comboBox3.Size = new System.Drawing.Size(121, 21);
             this.comboBox3.TabIndex = 16;
             // 
-            // flashBindingSource
-            // 
-            this.flashBindingSource.DataSource = typeof(CasparCGConfigurator.Flash);
-            // 
             // pipelineTokensComboBox
             // 
             this.pipelineTokensComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedItem", this.configurationBindingSource, "PipelineTokens", true));
@@ -1022,11 +966,6 @@
             this.pipelineTokensComboBox.Name = "pipelineTokensComboBox";
             this.pipelineTokensComboBox.Size = new System.Drawing.Size(121, 21);
             this.pipelineTokensComboBox.TabIndex = 14;
-            // 
-            // configurationBindingSource
-            // 
-            this.configurationBindingSource.DataSource = typeof(CasparCGConfigurator.configuration);
-            this.configurationBindingSource.CurrentChanged += new System.EventHandler(this.configurationBindingSource_CurrentChanged);
             // 
             // comboBox2
             // 
@@ -1082,147 +1021,71 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.splitContainerMidiSerial);
+            this.tabPage1.Controls.Add(this.button12);
+            this.tabPage1.Controls.Add(this.cbDebug);
+            this.tabPage1.Controls.Add(this.label9);
+            this.tabPage1.Controls.Add(this.label11);
+            this.tabPage1.Controls.Add(this.nudMidiChannel);
+            this.tabPage1.Controls.Add(this.btExit);
+            this.tabPage1.Controls.Add(this.btStartVLC);
+            this.tabPage1.Controls.Add(this.rtbLogs);
+            this.tabPage1.Controls.Add(this.CheckBox_MidiOutEnable);
+            this.tabPage1.Controls.Add(this.CheckBox_MidiInEnable);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1763, 989);
+            this.tabPage1.Size = new System.Drawing.Size(1667, 989);
             this.tabPage1.TabIndex = 3;
-            this.tabPage1.Text = "Midi & Serial";
+            this.tabPage1.Text = "Midi";
             this.tabPage1.UseVisualStyleBackColor = true;
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
-            // splitContainerMidiSerial
-            // 
-            this.splitContainerMidiSerial.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerMidiSerial.Location = new System.Drawing.Point(3, 3);
-            this.splitContainerMidiSerial.Name = "splitContainerMidiSerial";
-            // 
-            // splitContainerMidiSerial.Panel1
-            // 
-            this.splitContainerMidiSerial.Panel1.Controls.Add(this.btnTestWorkingMidiOutDev);
-            this.splitContainerMidiSerial.Panel1.Controls.Add(this.btnSetWorkingMidiOutDev);
-            this.splitContainerMidiSerial.Panel1.Controls.Add(this.cboBMidiOutDevs);
-            this.splitContainerMidiSerial.Panel1.Controls.Add(this.btnInitMIDIOutDev);
-            this.splitContainerMidiSerial.Panel1.Controls.Add(this.btnInitMIDIinDev);
-            this.splitContainerMidiSerial.Panel1.Controls.Add(this.button12);
-            this.splitContainerMidiSerial.Panel1.Controls.Add(this.cbDebug);
-            this.splitContainerMidiSerial.Panel1.Controls.Add(this.label9);
-            this.splitContainerMidiSerial.Panel1.Controls.Add(this.label11);
-            this.splitContainerMidiSerial.Panel1.Controls.Add(this.nudMidiChannel);
-            this.splitContainerMidiSerial.Panel1.Controls.Add(this.btExit);
-            this.splitContainerMidiSerial.Panel1.Controls.Add(this.btStartVLC);
-            this.splitContainerMidiSerial.Panel1.Controls.Add(this.rtbLogs);
-            this.splitContainerMidiSerial.Panel1.Controls.Add(this.CheckBox_MidiOutEnable);
-            this.splitContainerMidiSerial.Panel1.Controls.Add(this.CheckBox_MidiInEnable);
-            // 
-            // splitContainerMidiSerial.Panel2
-            // 
-            this.splitContainerMidiSerial.Panel2.Controls.Add(this.gBoxSerai);
-            this.splitContainerMidiSerial.Size = new System.Drawing.Size(1757, 983);
-            this.splitContainerMidiSerial.SplitterDistance = 725;
-            this.splitContainerMidiSerial.TabIndex = 30;
-            // 
-            // btnTestWorkingMidiOutDev
-            // 
-            this.btnTestWorkingMidiOutDev.Enabled = false;
-            this.btnTestWorkingMidiOutDev.Location = new System.Drawing.Point(550, 86);
-            this.btnTestWorkingMidiOutDev.Name = "btnTestWorkingMidiOutDev";
-            this.btnTestWorkingMidiOutDev.Size = new System.Drawing.Size(97, 23);
-            this.btnTestWorkingMidiOutDev.TabIndex = 31;
-            this.btnTestWorkingMidiOutDev.Text = "TEST";
-            this.btnTestWorkingMidiOutDev.UseVisualStyleBackColor = true;
-            this.btnTestWorkingMidiOutDev.Click += new System.EventHandler(this.btnTestWorkingMidiOutDev_Click);
-            // 
-            // btnSetWorkingMidiOutDev
-            // 
-            this.btnSetWorkingMidiOutDev.Enabled = false;
-            this.btnSetWorkingMidiOutDev.Location = new System.Drawing.Point(458, 86);
-            this.btnSetWorkingMidiOutDev.Name = "btnSetWorkingMidiOutDev";
-            this.btnSetWorkingMidiOutDev.Size = new System.Drawing.Size(86, 23);
-            this.btnSetWorkingMidiOutDev.TabIndex = 30;
-            this.btnSetWorkingMidiOutDev.Text = "Set";
-            this.btnSetWorkingMidiOutDev.UseVisualStyleBackColor = true;
-            this.btnSetWorkingMidiOutDev.Click += new System.EventHandler(this.btnSetWorkingMidiOutDev_Click);
-            // 
-            // cboBMidiOutDevs
-            // 
-            this.cboBMidiOutDevs.Enabled = false;
-            this.cboBMidiOutDevs.FormattingEnabled = true;
-            this.cboBMidiOutDevs.Location = new System.Drawing.Point(385, 86);
-            this.cboBMidiOutDevs.Name = "cboBMidiOutDevs";
-            this.cboBMidiOutDevs.Size = new System.Drawing.Size(52, 21);
-            this.cboBMidiOutDevs.TabIndex = 29;
-            // 
-            // btnInitMIDIOutDev
-            // 
-            this.btnInitMIDIOutDev.Enabled = false;
-            this.btnInitMIDIOutDev.Location = new System.Drawing.Point(205, 86);
-            this.btnInitMIDIOutDev.Name = "btnInitMIDIOutDev";
-            this.btnInitMIDIOutDev.Size = new System.Drawing.Size(145, 23);
-            this.btnInitMIDIOutDev.TabIndex = 28;
-            this.btnInitMIDIOutDev.Text = "Initialize MIDI Out devices";
-            this.btnInitMIDIOutDev.UseVisualStyleBackColor = true;
-            this.btnInitMIDIOutDev.EnabledChanged += new System.EventHandler(this.btnInitMIDIOutDev_EnabledChanged);
-            this.btnInitMIDIOutDev.Click += new System.EventHandler(this.btnInitMIDIOutDev_Click);
-            // 
-            // btnInitMIDIinDev
-            // 
-            this.btnInitMIDIinDev.Enabled = false;
-            this.btnInitMIDIinDev.Location = new System.Drawing.Point(205, 48);
-            this.btnInitMIDIinDev.Name = "btnInitMIDIinDev";
-            this.btnInitMIDIinDev.Size = new System.Drawing.Size(145, 23);
-            this.btnInitMIDIinDev.TabIndex = 27;
-            this.btnInitMIDIinDev.Text = "Initialize MIDI in devices";
-            this.btnInitMIDIinDev.UseVisualStyleBackColor = true;
-            this.btnInitMIDIinDev.Click += new System.EventHandler(this.btnInitMIDIinDev_Click);
-            // 
             // button12
             // 
-            this.button12.Location = new System.Drawing.Point(129, 722);
+            this.button12.Location = new System.Drawing.Point(616, 229);
             this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(75, 41);
-            this.button12.TabIndex = 26;
+            this.button12.Size = new System.Drawing.Size(75, 23);
+            this.button12.TabIndex = 16;
             this.button12.Text = "button12";
             this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.button12_Click_1);
+            this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
             // cbDebug
             // 
             this.cbDebug.AutoSize = true;
             this.cbDebug.Checked = true;
             this.cbDebug.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbDebug.Location = new System.Drawing.Point(292, 237);
+            this.cbDebug.Location = new System.Drawing.Point(176, 368);
             this.cbDebug.Margin = new System.Windows.Forms.Padding(2);
             this.cbDebug.Name = "cbDebug";
             this.cbDebug.Size = new System.Drawing.Size(58, 17);
-            this.cbDebug.TabIndex = 25;
+            this.cbDebug.TabIndex = 15;
             this.cbDebug.Text = "Debug";
             this.cbDebug.UseVisualStyleBackColor = true;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(86, 299);
+            this.label9.Location = new System.Drawing.Point(105, 99);
             this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(30, 13);
-            this.label9.TabIndex = 24;
+            this.label9.TabIndex = 14;
             this.label9.Text = "Logs";
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(86, 269);
+            this.label11.Location = new System.Drawing.Point(105, 69);
             this.label11.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(68, 13);
-            this.label11.TabIndex = 23;
+            this.label11.TabIndex = 13;
             this.label11.Text = "Midi Channel";
             // 
             // nudMidiChannel
             // 
-            this.nudMidiChannel.Location = new System.Drawing.Point(157, 267);
+            this.nudMidiChannel.Location = new System.Drawing.Point(176, 67);
             this.nudMidiChannel.Margin = new System.Windows.Forms.Padding(2);
             this.nudMidiChannel.Maximum = new decimal(new int[] {
             16,
@@ -1236,7 +1099,7 @@
             0});
             this.nudMidiChannel.Name = "nudMidiChannel";
             this.nudMidiChannel.Size = new System.Drawing.Size(47, 20);
-            this.nudMidiChannel.TabIndex = 22;
+            this.nudMidiChannel.TabIndex = 12;
             this.nudMidiChannel.Value = new decimal(new int[] {
             10,
             0,
@@ -1245,262 +1108,53 @@
             // 
             // btExit
             // 
-            this.btExit.Location = new System.Drawing.Point(70, 652);
+            this.btExit.Location = new System.Drawing.Point(588, 113);
             this.btExit.Margin = new System.Windows.Forms.Padding(2);
             this.btExit.Name = "btExit";
             this.btExit.Size = new System.Drawing.Size(84, 24);
-            this.btExit.TabIndex = 21;
+            this.btExit.TabIndex = 11;
             this.btExit.Text = "Exit";
             this.btExit.UseVisualStyleBackColor = true;
             // 
             // btStartVLC
             // 
-            this.btStartVLC.Location = new System.Drawing.Point(252, 722);
+            this.btStartVLC.Location = new System.Drawing.Point(588, 67);
             this.btStartVLC.Margin = new System.Windows.Forms.Padding(2);
             this.btStartVLC.Name = "btStartVLC";
             this.btStartVLC.Size = new System.Drawing.Size(84, 41);
-            this.btStartVLC.TabIndex = 20;
+            this.btStartVLC.TabIndex = 10;
             this.btStartVLC.Text = "Start VLC";
             this.btStartVLC.UseVisualStyleBackColor = true;
             // 
             // rtbLogs
             // 
-            this.rtbLogs.Location = new System.Drawing.Point(8, 320);
+            this.rtbLogs.Location = new System.Drawing.Point(176, 99);
             this.rtbLogs.Margin = new System.Windows.Forms.Padding(2);
             this.rtbLogs.Name = "rtbLogs";
-            this.rtbLogs.Size = new System.Drawing.Size(662, 265);
-            this.rtbLogs.TabIndex = 19;
+            this.rtbLogs.Size = new System.Drawing.Size(399, 265);
+            this.rtbLogs.TabIndex = 9;
             this.rtbLogs.Text = "";
+            this.rtbLogs.TextChanged += new System.EventHandler(this.rtbLogs_TextChanged);
             // 
             // CheckBox_MidiOutEnable
             // 
             this.CheckBox_MidiOutEnable.AutoSize = true;
-            this.CheckBox_MidiOutEnable.Location = new System.Drawing.Point(19, 90);
+            this.CheckBox_MidiOutEnable.Location = new System.Drawing.Point(665, 20);
             this.CheckBox_MidiOutEnable.Name = "CheckBox_MidiOutEnable";
             this.CheckBox_MidiOutEnable.Size = new System.Drawing.Size(106, 17);
-            this.CheckBox_MidiOutEnable.TabIndex = 18;
+            this.CheckBox_MidiOutEnable.TabIndex = 1;
             this.CheckBox_MidiOutEnable.Text = "გამავალი MIDI";
             this.CheckBox_MidiOutEnable.UseVisualStyleBackColor = true;
-            this.CheckBox_MidiOutEnable.CheckedChanged += new System.EventHandler(this.CheckBox_MidiOutEnable_CheckedChanged);
             // 
             // CheckBox_MidiInEnable
             // 
             this.CheckBox_MidiInEnable.AutoSize = true;
-            this.CheckBox_MidiInEnable.Location = new System.Drawing.Point(19, 48);
+            this.CheckBox_MidiInEnable.Location = new System.Drawing.Point(27, 20);
             this.CheckBox_MidiInEnable.Name = "CheckBox_MidiInEnable";
             this.CheckBox_MidiInEnable.Size = new System.Drawing.Size(120, 17);
-            this.CheckBox_MidiInEnable.TabIndex = 17;
+            this.CheckBox_MidiInEnable.TabIndex = 0;
             this.CheckBox_MidiInEnable.Text = "შემომავალი MIDI";
             this.CheckBox_MidiInEnable.UseVisualStyleBackColor = true;
-            this.CheckBox_MidiInEnable.CheckedChanged += new System.EventHandler(this.CheckBox_MidiInEnable_CheckedChanged);
-            this.CheckBox_MidiInEnable.CheckStateChanged += new System.EventHandler(this.CheckBox_MidiInEnable_CheckStateChanged);
-            // 
-            // gBoxSerai
-            // 
-            this.gBoxSerai.Controls.Add(this.rtxtDataArea);
-            this.gBoxSerai.Controls.Add(this.btnConnectOrDisConnect);
-            this.gBoxSerai.Controls.Add(this.groupBox3);
-            this.gBoxSerai.Controls.Add(this.groupBox6);
-            this.gBoxSerai.Controls.Add(this.button16);
-            this.gBoxSerai.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gBoxSerai.Location = new System.Drawing.Point(0, 0);
-            this.gBoxSerai.Name = "gBoxSerai";
-            this.gBoxSerai.Size = new System.Drawing.Size(1028, 983);
-            this.gBoxSerai.TabIndex = 30;
-            this.gBoxSerai.TabStop = false;
-            this.gBoxSerai.Text = "Serial";
-            this.gBoxSerai.Enter += new System.EventHandler(this.gBoxSerai_Enter);
-            // 
-            // rtxtDataArea
-            // 
-            this.rtxtDataArea.Location = new System.Drawing.Point(31, 406);
-            this.rtxtDataArea.Name = "rtxtDataArea";
-            this.rtxtDataArea.Size = new System.Drawing.Size(391, 249);
-            this.rtxtDataArea.TabIndex = 33;
-            this.rtxtDataArea.Text = "";
-            // 
-            // btnConnectOrDisConnect
-            // 
-            this.btnConnectOrDisConnect.Location = new System.Drawing.Point(31, 260);
-            this.btnConnectOrDisConnect.Name = "btnConnectOrDisConnect";
-            this.btnConnectOrDisConnect.Size = new System.Drawing.Size(246, 77);
-            this.btnConnectOrDisConnect.TabIndex = 32;
-            this.btnConnectOrDisConnect.Text = "CONNECT";
-            this.btnConnectOrDisConnect.UseVisualStyleBackColor = true;
-            this.btnConnectOrDisConnect.Click += new System.EventHandler(this.btnConnectOrDisConnect_Click);
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.rbText);
-            this.groupBox3.Controls.Add(this.rbHex);
-            this.groupBox3.Location = new System.Drawing.Point(31, 205);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(246, 49);
-            this.groupBox3.TabIndex = 31;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Data Mode";
-            // 
-            // rbText
-            // 
-            this.rbText.AutoSize = true;
-            this.rbText.Checked = true;
-            this.rbText.Location = new System.Drawing.Point(181, 19);
-            this.rbText.Name = "rbText";
-            this.rbText.Size = new System.Drawing.Size(46, 17);
-            this.rbText.TabIndex = 1;
-            this.rbText.TabStop = true;
-            this.rbText.Text = "Text";
-            this.rbText.UseVisualStyleBackColor = true;
-            // 
-            // rbHex
-            // 
-            this.rbHex.AutoSize = true;
-            this.rbHex.Location = new System.Drawing.Point(106, 19);
-            this.rbHex.Name = "rbHex";
-            this.rbHex.Size = new System.Drawing.Size(44, 17);
-            this.rbHex.TabIndex = 0;
-            this.rbHex.Text = "Hex";
-            this.rbHex.UseVisualStyleBackColor = true;
-            // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.cmbStopBits);
-            this.groupBox6.Controls.Add(this.cmbDataBits);
-            this.groupBox6.Controls.Add(this.cmbParity);
-            this.groupBox6.Controls.Add(this.cmbBoudRate);
-            this.groupBox6.Controls.Add(this.cmbPortName);
-            this.groupBox6.Controls.Add(this.label20);
-            this.groupBox6.Controls.Add(this.label41);
-            this.groupBox6.Controls.Add(this.label42);
-            this.groupBox6.Controls.Add(this.label43);
-            this.groupBox6.Controls.Add(this.label44);
-            this.groupBox6.Location = new System.Drawing.Point(31, 34);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(246, 165);
-            this.groupBox6.TabIndex = 30;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Serial COM Ports Settings";
-            // 
-            // cmbStopBits
-            // 
-            this.cmbStopBits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbStopBits.FormattingEnabled = true;
-            this.cmbStopBits.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3"});
-            this.cmbStopBits.Location = new System.Drawing.Point(106, 133);
-            this.cmbStopBits.Name = "cmbStopBits";
-            this.cmbStopBits.Size = new System.Drawing.Size(121, 21);
-            this.cmbStopBits.TabIndex = 9;
-            // 
-            // cmbDataBits
-            // 
-            this.cmbDataBits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbDataBits.FormattingEnabled = true;
-            this.cmbDataBits.Items.AddRange(new object[] {
-            "7",
-            "8",
-            "9"});
-            this.cmbDataBits.Location = new System.Drawing.Point(106, 106);
-            this.cmbDataBits.Name = "cmbDataBits";
-            this.cmbDataBits.Size = new System.Drawing.Size(121, 21);
-            this.cmbDataBits.TabIndex = 8;
-            // 
-            // cmbParity
-            // 
-            this.cmbParity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbParity.FormattingEnabled = true;
-            this.cmbParity.Items.AddRange(new object[] {
-            "None",
-            "Even",
-            "Odd"});
-            this.cmbParity.Location = new System.Drawing.Point(106, 79);
-            this.cmbParity.Name = "cmbParity";
-            this.cmbParity.Size = new System.Drawing.Size(121, 21);
-            this.cmbParity.TabIndex = 7;
-            // 
-            // cmbBoudRate
-            // 
-            this.cmbBoudRate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbBoudRate.FormattingEnabled = true;
-            this.cmbBoudRate.Items.AddRange(new object[] {
-            "1200",
-            "2400",
-            "4800",
-            "9600",
-            "19200",
-            "38400",
-            "57600",
-            "115200"});
-            this.cmbBoudRate.Location = new System.Drawing.Point(106, 52);
-            this.cmbBoudRate.Name = "cmbBoudRate";
-            this.cmbBoudRate.Size = new System.Drawing.Size(121, 21);
-            this.cmbBoudRate.TabIndex = 6;
-            // 
-            // cmbPortName
-            // 
-            this.cmbPortName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbPortName.FormattingEnabled = true;
-            this.cmbPortName.Location = new System.Drawing.Point(106, 25);
-            this.cmbPortName.Name = "cmbPortName";
-            this.cmbPortName.Size = new System.Drawing.Size(121, 21);
-            this.cmbPortName.TabIndex = 5;
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(18, 136);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(52, 13);
-            this.label20.TabIndex = 4;
-            this.label20.Text = "Stop Bits:";
-            // 
-            // label41
-            // 
-            this.label41.AutoSize = true;
-            this.label41.Location = new System.Drawing.Point(18, 109);
-            this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(53, 13);
-            this.label41.TabIndex = 3;
-            this.label41.Text = "Data Bits:";
-            // 
-            // label42
-            // 
-            this.label42.AutoSize = true;
-            this.label42.Location = new System.Drawing.Point(18, 82);
-            this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(36, 13);
-            this.label42.TabIndex = 2;
-            this.label42.Text = "Parity:";
-            // 
-            // label43
-            // 
-            this.label43.AutoSize = true;
-            this.label43.Location = new System.Drawing.Point(18, 55);
-            this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(61, 13);
-            this.label43.TabIndex = 1;
-            this.label43.Text = "Baud Rate:";
-            // 
-            // label44
-            // 
-            this.label44.AutoSize = true;
-            this.label44.Location = new System.Drawing.Point(18, 28);
-            this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(56, 13);
-            this.label44.TabIndex = 0;
-            this.label44.Text = "COM Port:";
-            // 
-            // button16
-            // 
-            this.button16.Location = new System.Drawing.Point(31, 358);
-            this.button16.Name = "button16";
-            this.button16.Size = new System.Drawing.Size(245, 24);
-            this.button16.TabIndex = 29;
-            this.button16.Text = "განაახლე პორტების სია";
-            this.button16.UseVisualStyleBackColor = true;
-            this.button16.Click += new System.EventHandler(this.button16_Click);
             // 
             // tabPage2
             // 
@@ -1514,16 +1168,16 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1763, 989);
+            this.tabPage2.Size = new System.Drawing.Size(1667, 989);
             this.tabPage2.TabIndex = 4;
-            this.tabPage2.Text = "SHOW  CONTROL";
+            this.tabPage2.Text = "Server";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // pnl_EliminateTasks
             // 
-            this.pnl_EliminateTasks.Controls.Add(this.btnUseVeto);
             this.pnl_EliminateTasks.Controls.Add(this.txtElimContScoreProcent1);
             this.pnl_EliminateTasks.Controls.Add(this.txtElimContScoreProcent0);
+            this.pnl_EliminateTasks.Controls.Add(this.lblCurrCont);
             this.pnl_EliminateTasks.Controls.Add(this.btnAddWinnerToList);
             this.pnl_EliminateTasks.Controls.Add(this.btnEliminateGo);
             this.pnl_EliminateTasks.Controls.Add(this.btnEliminateCallsImport);
@@ -1540,20 +1194,11 @@
             this.pnl_EliminateTasks.Controls.Add(this.panel7);
             this.pnl_EliminateTasks.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnl_EliminateTasks.Enabled = false;
-            this.pnl_EliminateTasks.Location = new System.Drawing.Point(3, 446);
+            this.pnl_EliminateTasks.Location = new System.Drawing.Point(3, 430);
             this.pnl_EliminateTasks.Name = "pnl_EliminateTasks";
-            this.pnl_EliminateTasks.Size = new System.Drawing.Size(1094, 180);
+            this.pnl_EliminateTasks.Size = new System.Drawing.Size(1055, 196);
             this.pnl_EliminateTasks.TabIndex = 87;
-            // 
-            // btnUseVeto
-            // 
-            this.btnUseVeto.Location = new System.Drawing.Point(1115, 45);
-            this.btnUseVeto.Name = "btnUseVeto";
-            this.btnUseVeto.Size = new System.Drawing.Size(85, 109);
-            this.btnUseVeto.TabIndex = 72;
-            this.btnUseVeto.Text = "USE VETO";
-            this.btnUseVeto.UseVisualStyleBackColor = true;
-            this.btnUseVeto.Click += new System.EventHandler(this.btnUseVeto_Click);
+            this.pnl_EliminateTasks.Paint += new System.Windows.Forms.PaintEventHandler(this.panel6_Paint);
             // 
             // txtElimContScoreProcent1
             // 
@@ -1571,11 +1216,19 @@
             this.txtElimContScoreProcent0.Size = new System.Drawing.Size(76, 38);
             this.txtElimContScoreProcent0.TabIndex = 70;
             // 
+            // lblCurrCont
+            // 
+            this.lblCurrCont.Location = new System.Drawing.Point(18, 170);
+            this.lblCurrCont.Name = "lblCurrCont";
+            this.lblCurrCont.Size = new System.Drawing.Size(165, 13);
+            this.lblCurrCont.TabIndex = 64;
+            this.lblCurrCont.Text = "დავუმატოთ კონკურსანტს";
+            // 
             // btnAddWinnerToList
             // 
             this.btnAddWinnerToList.Location = new System.Drawing.Point(1024, 45);
             this.btnAddWinnerToList.Name = "btnAddWinnerToList";
-            this.btnAddWinnerToList.Size = new System.Drawing.Size(85, 109);
+            this.btnAddWinnerToList.Size = new System.Drawing.Size(120, 109);
             this.btnAddWinnerToList.TabIndex = 69;
             this.btnAddWinnerToList.Text = "Add WINNER TO MAIN LIST";
             this.btnAddWinnerToList.UseVisualStyleBackColor = true;
@@ -1694,7 +1347,7 @@
             this.panel7.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel7.Location = new System.Drawing.Point(0, 0);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(1094, 27);
+            this.panel7.Size = new System.Drawing.Size(1055, 27);
             this.panel7.TabIndex = 0;
             // 
             // panel5
@@ -1702,9 +1355,9 @@
             this.panel5.Controls.Add(this.ContestantDataGrid);
             this.panel5.Controls.Add(this.txtnominalPosDelta);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel5.Location = new System.Drawing.Point(3, 177);
+            this.panel5.Location = new System.Drawing.Point(3, 161);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(1094, 269);
+            this.panel5.Size = new System.Drawing.Size(1055, 269);
             this.panel5.TabIndex = 86;
             // 
             // ContestantDataGrid
@@ -1714,7 +1367,7 @@
             this.ContestantDataGrid.Location = new System.Drawing.Point(0, 0);
             this.ContestantDataGrid.Name = "ContestantDataGrid";
             this.ContestantDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.ContestantDataGrid.Size = new System.Drawing.Size(1094, 269);
+            this.ContestantDataGrid.Size = new System.Drawing.Size(1055, 269);
             this.ContestantDataGrid.TabIndex = 37;
             this.ContestantDataGrid.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ContestantDataGrid_CellDoubleClick);
             this.ContestantDataGrid.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.ContestantDataGrid_ColumnHeaderMouseClick);
@@ -1731,8 +1384,6 @@
             // 
             // grp1
             // 
-            this.grp1.Controls.Add(this.btnLoadPreviewsState);
-            this.grp1.Controls.Add(this.btnSaveState);
             this.grp1.Controls.Add(this.label36);
             this.grp1.Controls.Add(this.cBox_CGEliminateChannelLayer);
             this.grp1.Controls.Add(this.cBox_CGEliminateChannel);
@@ -1754,38 +1405,17 @@
             this.grp1.Controls.Add(this.btnLoadScene);
             this.grp1.Controls.Add(this.btnAllIn);
             this.grp1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.grp1.Location = new System.Drawing.Point(3, 65);
+            this.grp1.Location = new System.Drawing.Point(3, 49);
             this.grp1.Name = "grp1";
-            this.grp1.Size = new System.Drawing.Size(1094, 112);
+            this.grp1.Size = new System.Drawing.Size(1055, 112);
             this.grp1.TabIndex = 85;
             this.grp1.TabStop = false;
-            // 
-            // btnLoadPreviewsState
-            // 
-            this.btnLoadPreviewsState.Enabled = false;
-            this.btnLoadPreviewsState.Location = new System.Drawing.Point(647, 68);
-            this.btnLoadPreviewsState.Name = "btnLoadPreviewsState";
-            this.btnLoadPreviewsState.Size = new System.Drawing.Size(177, 35);
-            this.btnLoadPreviewsState.TabIndex = 92;
-            this.btnLoadPreviewsState.Text = "LOAD PREVIOUS STATE";
-            this.btnLoadPreviewsState.UseVisualStyleBackColor = true;
-            this.btnLoadPreviewsState.Click += new System.EventHandler(this.btnLoadPreviewsState_Click);
-            // 
-            // btnSaveState
-            // 
-            this.btnSaveState.Location = new System.Drawing.Point(1108, 14);
-            this.btnSaveState.Name = "btnSaveState";
-            this.btnSaveState.Size = new System.Drawing.Size(75, 90);
-            this.btnSaveState.TabIndex = 91;
-            this.btnSaveState.Text = "SAVE STATE";
-            this.btnSaveState.UseVisualStyleBackColor = true;
-            this.btnSaveState.Click += new System.EventHandler(this.btnSaveState_Click);
             // 
             // label36
             // 
             this.label36.Location = new System.Drawing.Point(9, 91);
             this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(194, 18);
+            this.label36.Size = new System.Drawing.Size(206, 18);
             this.label36.TabIndex = 90;
             this.label36.Text = "Eliminate Dest. Channel Full Frame";
             // 
@@ -1823,7 +1453,7 @@
             "28",
             "29",
             "30"});
-            this.cBox_CGEliminateChannelLayer.Location = new System.Drawing.Point(272, 88);
+            this.cBox_CGEliminateChannelLayer.Location = new System.Drawing.Point(320, 88);
             this.cBox_CGEliminateChannelLayer.Name = "cBox_CGEliminateChannelLayer";
             this.cBox_CGEliminateChannelLayer.Size = new System.Drawing.Size(53, 21);
             this.cBox_CGEliminateChannelLayer.TabIndex = 89;
@@ -1838,7 +1468,7 @@
             "4",
             "5",
             "6"});
-            this.cBox_CGEliminateChannel.Location = new System.Drawing.Point(209, 88);
+            this.cBox_CGEliminateChannel.Location = new System.Drawing.Point(257, 88);
             this.cBox_CGEliminateChannel.Name = "cBox_CGEliminateChannel";
             this.cBox_CGEliminateChannel.Size = new System.Drawing.Size(53, 21);
             this.cBox_CGEliminateChannel.TabIndex = 88;
@@ -1847,7 +1477,7 @@
             // 
             this.label35.Location = new System.Drawing.Point(9, 65);
             this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(194, 18);
+            this.label35.Size = new System.Drawing.Size(206, 18);
             this.label35.TabIndex = 87;
             this.label35.Text = "JudgesScore Dest. Channel Full Frame";
             // 
@@ -1885,7 +1515,7 @@
             "28",
             "29",
             "30"});
-            this.cBox_CGJudgesScoreChannelLayer.Location = new System.Drawing.Point(272, 62);
+            this.cBox_CGJudgesScoreChannelLayer.Location = new System.Drawing.Point(320, 62);
             this.cBox_CGJudgesScoreChannelLayer.Name = "cBox_CGJudgesScoreChannelLayer";
             this.cBox_CGJudgesScoreChannelLayer.Size = new System.Drawing.Size(53, 21);
             this.cBox_CGJudgesScoreChannelLayer.TabIndex = 86;
@@ -1900,7 +1530,7 @@
             "4",
             "5",
             "6"});
-            this.cBox_CGJudgesScoreChannel.Location = new System.Drawing.Point(209, 62);
+            this.cBox_CGJudgesScoreChannel.Location = new System.Drawing.Point(257, 62);
             this.cBox_CGJudgesScoreChannel.Name = "cBox_CGJudgesScoreChannel";
             this.cBox_CGJudgesScoreChannel.Size = new System.Drawing.Size(53, 21);
             this.cBox_CGJudgesScoreChannel.TabIndex = 85;
@@ -1909,9 +1539,9 @@
             // 
             this.label40.Location = new System.Drawing.Point(9, 38);
             this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(194, 18);
+            this.label40.Size = new System.Drawing.Size(161, 15);
             this.label40.TabIndex = 84;
-            this.label40.Text = "Lower Title Dest. CG Alpha Channel ";
+            this.label40.Text = "Lower Title Dest. CG Channel";
             // 
             // cBox_CGCurrLowerTitleChannelLayer
             // 
@@ -1947,7 +1577,7 @@
             "28",
             "29",
             "30"});
-            this.cBox_CGCurrLowerTitleChannelLayer.Location = new System.Drawing.Point(272, 35);
+            this.cBox_CGCurrLowerTitleChannelLayer.Location = new System.Drawing.Point(320, 35);
             this.cBox_CGCurrLowerTitleChannelLayer.Name = "cBox_CGCurrLowerTitleChannelLayer";
             this.cBox_CGCurrLowerTitleChannelLayer.Size = new System.Drawing.Size(53, 21);
             this.cBox_CGCurrLowerTitleChannelLayer.TabIndex = 83;
@@ -1962,7 +1592,7 @@
             "4",
             "5",
             "6"});
-            this.cBox_CGCurrLowerTitleChannel.Location = new System.Drawing.Point(209, 35);
+            this.cBox_CGCurrLowerTitleChannel.Location = new System.Drawing.Point(257, 35);
             this.cBox_CGCurrLowerTitleChannel.Name = "cBox_CGCurrLowerTitleChannel";
             this.cBox_CGCurrLowerTitleChannel.Size = new System.Drawing.Size(53, 21);
             this.cBox_CGCurrLowerTitleChannel.TabIndex = 82;
@@ -2009,7 +1639,7 @@
             "28",
             "29",
             "30"});
-            this.cBox_CGCurrScoreBoardChannelLayer.Location = new System.Drawing.Point(272, 8);
+            this.cBox_CGCurrScoreBoardChannelLayer.Location = new System.Drawing.Point(320, 8);
             this.cBox_CGCurrScoreBoardChannelLayer.Name = "cBox_CGCurrScoreBoardChannelLayer";
             this.cBox_CGCurrScoreBoardChannelLayer.Size = new System.Drawing.Size(53, 21);
             this.cBox_CGCurrScoreBoardChannelLayer.TabIndex = 78;
@@ -2024,24 +1654,24 @@
             "4",
             "5",
             "6"});
-            this.cBox_CGScoreBoardCurrChannel.Location = new System.Drawing.Point(209, 8);
+            this.cBox_CGScoreBoardCurrChannel.Location = new System.Drawing.Point(257, 8);
             this.cBox_CGScoreBoardCurrChannel.Name = "cBox_CGScoreBoardCurrChannel";
             this.cBox_CGScoreBoardCurrChannel.Size = new System.Drawing.Size(53, 21);
             this.cBox_CGScoreBoardCurrChannel.TabIndex = 77;
             // 
             // btnALLShow
             // 
-            this.btnALLShow.Location = new System.Drawing.Point(830, 14);
+            this.btnALLShow.Location = new System.Drawing.Point(681, 13);
             this.btnALLShow.Name = "btnALLShow";
             this.btnALLShow.Size = new System.Drawing.Size(107, 90);
             this.btnALLShow.TabIndex = 74;
-            this.btnALLShow.Text = "Simulate VOTE ";
+            this.btnALLShow.Text = "Show ScoreBoard";
             this.btnALLShow.UseVisualStyleBackColor = true;
             this.btnALLShow.Click += new System.EventHandler(this.btnALLShow_Click);
             // 
             // button30
             // 
-            this.button30.Location = new System.Drawing.Point(345, 68);
+            this.button30.Location = new System.Drawing.Point(379, 68);
             this.button30.Name = "button30";
             this.button30.Size = new System.Drawing.Size(145, 35);
             this.button30.TabIndex = 73;
@@ -2072,9 +1702,9 @@
             // 
             // btnUnLoadAll
             // 
-            this.btnUnLoadAll.Location = new System.Drawing.Point(647, 14);
+            this.btnUnLoadAll.Location = new System.Drawing.Point(830, 14);
             this.btnUnLoadAll.Name = "btnUnLoadAll";
-            this.btnUnLoadAll.Size = new System.Drawing.Size(177, 48);
+            this.btnUnLoadAll.Size = new System.Drawing.Size(107, 89);
             this.btnUnLoadAll.TabIndex = 65;
             this.btnUnLoadAll.Text = "UNLOAD ALL";
             this.btnUnLoadAll.UseVisualStyleBackColor = true;
@@ -2082,7 +1712,7 @@
             // 
             // btnLoadFrom
             // 
-            this.btnLoadFrom.Location = new System.Drawing.Point(345, 13);
+            this.btnLoadFrom.Location = new System.Drawing.Point(379, 13);
             this.btnLoadFrom.Name = "btnLoadFrom";
             this.btnLoadFrom.Size = new System.Drawing.Size(145, 49);
             this.btnLoadFrom.TabIndex = 45;
@@ -2092,7 +1722,7 @@
             // 
             // btnLoadScene
             // 
-            this.btnLoadScene.Location = new System.Drawing.Point(496, 13);
+            this.btnLoadScene.Location = new System.Drawing.Point(530, 13);
             this.btnLoadScene.Name = "btnLoadScene";
             this.btnLoadScene.Size = new System.Drawing.Size(145, 49);
             this.btnLoadScene.TabIndex = 44;
@@ -2102,7 +1732,7 @@
             // 
             // btnAllIn
             // 
-            this.btnAllIn.Location = new System.Drawing.Point(496, 68);
+            this.btnAllIn.Location = new System.Drawing.Point(530, 68);
             this.btnAllIn.Name = "btnAllIn";
             this.btnAllIn.Size = new System.Drawing.Size(145, 35);
             this.btnAllIn.TabIndex = 43;
@@ -2113,15 +1743,6 @@
             // groupBox16
             // 
             this.groupBox16.BackColor = System.Drawing.Color.LightGray;
-            this.groupBox16.Controls.Add(this.btnConnectBackUpCG);
-            this.groupBox16.Controls.Add(this.button17);
-            this.groupBox16.Controls.Add(this.txtBackUpCasparPort);
-            this.groupBox16.Controls.Add(this.txtBackUpCasparServer);
-            this.groupBox16.Controls.Add(this.label19);
-            this.groupBox16.Controls.Add(this.lblBackUpStatus);
-            this.groupBox16.Controls.Add(this.label21);
-            this.groupBox16.Controls.Add(this.label22);
-            this.groupBox16.Controls.Add(this.txtContestantCount1);
             this.groupBox16.Controls.Add(this.txtContestantCount);
             this.groupBox16.Controls.Add(this.label31);
             this.groupBox16.Controls.Add(this.btnConnectCG);
@@ -2135,119 +1756,29 @@
             this.groupBox16.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox16.Location = new System.Drawing.Point(3, 3);
             this.groupBox16.Name = "groupBox16";
-            this.groupBox16.Size = new System.Drawing.Size(1094, 62);
+            this.groupBox16.Size = new System.Drawing.Size(1055, 46);
             this.groupBox16.TabIndex = 84;
             this.groupBox16.TabStop = false;
             // 
-            // btnConnectBackUpCG
-            // 
-            this.btnConnectBackUpCG.Location = new System.Drawing.Point(378, 34);
-            this.btnConnectBackUpCG.Name = "btnConnectBackUpCG";
-            this.btnConnectBackUpCG.Size = new System.Drawing.Size(103, 23);
-            this.btnConnectBackUpCG.TabIndex = 82;
-            this.btnConnectBackUpCG.Text = "Connect";
-            this.btnConnectBackUpCG.UseVisualStyleBackColor = true;
-            this.btnConnectBackUpCG.Click += new System.EventHandler(this.btnConnectBackUpCG_Click);
-            // 
-            // button17
-            // 
-            this.button17.Location = new System.Drawing.Point(490, 34);
-            this.button17.Name = "button17";
-            this.button17.Size = new System.Drawing.Size(70, 23);
-            this.button17.TabIndex = 81;
-            this.button17.Text = "რესტარტ";
-            this.button17.UseVisualStyleBackColor = true;
-            // 
-            // txtBackUpCasparPort
-            // 
-            this.txtBackUpCasparPort.Location = new System.Drawing.Point(316, 37);
-            this.txtBackUpCasparPort.Name = "txtBackUpCasparPort";
-            this.txtBackUpCasparPort.Size = new System.Drawing.Size(53, 20);
-            this.txtBackUpCasparPort.TabIndex = 80;
-            this.txtBackUpCasparPort.Text = "5250";
-            // 
-            // txtBackUpCasparServer
-            // 
-            this.txtBackUpCasparServer.Location = new System.Drawing.Point(166, 37);
-            this.txtBackUpCasparServer.Name = "txtBackUpCasparServer";
-            this.txtBackUpCasparServer.Size = new System.Drawing.Size(87, 20);
-            this.txtBackUpCasparServer.TabIndex = 79;
-            this.txtBackUpCasparServer.Text = "127.0.0.1";
-            // 
-            // label19
-            // 
-            this.label19.Location = new System.Drawing.Point(262, 44);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(45, 13);
-            this.label19.TabIndex = 76;
-            this.label19.Text = "პორტი";
-            // 
-            // lblBackUpStatus
-            // 
-            this.lblBackUpStatus.ForeColor = System.Drawing.Color.Red;
-            this.lblBackUpStatus.Location = new System.Drawing.Point(616, 44);
-            this.lblBackUpStatus.Name = "lblBackUpStatus";
-            this.lblBackUpStatus.Size = new System.Drawing.Size(100, 13);
-            this.lblBackUpStatus.TabIndex = 77;
-            this.lblBackUpStatus.Text = "NOT CONNECTED";
-            // 
-            // label21
-            // 
-            this.label21.Location = new System.Drawing.Point(569, 42);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(38, 15);
-            this.label21.TabIndex = 78;
-            this.label21.Text = "Status";
-            // 
-            // label22
-            // 
-            this.label22.Location = new System.Drawing.Point(6, 41);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(164, 16);
-            this.label22.TabIndex = 75;
-            this.label22.Text = "BackUp ვიდეო სერვერი";
-            // 
-            // txtContestantCount1
-            // 
-            this.txtContestantCount1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.txtContestantCount1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtContestantCount1.FormattingEnabled = true;
-            this.txtContestantCount1.Items.AddRange(new object[] {
-            "Value From File",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10"});
-            this.txtContestantCount1.Location = new System.Drawing.Point(955, 17);
-            this.txtContestantCount1.Name = "txtContestantCount1";
-            this.txtContestantCount1.Size = new System.Drawing.Size(154, 28);
-            this.txtContestantCount1.TabIndex = 74;
-            // 
             // txtContestantCount
             // 
-            this.txtContestantCount.Location = new System.Drawing.Point(955, 17);
+            this.txtContestantCount.Location = new System.Drawing.Point(826, 12);
             this.txtContestantCount.Name = "txtContestantCount";
             this.txtContestantCount.Size = new System.Drawing.Size(93, 20);
             this.txtContestantCount.TabIndex = 73;
-            this.txtContestantCount.Text = "3";
-            this.txtContestantCount.Visible = false;
+            this.txtContestantCount.Text = "8";
             // 
             // label31
             // 
-            this.label31.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label31.Location = new System.Drawing.Point(784, 14);
+            this.label31.Location = new System.Drawing.Point(628, 16);
             this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(165, 45);
+            this.label31.Size = new System.Drawing.Size(165, 13);
             this.label31.TabIndex = 72;
             this.label31.Text = "კონკურსანტთა რაოდენობა";
             // 
             // btnConnectCG
             // 
-            this.btnConnectCG.Location = new System.Drawing.Point(378, 8);
+            this.btnConnectCG.Location = new System.Drawing.Point(278, 11);
             this.btnConnectCG.Name = "btnConnectCG";
             this.btnConnectCG.Size = new System.Drawing.Size(103, 23);
             this.btnConnectCG.TabIndex = 70;
@@ -2257,33 +1788,32 @@
             // 
             // button13
             // 
-            this.button13.Location = new System.Drawing.Point(490, 8);
+            this.button13.Location = new System.Drawing.Point(384, 11);
             this.button13.Name = "button13";
             this.button13.Size = new System.Drawing.Size(70, 23);
             this.button13.TabIndex = 69;
             this.button13.Text = "რესტარტ";
             this.button13.UseVisualStyleBackColor = true;
-            this.button13.Click += new System.EventHandler(this.button13_Click);
             // 
             // txtCasparPort
             // 
-            this.txtCasparPort.Location = new System.Drawing.Point(316, 11);
+            this.txtCasparPort.Location = new System.Drawing.Point(239, 12);
             this.txtCasparPort.Name = "txtCasparPort";
-            this.txtCasparPort.Size = new System.Drawing.Size(53, 20);
+            this.txtCasparPort.Size = new System.Drawing.Size(36, 20);
             this.txtCasparPort.TabIndex = 64;
             this.txtCasparPort.Text = "5250";
             // 
             // txtCasparServer
             // 
-            this.txtCasparServer.Location = new System.Drawing.Point(166, 11);
+            this.txtCasparServer.Location = new System.Drawing.Point(126, 12);
             this.txtCasparServer.Name = "txtCasparServer";
-            this.txtCasparServer.Size = new System.Drawing.Size(87, 20);
+            this.txtCasparServer.Size = new System.Drawing.Size(62, 20);
             this.txtCasparServer.TabIndex = 63;
             this.txtCasparServer.Text = "127.0.0.1";
             // 
             // label12
             // 
-            this.label12.Location = new System.Drawing.Point(262, 18);
+            this.label12.Location = new System.Drawing.Point(191, 16);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(45, 13);
             this.label12.TabIndex = 60;
@@ -2292,7 +1822,7 @@
             // lblStatus
             // 
             this.lblStatus.ForeColor = System.Drawing.Color.Red;
-            this.lblStatus.Location = new System.Drawing.Point(616, 18);
+            this.lblStatus.Location = new System.Drawing.Point(498, 16);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(100, 13);
             this.lblStatus.TabIndex = 61;
@@ -2300,7 +1830,7 @@
             // 
             // label13
             // 
-            this.label13.Location = new System.Drawing.Point(569, 16);
+            this.label13.Location = new System.Drawing.Point(457, 15);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(38, 15);
             this.label13.TabIndex = 62;
@@ -2308,29 +1838,25 @@
             // 
             // label14
             // 
-            this.label14.Location = new System.Drawing.Point(6, 15);
+            this.label14.Location = new System.Drawing.Point(7, 16);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(151, 16);
+            this.label14.Size = new System.Drawing.Size(116, 13);
             this.label14.TabIndex = 26;
-            this.label14.Text = "მთავარი ვიდეო სერვერი";
+            this.label14.Text = "ვიდეო სერვერი";
             // 
             // groupBox15
             // 
             this.groupBox15.Controls.Add(this.panel4);
             this.groupBox15.Controls.Add(this.panel3);
             this.groupBox15.Dock = System.Windows.Forms.DockStyle.Right;
-            this.groupBox15.Location = new System.Drawing.Point(1097, 3);
+            this.groupBox15.Location = new System.Drawing.Point(1058, 3);
             this.groupBox15.Name = "groupBox15";
-            this.groupBox15.Size = new System.Drawing.Size(365, 623);
+            this.groupBox15.Size = new System.Drawing.Size(308, 623);
             this.groupBox15.TabIndex = 83;
             this.groupBox15.TabStop = false;
             // 
             // panel4
             // 
-            this.panel4.Controls.Add(this.btnAutoHiLite);
-            this.panel4.Controls.Add(this.cbox_AutoSaveSTATE);
-            this.panel4.Controls.Add(this.cBox_AutoBonusUpdate);
-            this.panel4.Controls.Add(this.cBox_AutoCallsProcentShow);
             this.panel4.Controls.Add(this.txtAllTitleName);
             this.panel4.Controls.Add(this.cBox_AutoTitleOnOFF);
             this.panel4.Controls.Add(this.btn_Looptitle_InOut);
@@ -2340,65 +1866,13 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(3, 16);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(359, 527);
+            this.panel4.Size = new System.Drawing.Size(302, 527);
             this.panel4.TabIndex = 86;
-            // 
-            // btnAutoHiLite
-            // 
-            this.btnAutoHiLite.AutoSize = true;
-            this.btnAutoHiLite.Location = new System.Drawing.Point(152, 469);
-            this.btnAutoHiLite.Name = "btnAutoHiLite";
-            this.btnAutoHiLite.Size = new System.Drawing.Size(78, 17);
-            this.btnAutoHiLite.TabIndex = 93;
-            this.btnAutoHiLite.Text = "Auto HiLite";
-            this.btnAutoHiLite.UseVisualStyleBackColor = true;
-            // 
-            // cbox_AutoSaveSTATE
-            // 
-            this.cbox_AutoSaveSTATE.AutoSize = true;
-            this.cbox_AutoSaveSTATE.Checked = true;
-            this.cbox_AutoSaveSTATE.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbox_AutoSaveSTATE.Location = new System.Drawing.Point(6, 487);
-            this.cbox_AutoSaveSTATE.Name = "cbox_AutoSaveSTATE";
-            this.cbox_AutoSaveSTATE.Size = new System.Drawing.Size(114, 17);
-            this.cbox_AutoSaveSTATE.TabIndex = 92;
-            this.cbox_AutoSaveSTATE.Text = "Auto Save STATE";
-            this.cbox_AutoSaveSTATE.UseVisualStyleBackColor = true;
-            // 
-            // cBox_AutoBonusUpdate
-            // 
-            this.cBox_AutoBonusUpdate.AutoSize = true;
-            this.cBox_AutoBonusUpdate.Checked = true;
-            this.cBox_AutoBonusUpdate.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cBox_AutoBonusUpdate.Location = new System.Drawing.Point(152, 450);
-            this.cBox_AutoBonusUpdate.Name = "cBox_AutoBonusUpdate";
-            this.cBox_AutoBonusUpdate.Size = new System.Drawing.Size(81, 17);
-            this.cBox_AutoBonusUpdate.TabIndex = 91;
-            this.cBox_AutoBonusUpdate.Text = "Auto Bonus";
-            this.cBox_AutoBonusUpdate.UseVisualStyleBackColor = true;
-            // 
-            // cBox_AutoCallsProcentShow
-            // 
-            this.cBox_AutoCallsProcentShow.AutoSize = true;
-            this.cBox_AutoCallsProcentShow.Location = new System.Drawing.Point(6, 469);
-            this.cBox_AutoCallsProcentShow.Name = "cBox_AutoCallsProcentShow";
-            this.cBox_AutoCallsProcentShow.Size = new System.Drawing.Size(128, 17);
-            this.cBox_AutoCallsProcentShow.TabIndex = 90;
-            this.cBox_AutoCallsProcentShow.Text = "ზარების % ჩვენება";
-            this.cBox_AutoCallsProcentShow.UseVisualStyleBackColor = true;
-            // 
-            // txtAllTitleName
-            // 
-            this.txtAllTitleName.Location = new System.Drawing.Point(253, 450);
-            this.txtAllTitleName.Name = "txtAllTitleName";
-            this.txtAllTitleName.Size = new System.Drawing.Size(102, 20);
-            this.txtAllTitleName.TabIndex = 89;
-            this.txtAllTitleName.Text = "ALL";
             // 
             // cBox_AutoTitleOnOFF
             // 
             this.cBox_AutoTitleOnOFF.AutoSize = true;
-            this.cBox_AutoTitleOnOFF.Location = new System.Drawing.Point(6, 449);
+            this.cBox_AutoTitleOnOFF.Location = new System.Drawing.Point(3, 456);
             this.cBox_AutoTitleOnOFF.Name = "cBox_AutoTitleOnOFF";
             this.cBox_AutoTitleOnOFF.Size = new System.Drawing.Size(143, 17);
             this.cBox_AutoTitleOnOFF.TabIndex = 88;
@@ -2407,9 +1881,9 @@
             // 
             // btn_Looptitle_InOut
             // 
-            this.btn_Looptitle_InOut.Location = new System.Drawing.Point(6, 403);
+            this.btn_Looptitle_InOut.Location = new System.Drawing.Point(3, 403);
             this.btn_Looptitle_InOut.Name = "btn_Looptitle_InOut";
-            this.btn_Looptitle_InOut.Size = new System.Drawing.Size(349, 41);
+            this.btn_Looptitle_InOut.Size = new System.Drawing.Size(295, 41);
             this.btn_Looptitle_InOut.TabIndex = 87;
             this.btn_Looptitle_InOut.Text = "LOOP TITLE IN";
             this.btn_Looptitle_InOut.UseVisualStyleBackColor = true;
@@ -2417,9 +1891,9 @@
             // 
             // btn_title_InOut
             // 
-            this.btn_title_InOut.Location = new System.Drawing.Point(6, 358);
+            this.btn_title_InOut.Location = new System.Drawing.Point(3, 358);
             this.btn_title_InOut.Name = "btn_title_InOut";
-            this.btn_title_InOut.Size = new System.Drawing.Size(349, 39);
+            this.btn_title_InOut.Size = new System.Drawing.Size(295, 39);
             this.btn_title_InOut.TabIndex = 86;
             this.btn_title_InOut.Text = "TITLE IN";
             this.btn_title_InOut.UseVisualStyleBackColor = true;
@@ -2431,7 +1905,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 296);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(359, 56);
+            this.panel2.Size = new System.Drawing.Size(302, 56);
             this.panel2.TabIndex = 85;
             // 
             // btnCallsImport
@@ -2439,7 +1913,7 @@
             this.btnCallsImport.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnCallsImport.Location = new System.Drawing.Point(0, 0);
             this.btnCallsImport.Name = "btnCallsImport";
-            this.btnCallsImport.Size = new System.Drawing.Size(359, 48);
+            this.btnCallsImport.Size = new System.Drawing.Size(302, 48);
             this.btnCallsImport.TabIndex = 84;
             this.btnCallsImport.Text = "ზარების იმპორტი";
             this.btnCallsImport.UseVisualStyleBackColor = true;
@@ -2454,7 +1928,7 @@
             this.groupBox7.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox7.Location = new System.Drawing.Point(0, 0);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(359, 296);
+            this.groupBox7.Size = new System.Drawing.Size(302, 296);
             this.groupBox7.TabIndex = 46;
             this.groupBox7.TabStop = false;
             this.groupBox7.Enter += new System.EventHandler(this.groupBox7_Enter);
@@ -2466,7 +1940,7 @@
             this.btnPLUS.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnPLUS.Location = new System.Drawing.Point(3, 157);
             this.btnPLUS.Name = "btnPLUS";
-            this.btnPLUS.Size = new System.Drawing.Size(353, 136);
+            this.btnPLUS.Size = new System.Drawing.Size(296, 136);
             this.btnPLUS.TabIndex = 48;
             this.btnPLUS.Text = "+";
             this.btnPLUS.UseVisualStyleBackColor = true;
@@ -2478,7 +1952,7 @@
             this.txtScoreToBeAdded.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtScoreToBeAdded.Location = new System.Drawing.Point(3, 104);
             this.txtScoreToBeAdded.Name = "txtScoreToBeAdded";
-            this.txtScoreToBeAdded.Size = new System.Drawing.Size(353, 53);
+            this.txtScoreToBeAdded.Size = new System.Drawing.Size(296, 53);
             this.txtScoreToBeAdded.TabIndex = 43;
             this.txtScoreToBeAdded.Text = "0";
             this.txtScoreToBeAdded.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -2492,7 +1966,7 @@
             this.lblCurrContestant.ForeColor = System.Drawing.Color.Red;
             this.lblCurrContestant.Location = new System.Drawing.Point(3, 16);
             this.lblCurrContestant.Name = "lblCurrContestant";
-            this.lblCurrContestant.Size = new System.Drawing.Size(353, 88);
+            this.lblCurrContestant.Size = new System.Drawing.Size(296, 88);
             this.lblCurrContestant.TabIndex = 41;
             this.lblCurrContestant.Text = "აარჩიე მომღერალი";
             this.lblCurrContestant.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -2503,29 +1977,20 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel3.Location = new System.Drawing.Point(3, 543);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(359, 77);
+            this.panel3.Size = new System.Drawing.Size(302, 77);
             this.panel3.TabIndex = 85;
             this.panel3.DoubleClick += new System.EventHandler(this.panel3_DoubleClick);
-            // 
-            // btn_showOutsiders
-            // 
-            this.btn_showOutsiders.Location = new System.Drawing.Point(6, 7);
-            this.btn_showOutsiders.Name = "btn_showOutsiders";
-            this.btn_showOutsiders.Size = new System.Drawing.Size(349, 60);
-            this.btn_showOutsiders.TabIndex = 74;
-            this.btn_showOutsiders.Text = "SHOW OUTSIDERS";
-            this.btn_showOutsiders.UseVisualStyleBackColor = true;
-            this.btn_showOutsiders.Click += new System.EventHandler(this.btn_showOutsiders_Click);
             // 
             // tabControl2
             // 
             this.tabControl2.Controls.Add(this.tabPage5);
+            this.tabControl2.Controls.Add(this.tabPage6);
             this.tabControl2.Controls.Add(this.tabPage7);
             this.tabControl2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tabControl2.Location = new System.Drawing.Point(3, 626);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(1459, 360);
+            this.tabControl2.Size = new System.Drawing.Size(1363, 360);
             this.tabControl2.TabIndex = 82;
             // 
             // tabPage5
@@ -2539,7 +2004,7 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(1451, 334);
+            this.tabPage5.Size = new System.Drawing.Size(1355, 334);
             this.tabPage5.TabIndex = 0;
             this.tabPage5.Text = "JUDGE";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -2554,7 +2019,7 @@
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Location = new System.Drawing.Point(1278, 3);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(170, 328);
+            this.panel8.Size = new System.Drawing.Size(74, 328);
             this.panel8.TabIndex = 8;
             this.panel8.Paint += new System.Windows.Forms.PaintEventHandler(this.panel8_Paint);
             // 
@@ -2587,7 +2052,7 @@
             this.btnVoteStandBy.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnVoteStandBy.Location = new System.Drawing.Point(0, 126);
             this.btnVoteStandBy.Name = "btnVoteStandBy";
-            this.btnVoteStandBy.Size = new System.Drawing.Size(170, 101);
+            this.btnVoteStandBy.Size = new System.Drawing.Size(74, 101);
             this.btnVoteStandBy.TabIndex = 11;
             this.btnVoteStandBy.Text = "Send LOGO to Judges";
             this.btnVoteStandBy.UseVisualStyleBackColor = false;
@@ -2596,11 +2061,10 @@
             // btnUpdateFromJudges
             // 
             this.btnUpdateFromJudges.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnUpdateFromJudges.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnUpdateFromJudges.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnUpdateFromJudges.Location = new System.Drawing.Point(0, 0);
             this.btnUpdateFromJudges.Name = "btnUpdateFromJudges";
-            this.btnUpdateFromJudges.Size = new System.Drawing.Size(170, 68);
+            this.btnUpdateFromJudges.Size = new System.Drawing.Size(74, 68);
             this.btnUpdateFromJudges.TabIndex = 10;
             this.btnUpdateFromJudges.Text = "UPDATE RESULTS of JUDGES";
             this.btnUpdateFromJudges.UseVisualStyleBackColor = false;
@@ -2613,7 +2077,7 @@
             this.btnVoteStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnVoteStart.Location = new System.Drawing.Point(0, 227);
             this.btnVoteStart.Name = "btnVoteStart";
-            this.btnVoteStart.Size = new System.Drawing.Size(170, 101);
+            this.btnVoteStart.Size = new System.Drawing.Size(74, 101);
             this.btnVoteStart.TabIndex = 9;
             this.btnVoteStart.Text = "Send To Judges VOTE START and LOAD  JUDGES Screen";
             this.btnVoteStart.UseVisualStyleBackColor = false;
@@ -2621,8 +2085,6 @@
             // 
             // grBoxJiuri4
             // 
-            this.grBoxJiuri4.Controls.Add(this.btnRestartDudje5);
-            this.grBoxJiuri4.Controls.Add(this.btnKillDudje5);
             this.grBoxJiuri4.Controls.Add(this.btt_J_4_1);
             this.grBoxJiuri4.Controls.Add(this.btt_J_4_2);
             this.grBoxJiuri4.Controls.Add(this.btt_J_4_3);
@@ -2642,32 +2104,7 @@
             this.grBoxJiuri4.Size = new System.Drawing.Size(255, 328);
             this.grBoxJiuri4.TabIndex = 6;
             this.grBoxJiuri4.TabStop = false;
-            this.grBoxJiuri4.Text = "ჟიური არ არი";
-            // 
-            // btnRestartDudje5
-            // 
-            this.btnRestartDudje5.BackColor = System.Drawing.SystemColors.InfoText;
-            this.btnRestartDudje5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRestartDudje5.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnRestartDudje5.Location = new System.Drawing.Point(7, 261);
-            this.btnRestartDudje5.Name = "btnRestartDudje5";
-            this.btnRestartDudje5.Size = new System.Drawing.Size(75, 55);
-            this.btnRestartDudje5.TabIndex = 15;
-            this.btnRestartDudje5.Text = "Restart";
-            this.btnRestartDudje5.UseVisualStyleBackColor = false;
-            // 
-            // btnKillDudje5
-            // 
-            this.btnKillDudje5.BackColor = System.Drawing.SystemColors.InfoText;
-            this.btnKillDudje5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnKillDudje5.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnKillDudje5.Location = new System.Drawing.Point(174, 262);
-            this.btnKillDudje5.Name = "btnKillDudje5";
-            this.btnKillDudje5.Size = new System.Drawing.Size(75, 55);
-            this.btnKillDudje5.TabIndex = 14;
-            this.btnKillDudje5.Text = "Kill";
-            this.btnKillDudje5.UseVisualStyleBackColor = false;
-            this.btnKillDudje5.Click += new System.EventHandler(this.btnKillDudje5_Click);
+            this.grBoxJiuri4.Text = "jiuri 1";
             // 
             // btt_J_4_1
             // 
@@ -2803,8 +2240,6 @@
             // grBoxJiuri3
             // 
             this.grBoxJiuri3.BackColor = System.Drawing.Color.Gainsboro;
-            this.grBoxJiuri3.Controls.Add(this.btnRestartDudje4);
-            this.grBoxJiuri3.Controls.Add(this.btnKillDudje4);
             this.grBoxJiuri3.Controls.Add(this.btt_J_3_1);
             this.grBoxJiuri3.Controls.Add(this.btt_J_3_2);
             this.grBoxJiuri3.Controls.Add(this.btt_J_3_3);
@@ -2817,40 +2252,13 @@
             this.grBoxJiuri3.Controls.Add(this.btt_J_3_9);
             this.grBoxJiuri3.Controls.Add(this.txtJudgeValue3);
             this.grBoxJiuri3.Dock = System.Windows.Forms.DockStyle.Left;
-            this.grBoxJiuri3.Enabled = false;
             this.grBoxJiuri3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grBoxJiuri3.Location = new System.Drawing.Point(768, 3);
             this.grBoxJiuri3.Name = "grBoxJiuri3";
             this.grBoxJiuri3.Size = new System.Drawing.Size(255, 328);
             this.grBoxJiuri3.TabIndex = 5;
             this.grBoxJiuri3.TabStop = false;
-            this.grBoxJiuri3.Text = "ჟიური არ არი";
-            // 
-            // btnRestartDudje4
-            // 
-            this.btnRestartDudje4.BackColor = System.Drawing.SystemColors.InfoText;
-            this.btnRestartDudje4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRestartDudje4.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnRestartDudje4.Location = new System.Drawing.Point(6, 261);
-            this.btnRestartDudje4.Name = "btnRestartDudje4";
-            this.btnRestartDudje4.Size = new System.Drawing.Size(75, 55);
-            this.btnRestartDudje4.TabIndex = 15;
-            this.btnRestartDudje4.Text = "Restart";
-            this.btnRestartDudje4.UseVisualStyleBackColor = false;
-            this.btnRestartDudje4.Click += new System.EventHandler(this.btnKillDudje4_Click);
-            // 
-            // btnKillDudje4
-            // 
-            this.btnKillDudje4.BackColor = System.Drawing.SystemColors.InfoText;
-            this.btnKillDudje4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnKillDudje4.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnKillDudje4.Location = new System.Drawing.Point(174, 261);
-            this.btnKillDudje4.Name = "btnKillDudje4";
-            this.btnKillDudje4.Size = new System.Drawing.Size(75, 55);
-            this.btnKillDudje4.TabIndex = 14;
-            this.btnKillDudje4.Text = "Kill";
-            this.btnKillDudje4.UseVisualStyleBackColor = false;
-            this.btnKillDudje4.Click += new System.EventHandler(this.btnKillDudje4_Click);
+            this.grBoxJiuri3.Text = "jiuri 1";
             // 
             // btt_J_3_1
             // 
@@ -2985,8 +2393,6 @@
             // 
             // grBoxJiuri2
             // 
-            this.grBoxJiuri2.Controls.Add(this.btnRestartDudje3);
-            this.grBoxJiuri2.Controls.Add(this.btnKillDudje3);
             this.grBoxJiuri2.Controls.Add(this.btt_J_2_1);
             this.grBoxJiuri2.Controls.Add(this.btt_J_2_2);
             this.grBoxJiuri2.Controls.Add(this.btt_J_2_3);
@@ -2999,40 +2405,13 @@
             this.grBoxJiuri2.Controls.Add(this.btt_J_2_9);
             this.grBoxJiuri2.Controls.Add(this.txtJudgeValue2);
             this.grBoxJiuri2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.grBoxJiuri2.Enabled = false;
             this.grBoxJiuri2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grBoxJiuri2.Location = new System.Drawing.Point(513, 3);
             this.grBoxJiuri2.Name = "grBoxJiuri2";
             this.grBoxJiuri2.Size = new System.Drawing.Size(255, 328);
             this.grBoxJiuri2.TabIndex = 4;
             this.grBoxJiuri2.TabStop = false;
-            this.grBoxJiuri2.Text = "ჟიური არ არი";
-            // 
-            // btnRestartDudje3
-            // 
-            this.btnRestartDudje3.BackColor = System.Drawing.SystemColors.InfoText;
-            this.btnRestartDudje3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRestartDudje3.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnRestartDudje3.Location = new System.Drawing.Point(7, 261);
-            this.btnRestartDudje3.Name = "btnRestartDudje3";
-            this.btnRestartDudje3.Size = new System.Drawing.Size(75, 55);
-            this.btnRestartDudje3.TabIndex = 15;
-            this.btnRestartDudje3.Text = "Restart";
-            this.btnRestartDudje3.UseVisualStyleBackColor = false;
-            this.btnRestartDudje3.Click += new System.EventHandler(this.btnKillDudje3_Click);
-            // 
-            // btnKillDudje3
-            // 
-            this.btnKillDudje3.BackColor = System.Drawing.SystemColors.InfoText;
-            this.btnKillDudje3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnKillDudje3.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnKillDudje3.Location = new System.Drawing.Point(174, 262);
-            this.btnKillDudje3.Name = "btnKillDudje3";
-            this.btnKillDudje3.Size = new System.Drawing.Size(75, 55);
-            this.btnKillDudje3.TabIndex = 14;
-            this.btnKillDudje3.Text = "Kill";
-            this.btnKillDudje3.UseVisualStyleBackColor = false;
-            this.btnKillDudje3.Click += new System.EventHandler(this.btnKillDudje3_Click);
+            this.grBoxJiuri2.Text = "jiuri 1";
             // 
             // btt_J_2_1
             // 
@@ -3168,8 +2547,6 @@
             // grBoxJiuri1
             // 
             this.grBoxJiuri1.BackColor = System.Drawing.Color.Gainsboro;
-            this.grBoxJiuri1.Controls.Add(this.btnRestartDudje2);
-            this.grBoxJiuri1.Controls.Add(this.btnKillDudje2);
             this.grBoxJiuri1.Controls.Add(this.btt_J_1_1);
             this.grBoxJiuri1.Controls.Add(this.btt_J_1_2);
             this.grBoxJiuri1.Controls.Add(this.btt_J_1_3);
@@ -3182,40 +2559,13 @@
             this.grBoxJiuri1.Controls.Add(this.btt_J_1_9);
             this.grBoxJiuri1.Controls.Add(this.txtJudgeValue1);
             this.grBoxJiuri1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.grBoxJiuri1.Enabled = false;
             this.grBoxJiuri1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grBoxJiuri1.Location = new System.Drawing.Point(258, 3);
             this.grBoxJiuri1.Name = "grBoxJiuri1";
             this.grBoxJiuri1.Size = new System.Drawing.Size(255, 328);
             this.grBoxJiuri1.TabIndex = 3;
             this.grBoxJiuri1.TabStop = false;
-            this.grBoxJiuri1.Text = "ჟიური არ არი";
-            // 
-            // btnRestartDudje2
-            // 
-            this.btnRestartDudje2.BackColor = System.Drawing.SystemColors.InfoText;
-            this.btnRestartDudje2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRestartDudje2.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnRestartDudje2.Location = new System.Drawing.Point(6, 262);
-            this.btnRestartDudje2.Name = "btnRestartDudje2";
-            this.btnRestartDudje2.Size = new System.Drawing.Size(75, 55);
-            this.btnRestartDudje2.TabIndex = 15;
-            this.btnRestartDudje2.Text = "Restart";
-            this.btnRestartDudje2.UseVisualStyleBackColor = false;
-            this.btnRestartDudje2.Click += new System.EventHandler(this.btnKillDudje2_Click);
-            // 
-            // btnKillDudje2
-            // 
-            this.btnKillDudje2.BackColor = System.Drawing.SystemColors.InfoText;
-            this.btnKillDudje2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnKillDudje2.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnKillDudje2.Location = new System.Drawing.Point(174, 261);
-            this.btnKillDudje2.Name = "btnKillDudje2";
-            this.btnKillDudje2.Size = new System.Drawing.Size(75, 55);
-            this.btnKillDudje2.TabIndex = 14;
-            this.btnKillDudje2.Text = "Kill";
-            this.btnKillDudje2.UseVisualStyleBackColor = false;
-            this.btnKillDudje2.Click += new System.EventHandler(this.btnKillDudje2_Click);
+            this.grBoxJiuri1.Text = "jiuri 1";
             // 
             // btt_J_1_1
             // 
@@ -3350,8 +2700,6 @@
             // 
             // grBoxJiuri0
             // 
-            this.grBoxJiuri0.Controls.Add(this.btnRestartDudje1);
-            this.grBoxJiuri0.Controls.Add(this.btnKillDudje1);
             this.grBoxJiuri0.Controls.Add(this.btt_J_0_1);
             this.grBoxJiuri0.Controls.Add(this.btt_J_0_2);
             this.grBoxJiuri0.Controls.Add(this.btt_J_0_3);
@@ -3364,7 +2712,6 @@
             this.grBoxJiuri0.Controls.Add(this.btt_J_0_9);
             this.grBoxJiuri0.Controls.Add(this.txtJudgeValue0);
             this.grBoxJiuri0.Dock = System.Windows.Forms.DockStyle.Left;
-            this.grBoxJiuri0.Enabled = false;
             this.grBoxJiuri0.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grBoxJiuri0.ForeColor = System.Drawing.SystemColors.ControlText;
             this.grBoxJiuri0.Location = new System.Drawing.Point(3, 3);
@@ -3372,33 +2719,7 @@
             this.grBoxJiuri0.Size = new System.Drawing.Size(255, 328);
             this.grBoxJiuri0.TabIndex = 0;
             this.grBoxJiuri0.TabStop = false;
-            this.grBoxJiuri0.Text = "ჟიური არ არი";
-            // 
-            // btnRestartDudje1
-            // 
-            this.btnRestartDudje1.BackColor = System.Drawing.SystemColors.InfoText;
-            this.btnRestartDudje1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRestartDudje1.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnRestartDudje1.Location = new System.Drawing.Point(3, 261);
-            this.btnRestartDudje1.Name = "btnRestartDudje1";
-            this.btnRestartDudje1.Size = new System.Drawing.Size(75, 55);
-            this.btnRestartDudje1.TabIndex = 14;
-            this.btnRestartDudje1.Text = "Restart";
-            this.btnRestartDudje1.UseVisualStyleBackColor = false;
-            this.btnRestartDudje1.Click += new System.EventHandler(this.btnKillDudje1_Click);
-            // 
-            // btnKillDudje1
-            // 
-            this.btnKillDudje1.BackColor = System.Drawing.SystemColors.InfoText;
-            this.btnKillDudje1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnKillDudje1.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnKillDudje1.Location = new System.Drawing.Point(173, 261);
-            this.btnKillDudje1.Name = "btnKillDudje1";
-            this.btnKillDudje1.Size = new System.Drawing.Size(75, 55);
-            this.btnKillDudje1.TabIndex = 13;
-            this.btnKillDudje1.Text = "Kill";
-            this.btnKillDudje1.UseVisualStyleBackColor = false;
-            this.btnKillDudje1.Click += new System.EventHandler(this.btnKillDudje1_Click);
+            this.grBoxJiuri0.Text = "jiuri 1";
             // 
             // btt_J_0_1
             // 
@@ -3531,11 +2852,89 @@
             this.txtJudgeValue0.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtJudgeValue0.TextChanged += new System.EventHandler(this.txtJudgeValues_TextChanged);
             // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.txtConsole);
+            this.tabPage6.Controls.Add(this.btnGO_2_CG);
+            this.tabPage6.Controls.Add(this.txtCmdBody);
+            this.tabPage6.Controls.Add(this.cBoxAMPCcmd);
+            this.tabPage6.Controls.Add(this.btnSendCommand);
+            this.tabPage6.Controls.Add(this.txtCmdPrefix);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(1355, 334);
+            this.tabPage6.TabIndex = 1;
+            this.tabPage6.Text = "LOG";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // txtConsole
+            // 
+            this.txtConsole.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.txtConsole.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.txtConsole.ForeColor = System.Drawing.Color.Lime;
+            this.txtConsole.Location = new System.Drawing.Point(3, 110);
+            this.txtConsole.Name = "txtConsole";
+            this.txtConsole.Size = new System.Drawing.Size(1349, 221);
+            this.txtConsole.TabIndex = 69;
+            this.txtConsole.Text = "";
+            this.txtConsole.TextChanged += new System.EventHandler(this.logConsole1_TextChanged);
+            // 
+            // btnGO_2_CG
+            // 
+            this.btnGO_2_CG.Location = new System.Drawing.Point(928, 33);
+            this.btnGO_2_CG.Name = "btnGO_2_CG";
+            this.btnGO_2_CG.Size = new System.Drawing.Size(139, 23);
+            this.btnGO_2_CG.TabIndex = 68;
+            this.btnGO_2_CG.Text = "GO 2 CG";
+            this.btnGO_2_CG.UseVisualStyleBackColor = true;
+            this.btnGO_2_CG.Click += new System.EventHandler(this.btnGO_2_CG_Click);
+            // 
+            // txtCmdBody
+            // 
+            this.txtCmdBody.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCmdBody.Location = new System.Drawing.Point(263, 36);
+            this.txtCmdBody.Name = "txtCmdBody";
+            this.txtCmdBody.Size = new System.Drawing.Size(659, 20);
+            this.txtCmdBody.TabIndex = 67;
+            this.txtCmdBody.TextChanged += new System.EventHandler(this.txtCmdBody_TextChanged);
+            this.txtCmdBody.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtCmdBody_KeyDown);
+            this.txtCmdBody.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCmdBody_KeyPress);
+            // 
+            // cBoxAMPCcmd
+            // 
+            this.cBoxAMPCcmd.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cBoxAMPCcmd.FormattingEnabled = true;
+            this.cBoxAMPCcmd.Items.AddRange(new object[] {
+            "ADD",
+            "ADD & PLAY",
+            "INVOKE",
+            "CLEAR"});
+            this.cBoxAMPCcmd.Location = new System.Drawing.Point(118, 35);
+            this.cBoxAMPCcmd.Name = "cBoxAMPCcmd";
+            this.cBoxAMPCcmd.Size = new System.Drawing.Size(133, 21);
+            this.cBoxAMPCcmd.TabIndex = 66;
+            // 
+            // btnSendCommand
+            // 
+            this.btnSendCommand.Location = new System.Drawing.Point(928, 7);
+            this.btnSendCommand.Name = "btnSendCommand";
+            this.btnSendCommand.Size = new System.Drawing.Size(139, 20);
+            this.btnSendCommand.TabIndex = 64;
+            this.btnSendCommand.Text = "Send Command";
+            this.btnSendCommand.UseVisualStyleBackColor = true;
+            this.btnSendCommand.Click += new System.EventHandler(this.btnSendCommand_Click_1);
+            // 
+            // txtCmdPrefix
+            // 
+            this.txtCmdPrefix.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCmdPrefix.Location = new System.Drawing.Point(22, 36);
+            this.txtCmdPrefix.Name = "txtCmdPrefix";
+            this.txtCmdPrefix.Size = new System.Drawing.Size(90, 20);
+            this.txtCmdPrefix.TabIndex = 63;
+            // 
             // tabPage7
             // 
-            this.tabPage7.Controls.Add(this.btnSendJudgesLogo);
-            this.tabPage7.Controls.Add(this.btnSendJudgesSponsor1Logo);
-            this.tabPage7.Controls.Add(this.cboxJudjesClientsIPs);
             this.tabPage7.Controls.Add(this.btn_loadRefreshJudges);
             this.tabPage7.Controls.Add(this.groupBox8);
             this.tabPage7.Controls.Add(this.textBoxMsg);
@@ -3556,40 +2955,10 @@
             this.tabPage7.Location = new System.Drawing.Point(4, 22);
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage7.Size = new System.Drawing.Size(1451, 334);
+            this.tabPage7.Size = new System.Drawing.Size(1355, 334);
             this.tabPage7.TabIndex = 2;
             this.tabPage7.Text = "VOTING SERVER";
             this.tabPage7.UseVisualStyleBackColor = true;
-            // 
-            // btnSendJudgesLogo
-            // 
-            this.btnSendJudgesLogo.Location = new System.Drawing.Point(1085, 37);
-            this.btnSendJudgesLogo.Name = "btnSendJudgesLogo";
-            this.btnSendJudgesLogo.Size = new System.Drawing.Size(165, 41);
-            this.btnSendJudgesLogo.TabIndex = 83;
-            this.btnSendJudgesLogo.Text = "Send  LOGO";
-            this.btnSendJudgesLogo.UseVisualStyleBackColor = true;
-            this.btnSendJudgesLogo.Click += new System.EventHandler(this.btnSendJudgesLogo_Click);
-            // 
-            // btnSendJudgesSponsor1Logo
-            // 
-            this.btnSendJudgesSponsor1Logo.Location = new System.Drawing.Point(1085, 94);
-            this.btnSendJudgesSponsor1Logo.Name = "btnSendJudgesSponsor1Logo";
-            this.btnSendJudgesSponsor1Logo.Size = new System.Drawing.Size(165, 42);
-            this.btnSendJudgesSponsor1Logo.TabIndex = 82;
-            this.btnSendJudgesSponsor1Logo.Text = "Send Sponsor1 LOGO";
-            this.btnSendJudgesSponsor1Logo.UseVisualStyleBackColor = true;
-            this.btnSendJudgesSponsor1Logo.Click += new System.EventHandler(this.btnSendJudgesSponsor1Logo_Click);
-            // 
-            // cboxJudjesClientsIPs
-            // 
-            this.cboxJudjesClientsIPs.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxJudjesClientsIPs.FormattingEnabled = true;
-            this.cboxJudjesClientsIPs.Location = new System.Drawing.Point(636, 128);
-            this.cboxJudjesClientsIPs.Name = "cboxJudjesClientsIPs";
-            this.cboxJudjesClientsIPs.Size = new System.Drawing.Size(120, 21);
-            this.cboxJudjesClientsIPs.TabIndex = 81;
-            this.cboxJudjesClientsIPs.SelectedIndexChanged += new System.EventHandler(this.cboxJudjesClientsIPs_SelectedIndexChanged);
             // 
             // btn_loadRefreshJudges
             // 
@@ -3603,9 +2972,14 @@
             // 
             // groupBox8
             // 
-            this.groupBox8.Controls.Add(this.txtDudgeName);
-            this.groupBox8.Controls.Add(this.cboxDudgesIpList);
+            this.groupBox8.Controls.Add(this.button34);
+            this.groupBox8.Controls.Add(this.button32);
+            this.groupBox8.Controls.Add(this.button31);
             this.groupBox8.Controls.Add(this.button14);
+            this.groupBox8.Controls.Add(this.txt_IPJiuri3);
+            this.groupBox8.Controls.Add(this.txt_IPJiuri2);
+            this.groupBox8.Controls.Add(this.txt_IPJiuri1);
+            this.groupBox8.Controls.Add(this.txt_IPJiuri0);
             this.groupBox8.Location = new System.Drawing.Point(24, 156);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(467, 166);
@@ -3613,31 +2987,73 @@
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "ჟიურის IP მისამართები";
             // 
-            // txtDudgeName
+            // button34
             // 
-            this.txtDudgeName.Location = new System.Drawing.Point(181, 39);
-            this.txtDudgeName.Name = "txtDudgeName";
-            this.txtDudgeName.Size = new System.Drawing.Size(135, 20);
-            this.txtDudgeName.TabIndex = 83;
+            this.button34.Location = new System.Drawing.Point(266, 121);
+            this.button34.Name = "button34";
+            this.button34.Size = new System.Drawing.Size(127, 23);
+            this.button34.TabIndex = 28;
+            this.button34.Text = "Apply";
+            this.button34.UseVisualStyleBackColor = true;
+            this.button34.Click += new System.EventHandler(this.button34_Click_1);
             // 
-            // cboxDudgesIpList
+            // button32
             // 
-            this.cboxDudgesIpList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxDudgesIpList.FormattingEnabled = true;
-            this.cboxDudgesIpList.Location = new System.Drawing.Point(22, 38);
-            this.cboxDudgesIpList.Name = "cboxDudgesIpList";
-            this.cboxDudgesIpList.Size = new System.Drawing.Size(120, 21);
-            this.cboxDudgesIpList.TabIndex = 82;
+            this.button32.Location = new System.Drawing.Point(266, 94);
+            this.button32.Name = "button32";
+            this.button32.Size = new System.Drawing.Size(127, 23);
+            this.button32.TabIndex = 27;
+            this.button32.Text = "Apply";
+            this.button32.UseVisualStyleBackColor = true;
+            this.button32.Click += new System.EventHandler(this.button32_Click_1);
+            // 
+            // button31
+            // 
+            this.button31.Location = new System.Drawing.Point(266, 65);
+            this.button31.Name = "button31";
+            this.button31.Size = new System.Drawing.Size(127, 23);
+            this.button31.TabIndex = 26;
+            this.button31.Text = "Apply";
+            this.button31.UseVisualStyleBackColor = true;
+            this.button31.Click += new System.EventHandler(this.button31_Click);
             // 
             // button14
             // 
-            this.button14.Location = new System.Drawing.Point(374, 36);
+            this.button14.Location = new System.Drawing.Point(266, 36);
             this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(87, 23);
+            this.button14.Size = new System.Drawing.Size(127, 23);
             this.button14.TabIndex = 25;
             this.button14.Text = "Apply";
             this.button14.UseVisualStyleBackColor = true;
             this.button14.Click += new System.EventHandler(this.button14_Click_1);
+            // 
+            // txt_IPJiuri3
+            // 
+            this.txt_IPJiuri3.Location = new System.Drawing.Point(98, 123);
+            this.txt_IPJiuri3.Name = "txt_IPJiuri3";
+            this.txt_IPJiuri3.Size = new System.Drawing.Size(135, 20);
+            this.txt_IPJiuri3.TabIndex = 24;
+            // 
+            // txt_IPJiuri2
+            // 
+            this.txt_IPJiuri2.Location = new System.Drawing.Point(98, 94);
+            this.txt_IPJiuri2.Name = "txt_IPJiuri2";
+            this.txt_IPJiuri2.Size = new System.Drawing.Size(135, 20);
+            this.txt_IPJiuri2.TabIndex = 23;
+            // 
+            // txt_IPJiuri1
+            // 
+            this.txt_IPJiuri1.Location = new System.Drawing.Point(98, 63);
+            this.txt_IPJiuri1.Name = "txt_IPJiuri1";
+            this.txt_IPJiuri1.Size = new System.Drawing.Size(135, 20);
+            this.txt_IPJiuri1.TabIndex = 22;
+            // 
+            // txt_IPJiuri0
+            // 
+            this.txt_IPJiuri0.Location = new System.Drawing.Point(98, 36);
+            this.txt_IPJiuri0.Name = "txt_IPJiuri0";
+            this.txt_IPJiuri0.Size = new System.Drawing.Size(135, 20);
+            this.txt_IPJiuri0.TabIndex = 21;
             // 
             // textBoxMsg
             // 
@@ -3697,9 +3113,9 @@
             // 
             // btnSendMessage
             // 
-            this.btnSendMessage.Location = new System.Drawing.Point(521, 124);
+            this.btnSendMessage.Location = new System.Drawing.Point(521, 126);
             this.btnSendMessage.Name = "btnSendMessage";
-            this.btnSendMessage.Size = new System.Drawing.Size(100, 28);
+            this.btnSendMessage.Size = new System.Drawing.Size(237, 28);
             this.btnSendMessage.TabIndex = 72;
             this.btnSendMessage.Text = "Send Message";
             this.btnSendMessage.UseVisualStyleBackColor = true;
@@ -3782,7 +3198,7 @@
             this.grpBonus.Dock = System.Windows.Forms.DockStyle.Right;
             this.grpBonus.Enabled = false;
             this.grpBonus.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpBonus.Location = new System.Drawing.Point(1462, 3);
+            this.grpBonus.Location = new System.Drawing.Point(1366, 3);
             this.grpBonus.Name = "grpBonus";
             this.grpBonus.Size = new System.Drawing.Size(298, 983);
             this.grpBonus.TabIndex = 73;
@@ -3814,7 +3230,6 @@
             // btbBoxesIn
             // 
             this.btbBoxesIn.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btbBoxesIn.Enabled = false;
             this.btbBoxesIn.Location = new System.Drawing.Point(3, 335);
             this.btbBoxesIn.Name = "btbBoxesIn";
             this.btbBoxesIn.Size = new System.Drawing.Size(286, 56);
@@ -3954,100 +3369,414 @@
             // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.txtConsole);
-            this.tabPage3.Controls.Add(this.btnGO_2_CG);
-            this.tabPage3.Controls.Add(this.txtCmdBody);
-            this.tabPage3.Controls.Add(this.cBoxAMPCcmd);
-            this.tabPage3.Controls.Add(this.btnSendCommand);
-            this.tabPage3.Controls.Add(this.txtCmdPrefix);
-            this.tabPage3.Controls.Add(this.button15);
-            this.tabPage3.Controls.Add(this.textBox8);
+            this.tabPage3.Controls.Add(this.groupBox3);
             this.tabPage3.Controls.Add(this.groupBox2);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1763, 989);
+            this.tabPage3.Size = new System.Drawing.Size(1667, 989);
             this.tabPage3.TabIndex = 5;
-            this.tabPage3.Text = "CG LOG";
+            this.tabPage3.Text = "Show COntrol";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // txtConsole
+            // groupBox3
             // 
-            this.txtConsole.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.txtConsole.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.txtConsole.ForeColor = System.Drawing.Color.Lime;
-            this.txtConsole.Location = new System.Drawing.Point(3, 530);
-            this.txtConsole.Name = "txtConsole";
-            this.txtConsole.Size = new System.Drawing.Size(1757, 456);
-            this.txtConsole.TabIndex = 75;
-            this.txtConsole.Text = "";
+            this.groupBox3.Controls.Add(this.button17);
+            this.groupBox3.Controls.Add(this.cBox_BidLayer);
+            this.groupBox3.Controls.Add(this.button15);
+            this.groupBox3.Controls.Add(this.txtBid);
+            this.groupBox3.Controls.Add(this.label22);
+            this.groupBox3.Controls.Add(this.txtQ1);
+            this.groupBox3.Controls.Add(this.label21);
+            this.groupBox3.Controls.Add(this.cBoxMidiNote);
+            this.groupBox3.Controls.Add(this.label15);
+            this.groupBox3.Controls.Add(this.cBoxMidiChannel);
+            this.groupBox3.Controls.Add(this.cBox_AnswersLayer);
+            this.groupBox3.Controls.Add(this.cBox_QuestionLayer);
+            this.groupBox3.Controls.Add(this.cBox_AnsCount);
+            this.groupBox3.Controls.Add(this.button16);
+            this.groupBox3.Controls.Add(this.groupBox6);
+            this.groupBox3.Controls.Add(this.checkBox3);
+            this.groupBox3.Controls.Add(this.label19);
+            this.groupBox3.Controls.Add(this.label20);
+            this.groupBox3.Controls.Add(this.btnQ4_show);
+            this.groupBox3.Controls.Add(this.txtQ);
+            this.groupBox3.Location = new System.Drawing.Point(8, 6);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(965, 383);
+            this.groupBox3.TabIndex = 39;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "4";
             // 
-            // btnGO_2_CG
+            // button17
             // 
-            this.btnGO_2_CG.Location = new System.Drawing.Point(1058, 394);
-            this.btnGO_2_CG.Name = "btnGO_2_CG";
-            this.btnGO_2_CG.Size = new System.Drawing.Size(139, 23);
-            this.btnGO_2_CG.TabIndex = 74;
-            this.btnGO_2_CG.Text = "GO 2 CG";
-            this.btnGO_2_CG.UseVisualStyleBackColor = true;
+            this.button17.BackColor = System.Drawing.Color.DarkKhaki;
+            this.button17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button17.ForeColor = System.Drawing.Color.White;
+            this.button17.Location = new System.Drawing.Point(414, 226);
+            this.button17.Name = "button17";
+            this.button17.Size = new System.Drawing.Size(128, 90);
+            this.button17.TabIndex = 61;
+            this.button17.Text = "UNDO";
+            this.button17.UseVisualStyleBackColor = false;
+            this.button17.Click += new System.EventHandler(this.button17_Click);
             // 
-            // txtCmdBody
+            // cBox_BidLayer
             // 
-            this.txtCmdBody.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCmdBody.Location = new System.Drawing.Point(261, 397);
-            this.txtCmdBody.Name = "txtCmdBody";
-            this.txtCmdBody.Size = new System.Drawing.Size(659, 20);
-            this.txtCmdBody.TabIndex = 73;
-            // 
-            // cBoxAMPCcmd
-            // 
-            this.cBoxAMPCcmd.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cBoxAMPCcmd.FormattingEnabled = true;
-            this.cBoxAMPCcmd.Items.AddRange(new object[] {
-            "---",
-            "ADD",
-            "ADD & PLAY",
-            "INVOKE",
-            "CLEAR"});
-            this.cBoxAMPCcmd.Location = new System.Drawing.Point(123, 397);
-            this.cBoxAMPCcmd.Name = "cBoxAMPCcmd";
-            this.cBoxAMPCcmd.Size = new System.Drawing.Size(133, 21);
-            this.cBoxAMPCcmd.TabIndex = 72;
-            // 
-            // btnSendCommand
-            // 
-            this.btnSendCommand.Location = new System.Drawing.Point(1058, 368);
-            this.btnSendCommand.Name = "btnSendCommand";
-            this.btnSendCommand.Size = new System.Drawing.Size(139, 20);
-            this.btnSendCommand.TabIndex = 71;
-            this.btnSendCommand.Text = "Send Command";
-            this.btnSendCommand.UseVisualStyleBackColor = true;
-            // 
-            // txtCmdPrefix
-            // 
-            this.txtCmdPrefix.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCmdPrefix.Location = new System.Drawing.Point(27, 397);
-            this.txtCmdPrefix.Name = "txtCmdPrefix";
-            this.txtCmdPrefix.Size = new System.Drawing.Size(90, 20);
-            this.txtCmdPrefix.TabIndex = 70;
+            this.cBox_BidLayer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cBox_BidLayer.FormattingEnabled = true;
+            this.cBox_BidLayer.Items.AddRange(new object[] {
+            "21",
+            "22",
+            "23",
+            "24",
+            "25"});
+            this.cBox_BidLayer.Location = new System.Drawing.Point(579, 229);
+            this.cBox_BidLayer.Name = "cBox_BidLayer";
+            this.cBox_BidLayer.Size = new System.Drawing.Size(70, 21);
+            this.cBox_BidLayer.TabIndex = 60;
             // 
             // button15
             // 
-            this.button15.Location = new System.Drawing.Point(1000, 33);
+            this.button15.Location = new System.Drawing.Point(271, 226);
             this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(183, 28);
-            this.button15.TabIndex = 41;
-            this.button15.Text = "button15";
+            this.button15.Size = new System.Drawing.Size(100, 90);
+            this.button15.TabIndex = 59;
+            this.button15.Text = "SHOW BID";
             this.button15.UseVisualStyleBackColor = true;
             this.button15.Click += new System.EventHandler(this.button15_Click);
             // 
-            // textBox8
+            // txtBid
             // 
-            this.textBox8.Location = new System.Drawing.Point(27, 33);
-            this.textBox8.Multiline = true;
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(861, 228);
-            this.textBox8.TabIndex = 40;
+            this.txtBid.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBid.Location = new System.Drawing.Point(98, 226);
+            this.txtBid.Name = "txtBid";
+            this.txtBid.Size = new System.Drawing.Size(125, 26);
+            this.txtBid.TabIndex = 58;
+            this.txtBid.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(18, 237);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(41, 13);
+            this.label22.TabIndex = 57;
+            this.label22.Text = "თანხა";
+            // 
+            // txtQ1
+            // 
+            this.txtQ1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtQ1.Location = new System.Drawing.Point(98, 50);
+            this.txtQ1.Name = "txtQ1";
+            this.txtQ1.Size = new System.Drawing.Size(506, 26);
+            this.txtQ1.TabIndex = 56;
+            this.txtQ1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(833, 27);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(51, 13);
+            this.label21.TabIndex = 55;
+            this.label21.Text = "midi Note";
+            // 
+            // cBoxMidiNote
+            // 
+            this.cBoxMidiNote.FormattingEnabled = true;
+            this.cBoxMidiNote.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16"});
+            this.cBoxMidiNote.Location = new System.Drawing.Point(896, 22);
+            this.cBoxMidiNote.Name = "cBoxMidiNote";
+            this.cBoxMidiNote.Size = new System.Drawing.Size(53, 21);
+            this.cBoxMidiNote.TabIndex = 54;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(697, 25);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(67, 13);
+            this.label15.TabIndex = 53;
+            this.label15.Text = "midi Channel";
+            // 
+            // cBoxMidiChannel
+            // 
+            this.cBoxMidiChannel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cBoxMidiChannel.FormattingEnabled = true;
+            this.cBoxMidiChannel.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16"});
+            this.cBoxMidiChannel.Location = new System.Drawing.Point(770, 20);
+            this.cBoxMidiChannel.Name = "cBoxMidiChannel";
+            this.cBoxMidiChannel.Size = new System.Drawing.Size(53, 21);
+            this.cBoxMidiChannel.TabIndex = 52;
+            // 
+            // cBox_AnswersLayer
+            // 
+            this.cBox_AnswersLayer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cBox_AnswersLayer.FormattingEnabled = true;
+            this.cBox_AnswersLayer.Items.AddRange(new object[] {
+            "16",
+            "17",
+            "18",
+            "19",
+            "20"});
+            this.cBox_AnswersLayer.Location = new System.Drawing.Point(880, 116);
+            this.cBox_AnswersLayer.Name = "cBox_AnswersLayer";
+            this.cBox_AnswersLayer.Size = new System.Drawing.Size(69, 21);
+            this.cBox_AnswersLayer.TabIndex = 51;
+            // 
+            // cBox_QuestionLayer
+            // 
+            this.cBox_QuestionLayer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cBox_QuestionLayer.FormattingEnabled = true;
+            this.cBox_QuestionLayer.Items.AddRange(new object[] {
+            "11",
+            "12",
+            "13",
+            "14",
+            "15"});
+            this.cBox_QuestionLayer.Location = new System.Drawing.Point(701, 121);
+            this.cBox_QuestionLayer.Name = "cBox_QuestionLayer";
+            this.cBox_QuestionLayer.Size = new System.Drawing.Size(69, 21);
+            this.cBox_QuestionLayer.TabIndex = 50;
+            // 
+            // cBox_AnsCount
+            // 
+            this.cBox_AnsCount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cBox_AnsCount.FormattingEnabled = true;
+            this.cBox_AnsCount.Items.AddRange(new object[] {
+            "2",
+            "3",
+            "4"});
+            this.cBox_AnsCount.Location = new System.Drawing.Point(21, 116);
+            this.cBox_AnsCount.Name = "cBox_AnsCount";
+            this.cBox_AnsCount.Size = new System.Drawing.Size(54, 21);
+            this.cBox_AnsCount.TabIndex = 49;
+            this.cBox_AnsCount.SelectedIndexChanged += new System.EventHandler(this.cBox_AnsCount_SelectedIndexChanged);
+            // 
+            // button16
+            // 
+            this.button16.Location = new System.Drawing.Point(700, 158);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(259, 158);
+            this.button16.TabIndex = 48;
+            this.button16.Text = "გასუფთავება";
+            this.button16.UseVisualStyleBackColor = true;
+            this.button16.Click += new System.EventHandler(this.button16_Click);
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.btn4_1_undo);
+            this.groupBox6.Controls.Add(this.btn4_1_correct);
+            this.groupBox6.Controls.Add(this.rBtn_4_4);
+            this.groupBox6.Controls.Add(this.rBtn_4_3);
+            this.groupBox6.Controls.Add(this.rBtn_4_2);
+            this.groupBox6.Controls.Add(this.rBtn_4_1);
+            this.groupBox6.Controls.Add(this.txtAnsw4_4);
+            this.groupBox6.Controls.Add(this.txtAnsw4_3);
+            this.groupBox6.Controls.Add(this.txtAnsw4_2);
+            this.groupBox6.Controls.Add(this.txtAnsw4_1);
+            this.groupBox6.Location = new System.Drawing.Point(98, 83);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(593, 129);
+            this.groupBox6.TabIndex = 47;
+            this.groupBox6.TabStop = false;
+            // 
+            // btn4_1_undo
+            // 
+            this.btn4_1_undo.BackColor = System.Drawing.Color.DarkKhaki;
+            this.btn4_1_undo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn4_1_undo.ForeColor = System.Drawing.Color.White;
+            this.btn4_1_undo.Location = new System.Drawing.Point(472, 17);
+            this.btn4_1_undo.Name = "btn4_1_undo";
+            this.btn4_1_undo.Size = new System.Drawing.Size(79, 89);
+            this.btn4_1_undo.TabIndex = 44;
+            this.btn4_1_undo.Text = "UNDO";
+            this.btn4_1_undo.UseVisualStyleBackColor = false;
+            this.btn4_1_undo.Click += new System.EventHandler(this.btn4_1_undo_Click);
+            // 
+            // btn4_1_correct
+            // 
+            this.btn4_1_correct.BackColor = System.Drawing.Color.DarkGreen;
+            this.btn4_1_correct.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn4_1_correct.ForeColor = System.Drawing.Color.White;
+            this.btn4_1_correct.Location = new System.Drawing.Point(316, 17);
+            this.btn4_1_correct.Name = "btn4_1_correct";
+            this.btn4_1_correct.Size = new System.Drawing.Size(128, 92);
+            this.btn4_1_correct.TabIndex = 40;
+            this.btn4_1_correct.Text = "Show Correct";
+            this.btn4_1_correct.UseVisualStyleBackColor = false;
+            this.btn4_1_correct.Click += new System.EventHandler(this.btn4_1_correct_Click);
+            // 
+            // rBtn_4_4
+            // 
+            this.rBtn_4_4.AutoSize = true;
+            this.rBtn_4_4.Enabled = false;
+            this.rBtn_4_4.Location = new System.Drawing.Point(259, 96);
+            this.rBtn_4_4.Name = "rBtn_4_4";
+            this.rBtn_4_4.Size = new System.Drawing.Size(14, 13);
+            this.rBtn_4_4.TabIndex = 34;
+            this.rBtn_4_4.TabStop = true;
+            this.rBtn_4_4.UseVisualStyleBackColor = true;
+            this.rBtn_4_4.Click += new System.EventHandler(this.rBtn_4_4_Click);
+            // 
+            // rBtn_4_3
+            // 
+            this.rBtn_4_3.AutoSize = true;
+            this.rBtn_4_3.Enabled = false;
+            this.rBtn_4_3.Location = new System.Drawing.Point(259, 71);
+            this.rBtn_4_3.Name = "rBtn_4_3";
+            this.rBtn_4_3.Size = new System.Drawing.Size(14, 13);
+            this.rBtn_4_3.TabIndex = 33;
+            this.rBtn_4_3.TabStop = true;
+            this.rBtn_4_3.UseVisualStyleBackColor = true;
+            this.rBtn_4_3.Click += new System.EventHandler(this.rBtn_4_3_Click);
+            // 
+            // rBtn_4_2
+            // 
+            this.rBtn_4_2.AutoSize = true;
+            this.rBtn_4_2.Enabled = false;
+            this.rBtn_4_2.Location = new System.Drawing.Point(259, 45);
+            this.rBtn_4_2.Name = "rBtn_4_2";
+            this.rBtn_4_2.Size = new System.Drawing.Size(14, 13);
+            this.rBtn_4_2.TabIndex = 32;
+            this.rBtn_4_2.TabStop = true;
+            this.rBtn_4_2.UseVisualStyleBackColor = true;
+            this.rBtn_4_2.Click += new System.EventHandler(this.rBtn_4_2_Click);
+            // 
+            // rBtn_4_1
+            // 
+            this.rBtn_4_1.AutoSize = true;
+            this.rBtn_4_1.Enabled = false;
+            this.rBtn_4_1.Location = new System.Drawing.Point(259, 20);
+            this.rBtn_4_1.Name = "rBtn_4_1";
+            this.rBtn_4_1.Size = new System.Drawing.Size(14, 13);
+            this.rBtn_4_1.TabIndex = 31;
+            this.rBtn_4_1.TabStop = true;
+            this.rBtn_4_1.UseVisualStyleBackColor = true;
+            this.rBtn_4_1.Click += new System.EventHandler(this.rBtn_4_1_Click);
+            // 
+            // txtAnsw4_4
+            // 
+            this.txtAnsw4_4.Enabled = false;
+            this.txtAnsw4_4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAnsw4_4.Location = new System.Drawing.Point(6, 93);
+            this.txtAnsw4_4.Name = "txtAnsw4_4";
+            this.txtAnsw4_4.Size = new System.Drawing.Size(235, 26);
+            this.txtAnsw4_4.TabIndex = 30;
+            this.txtAnsw4_4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txtAnsw4_3
+            // 
+            this.txtAnsw4_3.Enabled = false;
+            this.txtAnsw4_3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAnsw4_3.Location = new System.Drawing.Point(6, 68);
+            this.txtAnsw4_3.Name = "txtAnsw4_3";
+            this.txtAnsw4_3.Size = new System.Drawing.Size(235, 26);
+            this.txtAnsw4_3.TabIndex = 29;
+            this.txtAnsw4_3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txtAnsw4_2
+            // 
+            this.txtAnsw4_2.Enabled = false;
+            this.txtAnsw4_2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAnsw4_2.Location = new System.Drawing.Point(6, 42);
+            this.txtAnsw4_2.Name = "txtAnsw4_2";
+            this.txtAnsw4_2.Size = new System.Drawing.Size(235, 26);
+            this.txtAnsw4_2.TabIndex = 28;
+            this.txtAnsw4_2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txtAnsw4_1
+            // 
+            this.txtAnsw4_1.AcceptsReturn = true;
+            this.txtAnsw4_1.Enabled = false;
+            this.txtAnsw4_1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAnsw4_1.Location = new System.Drawing.Point(6, 17);
+            this.txtAnsw4_1.Name = "txtAnsw4_1";
+            this.txtAnsw4_1.Size = new System.Drawing.Size(235, 26);
+            this.txtAnsw4_1.TabIndex = 27;
+            this.txtAnsw4_1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Checked = true;
+            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox3.Location = new System.Drawing.Point(706, 57);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(129, 17);
+            this.checkBox3.TabIndex = 38;
+            this.checkBox3.Text = "განათების მართვა";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(18, 91);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(56, 13);
+            this.label19.TabIndex = 25;
+            this.label19.Text = "პასუხები";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(18, 28);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(57, 13);
+            this.label20.TabIndex = 24;
+            this.label20.Text = "შეკითხვა";
+            // 
+            // btnQ4_show
+            // 
+            this.btnQ4_show.Location = new System.Drawing.Point(610, 19);
+            this.btnQ4_show.Name = "btnQ4_show";
+            this.btnQ4_show.Size = new System.Drawing.Size(81, 54);
+            this.btnQ4_show.TabIndex = 23;
+            this.btnQ4_show.Text = "SHOW QUESTION";
+            this.btnQ4_show.UseVisualStyleBackColor = true;
+            this.btnQ4_show.Click += new System.EventHandler(this.btnQ4_show_Click);
+            // 
+            // txtQ
+            // 
+            this.txtQ.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtQ.Location = new System.Drawing.Point(98, 20);
+            this.txtQ.Name = "txtQ";
+            this.txtQ.Size = new System.Drawing.Size(506, 26);
+            this.txtQ.TabIndex = 22;
+            this.txtQ.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // groupBox2
             // 
@@ -4175,7 +3904,7 @@
             this.ShowCntrlNew.Location = new System.Drawing.Point(4, 22);
             this.ShowCntrlNew.Name = "ShowCntrlNew";
             this.ShowCntrlNew.Padding = new System.Windows.Forms.Padding(3);
-            this.ShowCntrlNew.Size = new System.Drawing.Size(1763, 989);
+            this.ShowCntrlNew.Size = new System.Drawing.Size(1667, 989);
             this.ShowCntrlNew.TabIndex = 6;
             this.ShowCntrlNew.Text = "SHOW CONTROL NEW";
             this.ShowCntrlNew.UseVisualStyleBackColor = true;
@@ -4701,50 +4430,57 @@
             // 
             // tabPage4
             // 
-            this.tabPage4.Controls.Add(this.trackBar1);
-            this.tabPage4.Controls.Add(this.hScrollBar1);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(1763, 989);
+            this.tabPage4.Size = new System.Drawing.Size(1667, 989);
             this.tabPage4.TabIndex = 7;
             this.tabPage4.Text = "tabPage4";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // trackBar1
+            // txtAllTitleName
             // 
-            this.trackBar1.Location = new System.Drawing.Point(450, 241);
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(815, 45);
-            this.trackBar1.TabIndex = 1;
+            this.txtAllTitleName.Location = new System.Drawing.Point(106, 481);
+            this.txtAllTitleName.Name = "txtAllTitleName";
+            this.txtAllTitleName.Size = new System.Drawing.Size(156, 20);
+            this.txtAllTitleName.TabIndex = 89;
             // 
-            // hScrollBar1
+            // pathsBindingSource
             // 
-            this.hScrollBar1.Location = new System.Drawing.Point(450, 422);
-            this.hScrollBar1.Name = "hScrollBar1";
-            this.hScrollBar1.Size = new System.Drawing.Size(527, 27);
-            this.hScrollBar1.TabIndex = 0;
+            this.pathsBindingSource.DataSource = typeof(CasparCGConfigurator.Paths);
             // 
-            // serialPort1
+            // flashBindingSource
             // 
-            this.serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.serialPort1_DataReceived);
+            this.flashBindingSource.DataSource = typeof(CasparCGConfigurator.Flash);
+            // 
+            // configurationBindingSource
+            // 
+            this.configurationBindingSource.DataSource = typeof(CasparCGConfigurator.configuration);
             // 
             // channelBindingSource
             // 
             this.channelBindingSource.DataSource = typeof(CasparCGConfigurator.Channel);
             // 
+            // btn_showOutsiders
+            // 
+            this.btn_showOutsiders.Location = new System.Drawing.Point(34, 7);
+            this.btn_showOutsiders.Name = "btn_showOutsiders";
+            this.btn_showOutsiders.Size = new System.Drawing.Size(199, 60);
+            this.btn_showOutsiders.TabIndex = 74;
+            this.btn_showOutsiders.Text = "SHOW OUTSIDERS";
+            this.btn_showOutsiders.UseVisualStyleBackColor = true;
+            this.btn_showOutsiders.Click += new System.EventHandler(this.btn_showOutsiders_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1771, 1039);
+            this.ClientSize = new System.Drawing.Size(1675, 1039);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
-            this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
-            this.Text = "დიდი, დიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიიი" +
-    "იიიიიიიიიიდი სცენა by Nicholas Ichkitidze";
+            this.Text = "დიიიიდი სცენა";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -4753,25 +4489,13 @@
             this.tabControl1.ResumeLayout(false);
             this.PathsTabPage.ResumeLayout(false);
             this.PathsTabPage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pathsBindingSource)).EndInit();
             this.ChannelsTabPage.ResumeLayout(false);
             this.ChannelsTabPage.PerformLayout();
             this.AdvancedTabPage.ResumeLayout(false);
             this.AdvancedTabPage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.flashBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.configurationBindingSource)).EndInit();
             this.tabPage1.ResumeLayout(false);
-            this.splitContainerMidiSerial.Panel1.ResumeLayout(false);
-            this.splitContainerMidiSerial.Panel1.PerformLayout();
-            this.splitContainerMidiSerial.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerMidiSerial)).EndInit();
-            this.splitContainerMidiSerial.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudMidiChannel)).EndInit();
-            this.gBoxSerai.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.pnl_EliminateTasks.ResumeLayout(false);
             this.pnl_EliminateTasks.PerformLayout();
@@ -4802,6 +4526,8 @@
             this.grBoxJiuri1.PerformLayout();
             this.grBoxJiuri0.ResumeLayout(false);
             this.grBoxJiuri0.PerformLayout();
+            this.tabPage6.ResumeLayout(false);
+            this.tabPage6.PerformLayout();
             this.tabPage7.ResumeLayout(false);
             this.tabPage7.PerformLayout();
             this.groupBox8.ResumeLayout(false);
@@ -4811,7 +4537,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridPhoneCalls)).EndInit();
             this.groupBox9.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
-            this.tabPage3.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
@@ -4822,9 +4551,9 @@
             this.groupBox5.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            this.tabPage4.ResumeLayout(false);
-            this.tabPage4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pathsBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flashBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.configurationBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.channelBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -4881,7 +4610,34 @@
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.CheckBox CheckBox_MidiOutEnable;
+        private System.Windows.Forms.CheckBox CheckBox_MidiInEnable;
+        private System.Windows.Forms.Button button12;
+        private System.Windows.Forms.CheckBox cbDebug;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.NumericUpDown nudMidiChannel;
+        private System.Windows.Forms.Button btExit;
+        private System.Windows.Forms.Button btStartVLC;
+        public System.Windows.Forms.RichTextBox rtbLogs;
         private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Button btn4_1_undo;
+        private System.Windows.Forms.Button btn4_1_correct;
+        private System.Windows.Forms.RadioButton rBtn_4_4;
+        private System.Windows.Forms.RadioButton rBtn_4_3;
+        private System.Windows.Forms.RadioButton rBtn_4_2;
+        private System.Windows.Forms.RadioButton rBtn_4_1;
+        private System.Windows.Forms.TextBox txtAnsw4_4;
+        private System.Windows.Forms.TextBox txtAnsw4_3;
+        private System.Windows.Forms.TextBox txtAnsw4_2;
+        private System.Windows.Forms.TextBox txtAnsw4_1;
+        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Button btnQ4_show;
+        private System.Windows.Forms.TextBox txtQ;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label25;
         internal System.Windows.Forms.NumericUpDown numericUpDown1;
@@ -4891,6 +4647,20 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.ComboBox cBox_out;
         private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Button button16;
+        private System.Windows.Forms.ComboBox cBox_AnsCount;
+        private System.Windows.Forms.ComboBox cBox_AnswersLayer;
+        private System.Windows.Forms.ComboBox cBox_QuestionLayer;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.ComboBox cBoxMidiNote;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.ComboBox cBoxMidiChannel;
+        private System.Windows.Forms.TextBox txtQ1;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Button button15;
+        private System.Windows.Forms.TextBox txtBid;
+        private System.Windows.Forms.ComboBox cBox_BidLayer;
+        private System.Windows.Forms.Button button17;
         private System.Windows.Forms.TabPage ShowCntrlNew;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox5;
@@ -4943,12 +4713,80 @@
         private System.Windows.Forms.Button btnBonus_3;
         private System.Windows.Forms.Button btnBonus_2;
         private System.Windows.Forms.Button btnBonus_1;
+        private System.Windows.Forms.Button btnBonus_0;
         private System.Windows.Forms.Button btnBonus_9;
         private System.Windows.Forms.Button btnBonus_8;
         private System.Windows.Forms.GroupBox groupBox10;
         private System.Windows.Forms.DataGridView dataGridPhoneCalls;
         private System.Windows.Forms.Button btbBoxesIn;
         private System.Windows.Forms.TabControl tabControl2;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.Button btnGO_2_CG;
+        private System.Windows.Forms.TextBox txtCmdBody;
+        private System.Windows.Forms.ComboBox cBoxAMPCcmd;
+        private System.Windows.Forms.Button btnSendCommand;
+        private System.Windows.Forms.TextBox txtCmdPrefix;
+        private System.Windows.Forms.GroupBox grBoxJiuri0;
+        private System.Windows.Forms.Button btt_J_0_1;
+        private System.Windows.Forms.Button btt_J_0_2;
+        private System.Windows.Forms.Button btt_J_0_3;
+        private System.Windows.Forms.Button btt_J_0_4;
+        private System.Windows.Forms.Button btt_J_0_5;
+        private System.Windows.Forms.Button btt_J_0_10;
+        private System.Windows.Forms.Button btt_J_0_7;
+        private System.Windows.Forms.Button btt_J_0_8;
+        private System.Windows.Forms.Button btt_J_0_6;
+        private System.Windows.Forms.Button btt_J_0_9;
+        private System.Windows.Forms.TextBox txtJudgeValue0;
+        private System.Windows.Forms.GroupBox grBoxJiuri1;
+        private System.Windows.Forms.Button btt_J_1_1;
+        private System.Windows.Forms.Button btt_J_1_2;
+        private System.Windows.Forms.Button btt_J_1_3;
+        private System.Windows.Forms.Button btt_J_1_4;
+        private System.Windows.Forms.Button btt_J_1_5;
+        private System.Windows.Forms.Button btt_J_1_10;
+        private System.Windows.Forms.Button btt_J_1_7;
+        private System.Windows.Forms.Button btt_J_1_8;
+        private System.Windows.Forms.Button btt_J_1_6;
+        private System.Windows.Forms.Button btt_J_1_9;
+        private System.Windows.Forms.TextBox txtJudgeValue1;
+        private System.Windows.Forms.GroupBox grBoxJiuri4;
+        private System.Windows.Forms.Button btt_J_4_1;
+        private System.Windows.Forms.Button btt_J_4_2;
+        private System.Windows.Forms.Button btt_J_4_3;
+        private System.Windows.Forms.Button btt_J_4_4;
+        private System.Windows.Forms.Button btt_J_4_5;
+        private System.Windows.Forms.Button btt_J_4_10;
+        private System.Windows.Forms.Button btt_J_4_7;
+        private System.Windows.Forms.Button btt_J_4_8;
+        private System.Windows.Forms.Button btt_J_4_6;
+        private System.Windows.Forms.Button btt_J_4_9;
+        private System.Windows.Forms.TextBox txtJudgeValue4;
+        private System.Windows.Forms.GroupBox grBoxJiuri3;
+        private System.Windows.Forms.Button btt_J_3_1;
+        private System.Windows.Forms.Button btt_J_3_2;
+        private System.Windows.Forms.Button btt_J_3_3;
+        private System.Windows.Forms.Button btt_J_3_4;
+        private System.Windows.Forms.Button btt_J_3_5;
+        private System.Windows.Forms.Button btt_J_3_10;
+        private System.Windows.Forms.Button btt_J_3_7;
+        private System.Windows.Forms.Button btt_J_3_8;
+        private System.Windows.Forms.Button btt_J_3_6;
+        private System.Windows.Forms.Button btt_J_3_9;
+        private System.Windows.Forms.TextBox txtJudgeValue3;
+        private System.Windows.Forms.GroupBox grBoxJiuri2;
+        private System.Windows.Forms.Button btt_J_2_1;
+        private System.Windows.Forms.Button btt_J_2_2;
+        private System.Windows.Forms.Button btt_J_2_3;
+        private System.Windows.Forms.Button btt_J_2_4;
+        private System.Windows.Forms.Button btt_J_2_5;
+        private System.Windows.Forms.Button btt_J_2_10;
+        private System.Windows.Forms.Button btt_J_2_7;
+        private System.Windows.Forms.Button btt_J_2_8;
+        private System.Windows.Forms.Button btt_J_2_6;
+        private System.Windows.Forms.Button btt_J_2_9;
+        private System.Windows.Forms.TextBox txtJudgeValue2;
         private System.Windows.Forms.GroupBox groupBox15;
         private System.Windows.Forms.GroupBox groupBox16;
         private System.Windows.Forms.TextBox txtCasparPort;
@@ -4971,6 +4809,7 @@
         private System.Windows.Forms.Label lblCurrContestant;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Label lblCurrCont;
         private System.Windows.Forms.Panel pnl_EliminateTasks;
         private System.Windows.Forms.Button btnLoadEliminateConts;
         private System.Windows.Forms.Button btnLoadEliminateScene;
@@ -5001,9 +4840,13 @@
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.Label textBoxMsg;
+        private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.Button btnUpdateFromJudges;
+        private System.Windows.Forms.Button btnVoteStart;
         public System.Windows.Forms.GroupBox grp1;
         private System.Windows.Forms.Button btnAddWinnerToList;
         private System.Windows.Forms.Button button29;
+        private System.Windows.Forms.RichTextBox txtConsole;
         private System.Windows.Forms.Button btnResetCalls;
         public System.Windows.Forms.DataGridView ContestantDataGrid;
         private System.Windows.Forms.Button button30;
@@ -5020,10 +4863,22 @@
         private System.Windows.Forms.Button btnCallsImport;
         private System.Windows.Forms.Button btn_title_InOut;
         private System.Windows.Forms.Button btn_Looptitle_InOut;
+        private System.Windows.Forms.Button btnVoteStandBy;
+        private System.Windows.Forms.CheckBox cBox_JudgesScoreShowFullFrame;
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.ComboBox cBox_CGJudgesScoreChannelLayer;
         private System.Windows.Forms.ComboBox cBox_CGJudgesScoreChannel;
         private System.Windows.Forms.CheckBox cBox_AutoTitleOnOFF;
+        private System.Windows.Forms.CheckBox cBox_JudgesScoreShowNoneFullFrame;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.TextBox txt_IPJiuri3;
+        private System.Windows.Forms.TextBox txt_IPJiuri2;
+        private System.Windows.Forms.TextBox txt_IPJiuri1;
+        private System.Windows.Forms.TextBox txt_IPJiuri0;
+        private System.Windows.Forms.Button button14;
+        private System.Windows.Forms.Button button34;
+        private System.Windows.Forms.Button button32;
+        private System.Windows.Forms.Button button31;
         private System.Windows.Forms.Button btn_loadRefreshJudges;
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.ComboBox cBox_CGEliminateChannelLayer;
@@ -5033,153 +4888,6 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.TextBox txtAllTitleName;
         private System.Windows.Forms.Button btn_showOutsiders;
-        private System.Windows.Forms.CheckBox cBox_AutoCallsProcentShow;
-        private System.Windows.Forms.CheckBox cBox_AutoBonusUpdate;
-        public System.Windows.Forms.Button btnBonus_0;
-        private System.Windows.Forms.Button btnSaveState;
-        private System.Windows.Forms.CheckBox cbox_AutoSaveSTATE;
-        private System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.Button button15;
-        private System.Windows.Forms.RichTextBox txtConsole;
-        private System.Windows.Forms.Button btnGO_2_CG;
-        private System.Windows.Forms.TextBox txtCmdBody;
-        private System.Windows.Forms.ComboBox cBoxAMPCcmd;
-        private System.Windows.Forms.Button btnSendCommand;
-        private System.Windows.Forms.TextBox txtCmdPrefix;
-        private System.Windows.Forms.TextBox txtPauseValue;
-        private System.Windows.Forms.ComboBox txtContestantCount1;
-        private System.Windows.Forms.ComboBox cboxJudjesClientsIPs;
-        private System.Windows.Forms.GroupBox groupBox8;
-        private System.Windows.Forms.ComboBox cboxDudgesIpList;
-        private System.Windows.Forms.Button button14;
-        private System.Windows.Forms.Button btnUseVeto;
-        private System.Windows.Forms.Button btnConnectBackUpCG;
-        private System.Windows.Forms.Button button17;
-        private System.Windows.Forms.TextBox txtBackUpCasparPort;
-        private System.Windows.Forms.TextBox txtBackUpCasparServer;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Label lblBackUpStatus;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.CheckBox btnAutoHiLite;
-        private System.Windows.Forms.Button btnLoadPreviewsState;
-        private System.Windows.Forms.Button btnSendJudgesLogo;
-        private System.Windows.Forms.Button btnSendJudgesSponsor1Logo;
-        private System.Windows.Forms.SplitContainer splitContainerMidiSerial;
-        private System.Windows.Forms.GroupBox gBoxSerai;
-        private System.Windows.Forms.Button button16;
-        private System.Windows.Forms.GroupBox groupBox3;
-        public System.Windows.Forms.ComboBox cmbPortName;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.Label label41;
-        private System.Windows.Forms.Label label42;
-        private System.Windows.Forms.Label label43;
-        private System.Windows.Forms.Label label44;
-        public System.Windows.Forms.Button btnConnectOrDisConnect;
-        public System.IO.Ports.SerialPort serialPort1;
-        public System.Windows.Forms.GroupBox groupBox6;
-        public System.Windows.Forms.ComboBox cmbStopBits;
-        public System.Windows.Forms.ComboBox cmbDataBits;
-        public System.Windows.Forms.ComboBox cmbParity;
-        public System.Windows.Forms.ComboBox cmbBoudRate;
-        public System.Windows.Forms.RadioButton rbText;
-        public System.Windows.Forms.RadioButton rbHex;
-        private System.Windows.Forms.RichTextBox rtxtDataArea;
-        private System.Windows.Forms.Button button12;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Button btExit;
-        private System.Windows.Forms.Button btStartVLC;
-        public System.Windows.Forms.RichTextBox rtbLogs;
-        private System.Windows.Forms.CheckBox CheckBox_MidiInEnable;
-        public System.Windows.Forms.CheckBox cbDebug;
-        public System.Windows.Forms.NumericUpDown nudMidiChannel;
-        private System.Windows.Forms.Button btnInitMIDIOutDev;
-        private System.Windows.Forms.Button btnInitMIDIinDev;
-        public System.Windows.Forms.ComboBox cboBMidiOutDevs;
-        public System.Windows.Forms.Button btnSetWorkingMidiOutDev;
-        public System.Windows.Forms.Button btnTestWorkingMidiOutDev;
-        private System.Windows.Forms.TabPage tabPage5;
-        private System.Windows.Forms.Panel panel8;
-        private System.Windows.Forms.CheckBox cBox_JudgesScoreShowNoneFullFrame;
-        private System.Windows.Forms.CheckBox cBox_JudgesScoreShowFullFrame;
-        private System.Windows.Forms.Button btnVoteStandBy;
-        private System.Windows.Forms.Button btnUpdateFromJudges;
-        private System.Windows.Forms.Button btnVoteStart;
-        private System.Windows.Forms.GroupBox grBoxJiuri4;
-        private System.Windows.Forms.Button btnRestartDudje5;
-        private System.Windows.Forms.Button btnKillDudje5;
-        private System.Windows.Forms.Button btt_J_4_1;
-        private System.Windows.Forms.Button btt_J_4_2;
-        private System.Windows.Forms.Button btt_J_4_3;
-        private System.Windows.Forms.Button btt_J_4_4;
-        private System.Windows.Forms.Button btt_J_4_5;
-        private System.Windows.Forms.Button btt_J_4_10;
-        private System.Windows.Forms.Button btt_J_4_7;
-        private System.Windows.Forms.Button btt_J_4_8;
-        private System.Windows.Forms.Button btt_J_4_6;
-        private System.Windows.Forms.Button btt_J_4_9;
-        private System.Windows.Forms.TextBox txtJudgeValue4;
-        private System.Windows.Forms.GroupBox grBoxJiuri3;
-        private System.Windows.Forms.Button btnRestartDudje4;
-        private System.Windows.Forms.Button btnKillDudje4;
-        private System.Windows.Forms.Button btt_J_3_1;
-        private System.Windows.Forms.Button btt_J_3_2;
-        private System.Windows.Forms.Button btt_J_3_3;
-        private System.Windows.Forms.Button btt_J_3_4;
-        private System.Windows.Forms.Button btt_J_3_5;
-        private System.Windows.Forms.Button btt_J_3_10;
-        private System.Windows.Forms.Button btt_J_3_7;
-        private System.Windows.Forms.Button btt_J_3_8;
-        private System.Windows.Forms.Button btt_J_3_6;
-        private System.Windows.Forms.Button btt_J_3_9;
-        private System.Windows.Forms.TextBox txtJudgeValue3;
-        private System.Windows.Forms.GroupBox grBoxJiuri2;
-        private System.Windows.Forms.Button btnRestartDudje3;
-        private System.Windows.Forms.Button btnKillDudje3;
-        private System.Windows.Forms.Button btt_J_2_1;
-        private System.Windows.Forms.Button btt_J_2_2;
-        private System.Windows.Forms.Button btt_J_2_3;
-        private System.Windows.Forms.Button btt_J_2_4;
-        private System.Windows.Forms.Button btt_J_2_5;
-        private System.Windows.Forms.Button btt_J_2_10;
-        private System.Windows.Forms.Button btt_J_2_7;
-        private System.Windows.Forms.Button btt_J_2_8;
-        private System.Windows.Forms.Button btt_J_2_6;
-        private System.Windows.Forms.Button btt_J_2_9;
-        private System.Windows.Forms.TextBox txtJudgeValue2;
-        private System.Windows.Forms.GroupBox grBoxJiuri1;
-        private System.Windows.Forms.Button btnRestartDudje2;
-        private System.Windows.Forms.Button btnKillDudje2;
-        private System.Windows.Forms.Button btt_J_1_1;
-        private System.Windows.Forms.Button btt_J_1_2;
-        private System.Windows.Forms.Button btt_J_1_3;
-        private System.Windows.Forms.Button btt_J_1_4;
-        private System.Windows.Forms.Button btt_J_1_5;
-        private System.Windows.Forms.Button btt_J_1_10;
-        private System.Windows.Forms.Button btt_J_1_7;
-        private System.Windows.Forms.Button btt_J_1_8;
-        private System.Windows.Forms.Button btt_J_1_6;
-        private System.Windows.Forms.Button btt_J_1_9;
-        private System.Windows.Forms.TextBox txtJudgeValue1;
-        private System.Windows.Forms.GroupBox grBoxJiuri0;
-        private System.Windows.Forms.Button btnRestartDudje1;
-        private System.Windows.Forms.Button btnKillDudje1;
-        private System.Windows.Forms.Button btt_J_0_1;
-        private System.Windows.Forms.Button btt_J_0_2;
-        private System.Windows.Forms.Button btt_J_0_3;
-        private System.Windows.Forms.Button btt_J_0_4;
-        private System.Windows.Forms.Button btt_J_0_5;
-        private System.Windows.Forms.Button btt_J_0_10;
-        private System.Windows.Forms.Button btt_J_0_7;
-        private System.Windows.Forms.Button btt_J_0_8;
-        private System.Windows.Forms.Button btt_J_0_6;
-        private System.Windows.Forms.Button btt_J_0_9;
-        private System.Windows.Forms.TextBox txtJudgeValue0;
-        public System.Windows.Forms.CheckBox CheckBox_MidiOutEnable;
-        private System.Windows.Forms.TextBox txtDudgeName;
-        private System.Windows.Forms.TrackBar trackBar1;
-        private System.Windows.Forms.HScrollBar hScrollBar1;
     }
 }
 

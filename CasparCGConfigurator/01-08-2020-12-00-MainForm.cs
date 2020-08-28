@@ -1,19 +1,22 @@
-﻿using Sanford.Multimedia.Midi;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Sockets;
 using System.Text;
-using System.Threading;
 using System.Windows.Forms;
+using System.IO;
+using System.Xml.Serialization;
 using System.Xml;
 using System.Xml.Linq;
-using System.Xml.Serialization;
+
+using Sanford.Multimedia;
+using Sanford.Multimedia.Midi;
+using System.Threading;
+
+using System.Net;
+using System.Net.Sockets;
 
 namespace CasparCGConfigurator
 {
@@ -31,12 +34,11 @@ namespace CasparCGConfigurator
         public OutputDevice OutDevice = null;
         public InputDevice inDevice = null;
         private SynchronizationContext context;
-         
 
-        //string currentLayer = "20";
-        //string currentChannel = "1";
+        string currentLayer = "20";
+        string currentChannel = "1";
 
-        //UInt16 nominalPosDelta = 80;
+        UInt16 nominalPosDelta = 80;
 
         string CGPrefixScoreBoard = "";
         string ChannelAndLayerOfScoreBoard = "";
@@ -58,16 +60,14 @@ namespace CasparCGConfigurator
         string ChannelAndLayerOfJudgesScoresBoardFullFrame = "";
 
 
-        const int MAX_CLIENTS = 48;
 
         public AsyncCallback pfnWorkerCallBack;
         public Socket m_mainSocket;
-        public Socket[] m_workerSocket = new Socket[MAX_CLIENTS];
+        public Socket[] m_workerSocket = new Socket[10];
         public int m_clientCount = 0;
 
-
+        const int MAX_CLIENTS = 24;
         UInt16 JudgeTurn = 0;
-        UInt32 totalPhoneCalls = 0;
 
 
 
@@ -81,7 +81,6 @@ namespace CasparCGConfigurator
             public int Score { get; set; }
             public string Phone { get; set; }
             public int PhoneCalls { get; set; }
-            public double PhoneCallsPercent { get; set; }
             /*
              public Contestant(string _ItemID, string _ID, int _POS, string _Gvari, int _Score)
              {
@@ -111,7 +110,7 @@ namespace CasparCGConfigurator
         }
 
         List<Contestant> ListContestant = new List<Contestant>();
-        //List<Contestant> ListContestantInStart = new List<Contestant>();
+        List<Contestant> ListContestantInStart = new List<Contestant>();
         BindingSource ContestantSource = new BindingSource();
 
         List<PhoneAndPhoneCalls> ListPhoneCalls = new List<PhoneAndPhoneCalls>();
@@ -122,17 +121,15 @@ namespace CasparCGConfigurator
         List<Voters> ListVoterJudges = new List<Voters>();
 
 
-        //string Q_4_CORRECT_Ans = "";
-        //string Q_3_CORRECT_Ans = "";
-        //string Q_2_CORRECT_Ans = "";
+        string Q_4_CORRECT_Ans = "";
+        string Q_3_CORRECT_Ans = "";
+        string Q_2_CORRECT_Ans = "";
 
         //string ConfigFile = "C:\\CasparCG\\CasparCG Server\\server\\casparcg.config";
         string ConfigFile = "C:\\CasparCG\\CasparCG Server 2.1.0\\CasparCG Server\\server\\casparcg.config";
 
 
         System.Net.Sockets.TcpClient casparClient = new System.Net.Sockets.TcpClient();
-        System.Net.Sockets.TcpClient casparBackUpClient = new System.Net.Sockets.TcpClient();
-        bool UseBackUpCG = false;
 
 
 
@@ -146,7 +143,7 @@ namespace CasparCGConfigurator
 
 
 
-        public Boolean TellToCaspar(String CGCmd, UInt16 MidiNote = 0)
+        public Boolean TellToCaspar(String CGCmd)
         {
             Boolean tmpBool = false;
 
@@ -160,13 +157,6 @@ namespace CasparCGConfigurator
 
                 var reader = new StreamReader(casparClient.GetStream());
                 var writer = new StreamWriter(casparClient.GetStream());
-
-                
-                if ((CheckBox_MidiOutEnable.Checked) && (MidiNote > 0))
-                { 
-                    Midi.outDevice_Send_Midi(9, MidiNote, 40);
-                    txtConsole.Text = txtConsole.Text.Insert(0, "Midi Note " + MidiNote + " გაგზავნილია" + Environment.NewLine);
-                }
 
                 writer.WriteLine(CGCmd);
                 writer.Flush();
@@ -198,69 +188,7 @@ namespace CasparCGConfigurator
             }
             catch (Exception)
             {
-                txtConsole.Text = txtConsole.Text.Insert(0, "სერვერი კავშირის პრობლემა ან სხვა სახის პრობლემა. " + Environment.NewLine);
-                //                logConsole.Text += "სერვერი კავშირის პრობლემა ან სხვა სახის პრობლემა. " + Environment.NewLine + logConsole.Text + Environment.NewLine;
-                tmpBool = false;
-
-            }
-
-            txtConsole.ScrollToCaret();
-
-            if (UseBackUpCG)
-                TellToBackUpCaspar(CGCmd);
-
-
-            return tmpBool;
-        }
-
-
-
-        public Boolean TellToBackUpCaspar(String CGCmd)
-        {
-            Boolean tmpBool = false;
-
-            try
-            {
-
-                //logConsole.Text += CGCmd + Environment.NewLine + logConsole.Text + Environment.NewLine;
-                txtConsole.Text = txtConsole.Text.Insert(0, CGCmd + Environment.NewLine);
-
-                //txtConsole.Text += CGCmd + Environment.NewLine;
-
-                var reader = new StreamReader(casparBackUpClient.GetStream());
-                var writer = new StreamWriter(casparBackUpClient.GetStream());
-
-                writer.WriteLine(CGCmd);
-                writer.Flush();
-
-                var reply = reader.ReadLine();
-
-                //txtConsole.Text += reply + Environment.NewLine;
-                //logConsole.Text = reply + logConsole.Text + Environment.NewLine;
-                txtConsole.Text = txtConsole.Text.Insert(0, reply + Environment.NewLine);
-
-                if (reply.Contains("201"))
-                {
-                    reply = reader.ReadLine();
-                    //txtConsole.Text = reply + Environment.NewLine;
-                    //logConsole.Text = reply + Environment.NewLine + logConsole.Text + Environment.NewLine;
-                    txtConsole.Text = txtConsole.Text.Insert(0, "BackUpCG: " + reply + Environment.NewLine);
-                    tmpBool = true;
-                }
-                else if (reply.Contains("200"))
-                {
-                    while (reply.Length > 0)
-                    {
-                        reply = reader.ReadLine();
-                        //logConsole.Text = reply + Environment.NewLine + logConsole.Text + Environment.NewLine;
-                        txtConsole.Text = txtConsole.Text.Insert(0, "BackUpCG: " + reply + Environment.NewLine);
-                        tmpBool = true;
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                txtConsole.Text = txtConsole.Text = txtConsole.Text.Insert(0, "BackUp სერვერი კავშირის პრობლემა ან სხვა სახის პრობლემა. " + Environment.NewLine);
+                txtConsole.Text = txtConsole.Text = txtConsole.Text.Insert(0, "სერვერი კავშირის პრობლემა ან სხვა სახის პრობლემა. " + Environment.NewLine);
                 //                logConsole.Text += "სერვერი კავშირის პრობლემა ან სხვა სახის პრობლემა. " + Environment.NewLine + logConsole.Text + Environment.NewLine;
                 tmpBool = false;
 
@@ -269,11 +197,9 @@ namespace CasparCGConfigurator
             txtConsole.ScrollToCaret();
             return tmpBool;
         }
-
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            UseBackUpCG = false;
 
             if (System.IO.File.Exists(ConfigFile))
                 //if (System.IO.File.Exists("C:\\CasparCG\\CasparCG Server 2.1.0\\CasparCG Server\\server\\casparcg.config"))
@@ -289,8 +215,10 @@ namespace CasparCGConfigurator
             this.SetToolTips();
 
 
-//            grp1.Enabled = false;
+            grp1.Enabled = false;
 
+            // InitMidi_In();
+            // initMidi_Out();
 
 
             //cBox_QuestionLayer.SelectedIndex = 0;
@@ -319,19 +247,16 @@ namespace CasparCGConfigurator
             //            cBox_CGCurrChannelLayer.Text = "5";
 
 
-            txtContestantCount1.SelectedIndex = 0;
 
-            cBox_CGScoreBoardCurrChannel.SelectedIndex = 1;
-            cBox_CGCurrScoreBoardChannelLayer.SelectedIndex = 2;
+            cBox_CGScoreBoardCurrChannel.SelectedIndex = 0;
+            cBox_CGCurrScoreBoardChannelLayer.SelectedIndex = 0;
 
             cBox_CGCurrLowerTitleChannel.SelectedIndex = 0;
-            cBox_CGCurrLowerTitleChannelLayer.SelectedIndex = 14;
+            cBox_CGCurrLowerTitleChannelLayer.SelectedIndex = 0; ;
 
-            cBox_CGJudgesScoreChannel.SelectedIndex = 2;
-            cBox_CGJudgesScoreChannelLayer.SelectedIndex = 5;
+            cBox_CGJudgesScoreChannel.SelectedIndex = 0;
+            cBox_CGJudgesScoreChannelLayer.SelectedIndex = 0;
 
-            cBox_CGEliminateChannel.SelectedIndex = 2;
-            cBox_CGEliminateChannelLayer.SelectedIndex = 3;
 
 
             /*
@@ -342,12 +267,6 @@ namespace CasparCGConfigurator
             ListContestant[0].Score = 0;
             */
 
-            Serial.UpdatePorts(this);
-
-
-            //InitMidi_In();
-            //Midi.InitMidi_In_Midi(this);
-            //Midi.initMidi_Out_Midi(this);
 
         }
 
@@ -715,7 +634,7 @@ namespace CasparCGConfigurator
                         " midi OUT devices. Initializing MIDI interface... ");
 
                     //context = SynchronizationContext.Current;
-                    OutDevice = new OutputDevice(0);
+                    OutDevice = new OutputDevice(1);
                     //OutDevice.ChannelMessageReceived += HandleChannelMessageReceived;
                     OutDevice.Error += new EventHandler<Sanford.Multimedia.ErrorEventArgs>(outDevice_Error);
                     //OutDevice..StartRecording();
@@ -754,7 +673,35 @@ namespace CasparCGConfigurator
 
         private void btnQ4_show_Click(object sender, EventArgs e)
         {
+            if ((txtQ.Text == "") & (txtQ1.Text == ""))
+            {
+            }
+            else
+            {
+                TellCGToShowGrfx(4, (listBox1.SelectedIndex + 1).ToString(), cBox_AnswersLayer.SelectedItem.ToString(), "REMOVE", 1, "");
 
+                if (txtQ1.Text == "")
+                    TellCGToShowGrfx(4, (listBox1.SelectedIndex + 1).ToString(), cBox_QuestionLayer.SelectedItem.ToString(), "ADD", 1, "G" + cBox_AnsCount.SelectedItem.ToString());
+                else
+                    TellCGToShowGrfx(4, (listBox1.SelectedIndex + 1).ToString(), cBox_QuestionLayer.SelectedItem.ToString(), "ADD", 1, "G" + cBox_AnsCount.SelectedItem.ToString() + "2");
+
+
+                if (checkBox3.Checked)
+                {
+                    ChannelMessageBuilder MidiOutCmd = new ChannelMessageBuilder();
+
+                    MidiOutCmd.Command = ChannelCommand.NoteOn;
+                    MidiOutCmd.MidiChannel = Int32.Parse(cBoxMidiChannel.Text);
+
+                    MidiOutCmd.Data1 = Int32.Parse(cBoxMidiNote.Text);
+                    MidiOutCmd.Data2 = 40;
+                    MidiOutCmd.Build();
+
+                    OutDevice.Send(MidiOutCmd.Result);
+
+                }
+
+            }
         }
 
         private void txtConsole_TextChanged(object sender, EventArgs e)
@@ -765,6 +712,56 @@ namespace CasparCGConfigurator
 
         }
 
+
+        private void TellCGToShowGrfx(int _questNo, String _outPut, String _layer, String _cmd, uint _showParam, String _grfxName)
+        {
+            String _cmdStr = "";
+            try
+            {
+                var reader = new StreamReader(casparClient.GetStream());
+                var writer = new StreamWriter(casparClient.GetStream());
+
+                _cmdStr = "CG ";
+                _cmdStr += _outPut;
+                _cmdStr += "-";
+                _cmdStr += _layer;
+                _cmdStr += " ";
+                _cmdStr += _cmd;
+                _cmdStr += " ";
+                _cmdStr += _showParam.ToString();
+                _cmdStr += " \"ASK/" + _grfxName + "\" 1 ";
+
+                _cmdStr += CollectTemplateDataForCG(_questNo);
+
+                writer.WriteLine(_cmdStr);
+                writer.Flush();
+
+                var reply = reader.ReadLine();
+
+                txtConsole.Text += reply + Environment.NewLine;
+
+                if (reply.Contains("201"))
+                {
+                    reply = reader.ReadLine();
+                    txtConsole.Text += reply + Environment.NewLine;
+                }
+                else if (reply.Contains("200"))
+                {
+                    while (reply.Length > 0)
+                    {
+                        reply = reader.ReadLine();
+                        txtConsole.Text += reply + Environment.NewLine;
+                    }
+                }
+
+            }
+
+            catch (Exception)
+            {
+                txtConsole.Text += "სერვერი კავშირის პრობლემა ან სხვა სახის პრობლემა. " + Environment.NewLine;
+            }
+
+        }
 
 
 
@@ -778,14 +775,119 @@ namespace CasparCGConfigurator
         }
 
 
+        private string CollectTemplateDataForCG(int CCount)
+        {
+            String cmdStr = "";
 
+            cmdStr += "\"<templateData>";
+            var color = Color.Red;
+            //const int val = 0x11223344;
+            // var color = new Color(val);
+
+            if (txtQ1.Text == "")
+                cmdStr += "<componentData id=\\\"q0\\\">" + CollecteDataIds("text", txtQ.Text) + "</componentData>";
+
+            else
+            {
+                cmdStr += "<componentData id=\\\"q0\\\">" + CollecteDataIds("text", txtQ.Text) + "</componentData>";
+                cmdStr += "<componentData id=\\\"q1\\\">" + CollecteDataIds("text", txtQ1.Text) + "</componentData>";
+            }
+
+
+
+            if (CCount == 4)
+            {
+                //cmdStr += "<componentData id=\\\"f0\\\"><data id=\\\"text\\\" value=\\\"" + txtQ4.Text + "\\\"/></componentData>";
+
+                //  cmdStr += "<componentData id=\\\"f0\\\" type=\"CasparTextField\">" + CollecteDataIds("text", txtQ4.Text) + CollecteDataIds("f0.textColor", String.Format("0x{0:X8}", color.ToArgb())) + "</componentData>";
+
+
+                cmdStr += "<componentData id=\\\"a1\\\"><data id=\\\"text\\\" value=\\\"" + txtAnsw4_1.Text + "\\\"/></componentData>";
+                cmdStr += "<componentData id=\\\"a2\\\"><data id=\\\"text\\\" value=\\\"" + txtAnsw4_2.Text + "\\\"/></componentData>";
+                cmdStr += "<componentData id=\\\"a3\\\"><data id=\\\"text\\\" value=\\\"" + txtAnsw4_3.Text + "\\\"/></componentData>";
+                cmdStr += "<componentData id=\\\"a4\\\"><data id=\\\"text\\\" value=\\\"" + txtAnsw4_4.Text + "\\\"/></componentData>";
+            }
+            else if (CCount == 3)
+            {
+                //cmdStr += "<componentData id=\\\"f0\\\">" + CollecteDataIds("text", txtQ.Text) + "</componentData>";
+                cmdStr += "<componentData id=\\\"a1\\\"><data id=\\\"text\\\" value=\\\"" + txtAnsw4_1.Text + "\\\"/></componentData>";
+                cmdStr += "<componentData id=\\\"a2\\\"><data id=\\\"text\\\" value=\\\"" + txtAnsw4_2.Text + "\\\"/></componentData>";
+                cmdStr += "<componentData id=\\\"a3\\\"><data id=\\\"text\\\" value=\\\"" + txtAnsw4_3.Text + "\\\"/></componentData>";
+
+            }
+            else if (CCount == 2)
+            {
+                //cmdStr += "<componentData id=\\\"f0\\\">" + CollecteDataIds("text", txtQ.Text) + "</componentData>";
+                cmdStr += "<componentData id=\\\"a1\\\"><data id=\\\"text\\\" value=\\\"" + txtAnsw4_1.Text + "\\\"/></componentData>";
+                cmdStr += "<componentData id=\\\"a2\\\"><data id=\\\"text\\\" value=\\\"" + txtAnsw4_2.Text + "\\\"/></componentData>";
+
+            }
+            else if (CCount == 0)
+            {
+                //cmdStr += "<componentData id=\\\"f0\\\">" + CollecteDataIds("text", txtQ.Text) + "</componentData>";
+                cmdStr += "<componentData id=\\\"t0\\\"><data id=\\\"text\\\" value=\\\"" + txtBid.Text + "\\\"/></componentData>";
+
+
+            }
+
+
+            cmdStr += "</templateData>\"";
+
+
+
+
+            return cmdStr;
+        }
+
+
+        private void btn4_1_correct_Click(object sender, EventArgs e)
+        {
+            if (txtQ.Text != "")
+                TellCGToShowGrfx(4, (listBox1.SelectedIndex + 1).ToString(), cBox_AnswersLayer.SelectedItem.ToString(), "ADD", 1, Q_4_CORRECT_Ans);
+        }
+
+        private void btn4_1_undo_Click(object sender, EventArgs e)
+        {
+            //TellCGToShowGrfx(4, 2, 11, "REMOVE", 1, "");
+            TellCGToShowGrfx(4, (listBox1.SelectedIndex + 1).ToString(), cBox_AnswersLayer.SelectedItem.ToString(), "REMOVE", 1, "");
+        }
+
+        private void rBtn_4_1_Click(object sender, EventArgs e)
+        {
+            if (rBtn_4_1.Checked)
+                Q_4_CORRECT_Ans = "G" + cBox_AnsCount.SelectedItem.ToString() + " - 1ok";
+        }
+
+        private void rBtn_4_2_Click(object sender, EventArgs e)
+        {
+            if (rBtn_4_2.Checked)
+                Q_4_CORRECT_Ans = "G" + cBox_AnsCount.SelectedItem.ToString() + " - 2ok";
+        }
+
+        private void rBtn_4_3_Click(object sender, EventArgs e)
+        {
+            if (rBtn_4_3.Checked)
+                Q_4_CORRECT_Ans = "G" + cBox_AnsCount.SelectedItem.ToString() + " - 3ok";
+        }
+
+        private void rBtn_4_4_Click(object sender, EventArgs e)
+        {
+            if (rBtn_4_4.Checked)
+                Q_4_CORRECT_Ans = "G" + cBox_AnsCount.SelectedItem.ToString() + " - 4ok";
+
+        }
 
         private void PathsTabPage_Click(object sender, EventArgs e)
         {
 
         }
 
-
+        private void button16_Click(object sender, EventArgs e)
+        {
+            TellCGToShowGrfx(4, (listBox1.SelectedIndex + 1).ToString(), cBox_QuestionLayer.SelectedItem.ToString(), "REMOVE", 1, "");
+            TellCGToShowGrfx(4, (listBox1.SelectedIndex + 1).ToString(), cBox_AnswersLayer.SelectedItem.ToString(), "REMOVE", 1, "");
+            TellCGToShowGrfx(4, (listBox1.SelectedIndex + 1).ToString(), cBox_BidLayer.SelectedItem.ToString(), "REMOVE", 1, "");
+        }
 
         private void rBtn4_4_Click(object sender, EventArgs e)
         {
@@ -794,6 +896,74 @@ namespace CasparCGConfigurator
 
 
 
+        private void cBox_AnsCount_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+
+            if (cBox_AnsCount.SelectedItem != null)
+            {
+                rBtn_4_1.Checked = false;
+                rBtn_4_2.Checked = false;
+                rBtn_4_3.Checked = false;
+                rBtn_4_4.Checked = false;
+
+                if (cBox_AnsCount.SelectedItem.ToString() == "2")
+                {
+                    txtAnsw4_1.Enabled = true;
+                    txtAnsw4_2.Enabled = true;
+                    txtAnsw4_3.Enabled = false;
+                    txtAnsw4_4.Enabled = false;
+                    rBtn_4_1.Enabled = true;
+                    rBtn_4_2.Enabled = true;
+                    rBtn_4_3.Enabled = false;
+                    rBtn_4_4.Enabled = false;
+                }
+                else if (cBox_AnsCount.SelectedItem.ToString() == "3")
+                {
+                    txtAnsw4_1.Enabled = true;
+                    txtAnsw4_2.Enabled = true;
+                    txtAnsw4_3.Enabled = true;
+                    txtAnsw4_4.Enabled = false;
+                    rBtn_4_1.Enabled = true;
+                    rBtn_4_2.Enabled = true;
+                    rBtn_4_3.Enabled = true;
+                    rBtn_4_4.Enabled = false;
+
+                }
+                else if (cBox_AnsCount.SelectedItem.ToString() == "4")
+                {
+                    txtAnsw4_1.Enabled = true;
+                    txtAnsw4_2.Enabled = true;
+                    txtAnsw4_3.Enabled = true;
+                    txtAnsw4_4.Enabled = true;
+                    rBtn_4_1.Enabled = true;
+                    rBtn_4_2.Enabled = true;
+                    rBtn_4_3.Enabled = true;
+                    rBtn_4_4.Enabled = true;
+
+
+                }
+
+            }
+
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            if ((txtBid.Text != ""))
+            {
+                TellCGToShowGrfx(0, (listBox1.SelectedIndex + 1).ToString(), cBox_BidLayer.SelectedItem.ToString(), "ADD", 1, "Tanxa0");
+            }
+            else
+            { }
+
+
+        }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            TellCGToShowGrfx(0, (listBox1.SelectedIndex + 1).ToString(), cBox_BidLayer.SelectedItem.ToString(), "REMOVE", 1, "");
+        }
 
         private void btnSendCommand_Click(object sender, EventArgs e)
         {
@@ -832,7 +1002,7 @@ namespace CasparCGConfigurator
 
         private void button29_Click(object sender, EventArgs e)
         {
-            //TellToCaspar("CG 1-" + currentLayer + " ADD 1 \"html2020/DidiScena/Z2\" 0");
+            //TellToCaspar("CG 1-" + currentLayer + " ADD 1 \"html/DidiScena/Z2\" 0");
 
 
 
@@ -983,9 +1153,9 @@ namespace CasparCGConfigurator
             if (cBoxAMPCcmd.SelectedItem.ToString() == "INVOKE")
                 TellToCaspar("CG " + cBox_CGScoreBoardCurrChannel.SelectedItem.ToString() + "-" + cBox_CGCurrScoreBoardChannelLayer.SelectedItem.ToString() + " INVOKE 0 \"" + txtCmdBody.Text + "\"");
             else if (cBoxAMPCcmd.SelectedItem.ToString() == "ADD & PLAY")
-                TellToCaspar("CG " + cBox_CGScoreBoardCurrChannel.SelectedItem.ToString() + "-" + cBox_CGCurrScoreBoardChannelLayer.SelectedItem.ToString() + " ADD " + cBox_CGCurrScoreBoardChannelLayer.SelectedItem.ToString() + " \"html2020/DidiScena/" + txtCmdBody.Text + "\" 1");
+                TellToCaspar("CG " + cBox_CGScoreBoardCurrChannel.SelectedItem.ToString() + "-" + cBox_CGCurrScoreBoardChannelLayer.SelectedItem.ToString() + " ADD " + cBox_CGCurrScoreBoardChannelLayer.SelectedItem.ToString() + " \"html/DidiScena/" + txtCmdBody.Text + "\" 1");
             else if (cBoxAMPCcmd.SelectedItem.ToString() == "ADD")
-                TellToCaspar("CG " + cBox_CGScoreBoardCurrChannel.SelectedItem.ToString() + "-" + cBox_CGCurrScoreBoardChannelLayer.SelectedItem.ToString() + " ADD " + cBox_CGCurrScoreBoardChannelLayer.SelectedItem.ToString() + " \"html2020/DidiScena/" + txtCmdBody.Text + "\" 0");
+                TellToCaspar("CG " + cBox_CGScoreBoardCurrChannel.SelectedItem.ToString() + "-" + cBox_CGCurrScoreBoardChannelLayer.SelectedItem.ToString() + " ADD " + cBox_CGCurrScoreBoardChannelLayer.SelectedItem.ToString() + " \"html/DidiScena/" + txtCmdBody.Text + "\" 0");
 
 
 
@@ -1074,6 +1244,246 @@ namespace CasparCGConfigurator
 
         }
 
+        private void button30_Click_1(object sender, EventArgs e)
+        {
+        }
+
+        private void button42_Click(object sender, EventArgs e)
+        {
+
+
+
+        }
+
+        private void btnLoadFrom_Click(object sender, EventArgs e)
+        {
+
+            string[] momgerali = new string[Convert.ToUInt16(txtContestantCount.Text)];
+            string[] phoneNum = new string[Convert.ToUInt16(txtContestantCount.Text)];
+
+
+            ListContestant.Clear();
+            ListContestantInStart.Clear();
+            //ListContestant.RemoveAll();
+            ListVoterJudges.Clear();
+            ContestantSource.Clear();
+            //ContestantDataGrid.Rows.Clear();
+            //dataGridView1.Rows.Clear();
+
+
+            ChannelAndLayerOfScoreBoard = cBox_CGScoreBoardCurrChannel.SelectedItem.ToString() + "-" + cBox_CGCurrScoreBoardChannelLayer.SelectedItem.ToString();
+            ChannelAndLayerOfBonusBoard = cBox_CGScoreBoardCurrChannel.SelectedItem.ToString() + "-" + (Convert.ToInt16(cBox_CGCurrScoreBoardChannelLayer.Text) + 1).ToString();
+            ChannelAndLayerOfEliminateBoard = cBox_CGScoreBoardCurrChannel.SelectedItem.ToString() + "-" + (Convert.ToInt16(cBox_CGCurrScoreBoardChannelLayer.Text) + 2).ToString();
+            ChannelAndLayerOfLowerThirdBoard = cBox_CGCurrLowerTitleChannel.SelectedItem.ToString() + "-" + cBox_CGCurrLowerTitleChannelLayer.SelectedItem.ToString();
+            ChannelAndLayerOfJudgesScoresBoardFullFrame = cBox_CGJudgesScoreChannel.SelectedItem.ToString() + "-" + cBox_CGJudgesScoreChannelLayer.SelectedItem.ToString();
+            ChannelAndLayerOfJudgesScoresBoard = cBox_CGCurrLowerTitleChannel.SelectedItem.ToString() + "-" + (Convert.ToInt16(cBox_CGCurrLowerTitleChannelLayer.Text) + 2).ToString();
+
+
+            TellToCaspar("CLEAR " + ChannelAndLayerOfScoreBoard);
+            TellToCaspar("CLEAR " + ChannelAndLayerOfBonusBoard);
+            TellToCaspar("CLEAR " + ChannelAndLayerOfEliminateBoard);
+            TellToCaspar("CLEAR " + ChannelAndLayerOfLowerThirdBoard);
+            TellToCaspar("CLEAR " + ChannelAndLayerOfJudgesScoresBoardFullFrame);
+            TellToCaspar("CLEAR " + ChannelAndLayerOfJudgesScoresBoard);
+
+
+            CGPrefixScoreBoard = "CG " + ChannelAndLayerOfScoreBoard;
+            CGPrefixBonusBoard = "CG " + ChannelAndLayerOfBonusBoard;
+            CGPrefixEliminateBoard = "CG " + ChannelAndLayerOfEliminateBoard;
+            CGPrefixLowerThirdBoard = "CG " + ChannelAndLayerOfLowerThirdBoard;
+            CGPrefixJudgesScoresBoard = "CG " + ChannelAndLayerOfJudgesScoresBoard;
+            CGPrefixJudgesScoresBoardFullFrame = "CG " + ChannelAndLayerOfJudgesScoresBoardFullFrame;
+
+
+
+
+
+            var fileStream = new FileStream(@"c:\CGData\bonuses.txt", FileMode.Open, FileAccess.Read);
+            using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
+            {
+                string line;
+                string[] lineSplited = { "", "" };
+
+                while ((line = streamReader.ReadLine()) != null)
+                {
+                    lineSplited = line.Split(',');
+                    //                    var BonusButtonObj = new Voters();
+                    btnBonus_0.Text = lineSplited[0];
+                    btnBonus_1.Text = lineSplited[1];
+                    btnBonus_2.Text = lineSplited[2];
+                    btnBonus_3.Text = lineSplited[3];
+                    btnBonus_4.Text = lineSplited[4];
+                    btnBonus_5.Text = lineSplited[5];
+                    btnBonus_6.Text = lineSplited[6];
+                    btnBonus_7.Text = lineSplited[7];
+                    btnBonus_8.Text = lineSplited[8];
+                    btnBonus_9.Text = lineSplited[9];
+
+                }
+
+            }
+
+
+
+
+
+
+            fileStream = new FileStream(@"c:\CGData\judges.txt", FileMode.Open, FileAccess.Read);
+            using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
+            {
+                string line;
+                string[] lineSplited = { "", "" };
+
+                while ((line = streamReader.ReadLine()) != null)
+                {
+                    lineSplited = line.Split(',');
+                    var VoterObj = new Voters();
+                    VoterObj.JudgeIP = lineSplited[0];
+                    VoterObj.JudgeName = lineSplited[1];
+                    VoterObj.Voted = false;
+                    ListVoterJudges.Add(VoterObj);
+
+                }
+
+            }
+
+
+
+
+            grBoxJiuri0.Text = ListVoterJudges[0].JudgeName + ":" + ListVoterJudges[0].JudgeIP;
+            txt_IPJiuri0.Text = ListVoterJudges[0].JudgeIP;
+            grBoxJiuri1.Text = ListVoterJudges[1].JudgeName + ":" + ListVoterJudges[1].JudgeIP;
+            txt_IPJiuri1.Text = ListVoterJudges[1].JudgeIP;
+            grBoxJiuri2.Text = ListVoterJudges[2].JudgeName + ":" + ListVoterJudges[2].JudgeIP;
+            txt_IPJiuri2.Text = ListVoterJudges[2].JudgeIP;
+            grBoxJiuri3.Text = ListVoterJudges[3].JudgeName + ":" + ListVoterJudges[3].JudgeIP;
+            txt_IPJiuri3.Text = ListVoterJudges[3].JudgeIP;
+            grBoxJiuri4.Text = ListVoterJudges[4].JudgeName + ":" + ListVoterJudges[4].JudgeIP;
+            
+
+            fileStream = new FileStream(@"c:\CGData\contestants.txt", FileMode.Open, FileAccess.Read);
+            using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
+            {
+                string line;
+                string[] lineSplited = { "", "" };
+                UInt16 i = 0;
+                while (((line = streamReader.ReadLine()) != null) && (i < Convert.ToUInt16(txtContestantCount.Text)))
+                {
+                    lineSplited = line.Split(',');
+                    phoneNum[i] = lineSplited[0];
+                    momgerali[i] = lineSplited[1];
+                    i++;
+
+                    //var PhoneCallObj = new PhoneAndPhoneCalls();
+                    //PhoneCallObj.Phone = lineSplited[0];
+                    //PhoneCallObj.PhoneCalls = Convert.ToUInt32(lineSplited[1]);
+                    //ListPhoneCalls.Add(PhoneCallObj);
+
+                }
+
+
+            }
+
+
+
+
+
+            //momgerali[0] = "John Lenon";
+            //momgerali[1] = "ნატო მეტონიძე";
+            //momgerali[2] = "დონალდ ტრამპი";
+            //momgerali[3] = "სინატრა";
+            //momgerali[4] = "ვიღაცა მომღერალი";
+            //           momgerali[5] = "პაპუნა ჩადუნელი";
+            //           momgerali[6] = "ბიძინა ივანიშვილი";
+            //           momgerali[7] = "ნანა ბელქანია";
+            //           momgerali[8] = "ალ ბანო";
+            //           momgerali[9] = "jeckson";
+
+            /*            
+                       phoneNum[1] = "99510000002";
+                        phoneNum[2] = "99510000003";
+                        phoneNum[3] = "99510000004";
+                        phoneNum[4] = "99510000005";
+                        phoneNum[5] = "99510000006";
+                        phoneNum[6] = "99510000007";
+                        phoneNum[7] = "99510000008";
+                        phoneNum[8] = "99510000009";
+                        phoneNum[9] = "99510000010";
+            */
+
+            //for (UInt16 i = 0; i < Convert.ToUInt16(txtContestantCount.Text); i++)
+            //{
+            //    phoneNum[i] = "995100000" + i.ToString("00");
+
+            //    //momgerali[i] = "მომღერალი" + i.ToString("00"); 
+            //}
+
+
+
+
+
+            for (UInt16 i = 0; i < Convert.ToUInt16(txtContestantCount.Text); i++)
+            {
+                var ContestantObj = new Contestant();
+                ContestantObj.ContItemID = "contItem" + i.ToString("00");
+                ContestantObj.NameID = "_NameCont" + i.ToString("00");
+                ContestantObj.ScoreID = "_ScoreCont" + i.ToString("00");
+                ContestantObj.Position = i + 1;
+                //ContestantObj.Position = i ;
+                ContestantObj.Gvari = momgerali[i];
+                ContestantObj.Phone = phoneNum[i];
+                ContestantObj.Score = 0;
+                //ContestantObj.Score = 100 - (i * 10);
+                ContestantObj.PhoneCalls = 0;
+                ListContestant.Add(ContestantObj);
+                ListContestantInStart.Add(ContestantObj);
+
+
+            }
+
+
+
+            ContestantSource.ResetBindings(true);
+            ContestantDataGrid.Columns[ContestantDataGrid.ColumnCount - 1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+        }
+
+        private void button34_Click(object sender, EventArgs e)
+        {
+            //TellToCaspar("CG 1-" + currentLayer + " INVOKE 0 \"Inv_AllIn\"");
+            var locCMD = "";
+            var locCouple = "";
+            locCMD = "CG " + cBox_CGScoreBoardCurrChannel.SelectedItem.ToString() + "-" + cBox_CGCurrScoreBoardChannelLayer.SelectedItem.ToString() + " INVOKE 0 \"Inv_update2(";
+
+
+
+
+            //CG 1 - 20 INVOKE 0 "Inv_update2(45,'abs','d','daa')"
+
+            //locCMD = "CG 1-" + currentLayer + " UPDATE 0 \"{" ;
+
+            for (UInt16 i = 0; i < Convert.ToUInt16(txtContestantCount.Text); i++)
+            {
+                locCouple = "'" + ListContestant[i].Gvari + "'" + "," + ListContestant[i].Score.ToString();
+                //locCMD += "\"_NameCont" + i.ToString() + "\"" + ":" + "\"" + ListContestant[i].Gvari + "\"" + "," + "\"_ScoreCont" + i.ToString() + "\"" + ":" + "\"" + ListContestant[i].Score.ToString() + "\"";
+                locCMD += locCouple;
+                if (i != 9)
+                    locCMD += ",";
+            }
+
+            //locCMD += "}\"";
+            //locCMD += "}";
+            locCMD += ")\"";
+
+            //CG 1 - 20 UPDATE 1 "{\"f0\":\"15\",\"f1\":\"85\"}"
+
+
+            TellToCaspar(locCMD);
+
+            ContestantSource.ResetBindings(false);
+
+        }
+
         private void doPLUS_forContestant(int PhoneCalls)
         {
             int currContestantPos = ContestantDataGrid.SelectedRows[0].Index;
@@ -1082,7 +1492,7 @@ namespace CasparCGConfigurator
             int currContestantNewPosition = currContestantPos;
             //string CGPrefix = "CG " + cBox_CGCurrChannel.SelectedItem.ToString() + "-" + cBox_CGCurrChannelLayer.SelectedItem.ToString();
 
-            //int PosDeltaIfEqual = 0;
+            int PosDeltaIfEqual = 0;
 
 
 
@@ -1144,22 +1554,11 @@ namespace CasparCGConfigurator
 
             if ((currContestantOldPos - currContestantNewPosition) == 0)
             {
-                //if (TellToCaspar(CGPrefixScoreBoard + " INVOKE 0 \"updateScore('" + ListContestant[currContestantPos].ScoreID + "','" + txtScoreToBeAdded.Text + "')\""))
-                if (TellToCaspar(CGPrefixScoreBoard + " INVOKE 0 \"updateScore('" + ListContestant[currContestantPos].ScoreID + "','" + txtScoreToBeAdded.Text + "','" + 
-                    ListContestant[currContestantPos].ContItemID + "')\"",60))
-
+                if (TellToCaspar(CGPrefixScoreBoard + " INVOKE 0 \"updateScore('" + ListContestant[currContestantPos].ScoreID + "','" + txtScoreToBeAdded.Text + "')\""))
 
                 {
                     ListContestant[currContestantPos].Score = currContestantNewScore;
                     ListContestant[currContestantPos].PhoneCalls = PhoneCalls;
-
-
-
-                    if (totalPhoneCalls == 0)
-                        ListContestant[currContestantPos].PhoneCallsPercent = 0;
-                    else
-                        ListContestant[currContestantPos].PhoneCallsPercent = (Convert.ToDouble(PhoneCalls) / Convert.ToDouble(totalPhoneCalls)) * 100;
-
 
                     //ListContestant[currContestantPos].Position = currContestantNewPosition + 1;
 
@@ -1169,17 +1568,11 @@ namespace CasparCGConfigurator
             }
             else
             {
-                if (TellToCaspar(CGPrefixScoreBoard + " INVOKE 0 \"" + txtCmdBody.Text + "\"",80))
+                if (TellToCaspar(CGPrefixScoreBoard + " INVOKE 0 \"" + txtCmdBody.Text + "\""))
                 //                    if (TellToCaspar("CG " + cBox_CGCurrChannel.SelectedItem.ToString() + "-" + cBox_CGCurrChannelLayer.SelectedItem.ToString() + " INVOKE 0 \"updateScore('"+ ListContestant[currContestantPos].ScoreID + "','" + txtScoreToBeAdded.Text + "')\""))
                 {
                     ListContestant[currContestantPos].Score = currContestantNewScore;
                     ListContestant[currContestantPos].PhoneCalls = PhoneCalls;
-                    if (totalPhoneCalls == 0)
-                        ListContestant[currContestantPos].PhoneCallsPercent = 0;
-                    else
-                        ListContestant[currContestantPos].PhoneCallsPercent = (Convert.ToDouble(PhoneCalls) / Convert.ToDouble(totalPhoneCalls)) * 100;
-
-
                     //ListContestant[currContestantPos].Position = currContestantNewPosition;
                     ListContestant[currContestantPos].Position = currContestantNewPosition + 1;
 
@@ -1187,7 +1580,7 @@ namespace CasparCGConfigurator
                     //string strColumnName = "Position";
                     //SortOrder strSortOrder = getSortOrder(3);
 
-                    //string strColumnName = "Score";
+                    string strColumnName = "Score";
                     SortOrder strSortOrder = getSortOrder(5);
 
 
@@ -1272,12 +1665,11 @@ namespace CasparCGConfigurator
 
         private void btnPLUS_Click(object sender, EventArgs e)
         {
-            //string UpPrefix = "-=";
-            //string DownPrefix = "+=";
+            string UpPrefix = "-=";
+            string DownPrefix = "+=";
             //int currContestantPos = dataGridView1.CurrentRow.Index;
 
-            
-            if ((ContestantDataGrid.Rows.Count <= 1) || (Convert.ToUInt16(txtScoreToBeAdded.Text) == 0) || (lblCurrContestant.Text == "აარჩიე მომღერალი"))
+            if ((ContestantDataGrid.Rows.Count <= 1) || (Convert.ToUInt16(txtScoreToBeAdded.Text) == 0) || (lblCurrContestant.Text == "აარჩიე მომღერალი") )
             {
                 return;
             }
@@ -1285,19 +1677,12 @@ namespace CasparCGConfigurator
             {
                 doPLUS_forContestant(0);
 
-                
-
                 btnVoteStandBy.PerformClick();
-                if (cbox_AutoSaveSTATE.Checked)
-                {
-                    btnSaveState.PerformClick();
-                }
-
                 if (cBox_AutoTitleOnOFF.Checked)
                 {
                     TitleInOut();
                 }
-                //btn_title_InOut.Enabled = false;
+                btn_title_InOut.Enabled = false;
             }
 
 
@@ -1310,51 +1695,21 @@ namespace CasparCGConfigurator
             Button[] barray = { btnBonus_0, btnBonus_1, btnBonus_2, btnBonus_3, btnBonus_4, btnBonus_5, btnBonus_6, btnBonus_7, btnBonus_8, btnBonus_9 };
 
             if (btbBoxesIn.Text == "BOXES IN")
-            {
+            { 
+                TellToCaspar(CGPrefixBonusBoard + " ADD 1 \"html/DidiScena/bbox\" 0");
+                TellToCaspar(CGPrefixBonusBoard + " INVOKE 0 \"" + "createBonusBoxItems(" + txtContestantCount.Text + ")" + "\"");            
+                TellToCaspar(CGPrefixBonusBoard + " INVOKE 0 \"" + "go1" + "\"");
 
-                if (cBox_AutoBonusUpdate.Checked)
-                {
-                    //for (int i = (Convert.ToInt32(txtContestantCount.Text) - 1); i>=0; i--)
-                    //for (int i = (Convert.ToInt32(txtContestantCount.Text) - 1); i>=0; i--)
-                    //for (int i = (Convert.ToInt32(txtContestantCount.Text) - 1); i>=0; i--)
-                    for (UInt16 i = 0; i < Convert.ToUInt16(txtContestantCount.Text); i++)
-                    {
-
-                        btnBonus_X_ClickAuto(barray[i]);
-                        Thread.Sleep(Convert.ToInt32(txtPauseValue.Text));
-                    }
-
-                    if (btnAutoHiLite.Checked)
-                    {
-                        Thread.Sleep(Convert.ToInt32(txtPauseValue.Text));
-                        btn_showOutsiders.PerformClick();
-                    }
-                    //btnBonus_X_Click(barray[0]);
-                    //btnBonus_0.PerformClick();
-                    //btnBonus_1.PerformClick();
-                    //btnBonus_2.PerformClick();
+            //Button nBtn = new Button();
+                
 
 
-                }
-                else
-                {
-
-                    TellToCaspar(CGPrefixBonusBoard + " ADD 1 \"html2020/DidiScena/bbox\" 0");
-                    TellToCaspar(CGPrefixBonusBoard + " INVOKE 0 \"" + "createBonusBoxItems(" + txtContestantCount.Text + ")" + "\"");
-                    TellToCaspar(CGPrefixBonusBoard + " INVOKE 0 \"" + "go1(" + txtContestantCount.Text + ")" + "\"");
-
-                    //Button nBtn = new Button();
-
-
-
-                    for (UInt16 i = 0; i < Convert.ToUInt16(txtContestantCount.Text); i++)
-                    {
+                for (UInt16 i=0; i< Convert.ToUInt16(txtContestantCount.Text); i++)
+                    { 
                         barray[i].Enabled = true;
                     }
 
-                    btbBoxesIn.Text = "BOXES OUT";
-
-                }
+                btbBoxesIn.Text = "BOXES OUT";
             }
             else
             {
@@ -1362,7 +1717,7 @@ namespace CasparCGConfigurator
                 for (UInt16 i = 0; i < Convert.ToUInt16(txtContestantCount.Text); i++)
                 {
                     barray[i].Enabled = false;
-                }
+                }                
                 btbBoxesIn.Text = "BOXES IN";
             }
 
@@ -1394,50 +1749,19 @@ namespace CasparCGConfigurator
         {
             Random r = new Random();
 
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"c:\CGData\data.txt"))
+            using (System.IO.StreamWriter file =  new System.IO.StreamWriter(@"c:\CGData\data.txt"))
             {
                 foreach (Contestant Cline in ListContestant)
                 {
                     // If the line doesn't contain the word 'Second', write the line to the file.
 
-                    file.WriteLine(Cline.Phone + "\t" + (r.Next(15000)).ToString());
-                }
-            }
-        }
-
-
-        public void rendomizeJudgesVotes()
-        {
-            Random r = new Random();
-
-
-
-
-            // If the line doesn't contain the word 'Second', write the line to the file.
-
-            for (UInt16 i=0; i< (ushort)(ListVoterJudges.Count); i++)
-            {
-                ((tabPage5.Controls["grBoxJiuri" + (i).ToString()] as GroupBox).Controls["txtJudgeValue" + (i).ToString()] as TextBox).Text = (r.Next(1, 10)).ToString();
-                    
-
-                //                ("grBoxJiuri" + (ListVoterJudges.Count - 1).ToString()] as GroupBox).Enabled = true;
-                //(tabPage5.Controls["txtJudgeValue" + (i).ToString()] as TextBox).Text = 
+                    file.WriteLine(Cline.Phone + "," + (r.Next(15000)).ToString());
+                } 
+                                   
             }
 
-            
-
-/*
-
-            txtJudgeValue0.Text = (r.Next(1, 10)).ToString();
-            txtJudgeValue1.Text = (r.Next(1, 10)).ToString();
-            txtJudgeValue2.Text = (r.Next(1, 10)).ToString();
-            txtJudgeValue3.Text = (r.Next(1, 10)).ToString();
-            txtJudgeValue4.Text = (r.Next(1, 10)).ToString();
-*/
-            //txtJudgeValue4.Text = (r.Next(1, 10)).ToString();
-
-
         }
+
 
         private void btnCallsImport_Click(object sender, EventArgs e)
         {
@@ -1445,7 +1769,6 @@ namespace CasparCGConfigurator
 
 
             //rendomizePhoneCals();
-            totalPhoneCalls = 0;
 
             var fileStream = new FileStream(@"c:\CGData\data.txt", FileMode.Open, FileAccess.Read);
             using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
@@ -1464,7 +1787,6 @@ namespace CasparCGConfigurator
                             var PhoneCallObj = new PhoneAndPhoneCalls();
                             PhoneCallObj.Phone = lineSplited[0];
                             PhoneCallObj.PhoneCalls = Convert.ToUInt32(lineSplited[1]);
-                            totalPhoneCalls = totalPhoneCalls + PhoneCallObj.PhoneCalls;
                             ListPhoneCalls.Add(PhoneCallObj);
                             break;
                         }
@@ -1515,102 +1837,12 @@ namespace CasparCGConfigurator
             //}
 
             setAllScoresWhite();
-
-
-            UInt16 n = 0;
-            UInt32 PhoneCallCurrCont = 0;
-            foreach (DataGridViewRow row in dataGridPhoneCalls.Rows)
-            {
-                int rslt = ListContestant.FindIndex(x => x.Phone == row.Cells[0].Value.ToString());
-                PhoneCallCurrCont = Convert.ToUInt32(row.Cells[1].Value.ToString());
-
-
-                foreach (Control c in groupBox9.Controls)
-                {
-                    Button b = c as Button;
-                    if ((b != null) && (b.Name == "btnBonus_" + n.ToString()))
-                    {
-                        //b.Text = ListContestant[rslt].Gvari;
-                        //toolTip1.SetToolTip(b, row.Cells[0].Value.ToString() + " - " + ListContestant[rslt].Gvari);
-                        toolTip1.SetToolTip(b, row.Cells[0].Value.ToString() + " - " + PhoneCallCurrCont.ToString() + " - " + ((Convert.ToDouble(PhoneCallCurrCont) / Convert.ToDouble(totalPhoneCalls)) * 100).ToString(".00") + "% - " + ListContestant[rslt].Gvari);
-                    }
-                }
-
-                n++;
-            }
-
-
-            btnCallsImport.Text = "ზარების იმპორტი (სულ " + totalPhoneCalls.ToString() + " ზარი)";
-
         }
 
-
-        private void btnBonus_X_ClickAuto(object sender)
-        {
-            Int32 CurrRowIndex = Convert.ToInt16(((sender as Button).Name).Split('_')[1]);
-            Int32 CurrRowIndexInGrid = -1;
-            string _PhoneCallsContName = "";
-
-            dataGridPhoneCalls.ClearSelection();
-            dataGridPhoneCalls.Rows[CurrRowIndex].Selected = true;
-
-            txtScoreToBeAdded.Text = (sender as Button).Text;// "50";
-            //int currRow = -1;
-
-            string searchValue = dataGridPhoneCalls.Rows[CurrRowIndex].Cells[0].Value.ToString();
-            int phoneCallValue = Convert.ToInt32(dataGridPhoneCalls.Rows[CurrRowIndex].Cells[1].Value.ToString());
-
-            ContestantDataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            ContestantDataGrid.ClearSelection();
-
-
-            try
-            {
-                foreach (DataGridViewRow row in ContestantDataGrid.Rows)
-                {
-                    if (row.Cells[6].Value.ToString().Equals(searchValue))
-                    {
-                        row.Selected = true;
-                        CurrRowIndexInGrid = row.Index;
-                        ListContestant[CurrRowIndexInGrid].PhoneCalls = phoneCallValue;
-                        _PhoneCallsContName = (ListContestant[CurrRowIndexInGrid].ScoreID).Substring(10, 2);
-                        break;
-                    }
-                }
-
-
-                //lblCurrCont.Text = CurrRowIndexInGrid.ToString("00") + " - " + ContestantDataGrid.Rows[CurrRowIndexInGrid].Cells[0].Value;
-                lblCurrContestant.Text = ListContestant[CurrRowIndexInGrid].Gvari;
-
-
-                if (!cBox_AutoBonusUpdate.Checked)
-                {
-                    TellToCaspar(CGPrefixBonusBoard + " INVOKE 0 \"" + "bonusBoxGoAway('#bbox" + CurrRowIndex.ToString("00") + "'" +
-                    "" +
-                    ")" + "\"");
-                }
-
-                doPLUS_forContestant(phoneCallValue);
-                //btnPLUS.PerformClick();
-
-                if (cBox_AutoCallsProcentShow.Checked)
-                    TellToCaspar(CGPrefixScoreBoard + " INVOKE 0 \"showCallPercent('" + _PhoneCallsContName + "','" + ((Convert.ToDouble(phoneCallValue) / Convert.ToDouble(totalPhoneCalls)) * 100).ToString("0.00") + "')\"");
-
-                (sender as Button).Enabled = false;
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show(exc.Message);
-                CurrRowIndex = -1;
-            }
-
-
-        }
         private void btnBonus_X_Click(object sender, EventArgs e)
         {
             Int32 CurrRowIndex = Convert.ToInt16(((sender as Button).Name).Split('_')[1]);
             Int32 CurrRowIndexInGrid = -1;
-            string _PhoneCallsContName = "";
 
             dataGridPhoneCalls.ClearSelection();
             dataGridPhoneCalls.Rows[CurrRowIndex].Selected = true;
@@ -1634,13 +1866,12 @@ namespace CasparCGConfigurator
                         row.Selected = true;
                         CurrRowIndexInGrid = row.Index;
                         ListContestant[CurrRowIndexInGrid].PhoneCalls = phoneCallValue;
-                        _PhoneCallsContName = (ListContestant[CurrRowIndexInGrid].ScoreID).Substring(10, 2);
                         break;
                     }
                 }
 
 
-                //lblCurrCont.Text = CurrRowIndexInGrid.ToString("00") + " - " + ContestantDataGrid.Rows[CurrRowIndexInGrid].Cells[0].Value;
+                lblCurrCont.Text = CurrRowIndexInGrid.ToString("00") + " - " + ContestantDataGrid.Rows[CurrRowIndexInGrid].Cells[0].Value;
                 lblCurrContestant.Text = ListContestant[CurrRowIndexInGrid].Gvari;
 
 
@@ -1653,9 +1884,6 @@ namespace CasparCGConfigurator
                 doPLUS_forContestant(phoneCallValue);
                 //btnPLUS.PerformClick();
 
-                if (cBox_AutoCallsProcentShow.Checked)
-                    TellToCaspar(CGPrefixScoreBoard + " INVOKE 0 \"showCallPercent('" + _PhoneCallsContName + "','" + ((Convert.ToDouble(phoneCallValue) / Convert.ToDouble(totalPhoneCalls)) * 100).ToString("0.00") + "')\"");
-
                 (sender as Button).Enabled = false;
             }
             catch (Exception exc)
@@ -1664,6 +1892,10 @@ namespace CasparCGConfigurator
                 CurrRowIndex = -1;
             }
 
+
+        }
+        private void btnBonus1_Click(object sender, EventArgs e)
+        {
 
         }
 
@@ -1747,35 +1979,25 @@ namespace CasparCGConfigurator
                     grBoxJiuri3.ForeColor = Color.Black;
                     grBoxJiuri4.ForeColor = Color.Black;
 
-//                    grp1.Enabled = true;
-                    grpBonus.Enabled = true;
+                    grp1.Enabled = true;
+                    grpBonus.Enabled=true;
 
                     pnl_EliminateTasks.Enabled = true;
-
-
-
 
                 }
                 else
                 {
                     lblStatus.Text = "NOT CONNECTED";
-                    lblStatus.ForeColor = Color.Red;
+                    lblStatus.ForeColor = Color.Green;
                     txtConsole.Text += Environment.NewLine + "Caspar სერვერთან კავშირი არ არის! " + Environment.NewLine;
-//                    grp1.Enabled = false;
+                    grp1.Enabled = false;
                     grpBonus.Enabled = false;
                     pnl_EliminateTasks.Enabled = false;
                 }
             }
             catch (Exception)
             {
-
-                lblStatus.Text = "NOT CONNECTED";
-                lblStatus.ForeColor = Color.Red;
                 txtConsole.Text += Environment.NewLine + "Caspar სერვერთან კავშირი ვერ მყარდება, არ მუშაობს ან არ გვიშვებს! " + Environment.NewLine;
-//                grp1.Enabled = false;
-                grpBonus.Enabled = false;
-                pnl_EliminateTasks.Enabled = false;
-
             }
         }
 
@@ -1821,7 +2043,6 @@ namespace CasparCGConfigurator
 
 
 
-            btnLoadPreviewsState.Enabled = false;
 
         }
 
@@ -1835,10 +2056,10 @@ namespace CasparCGConfigurator
                 string bgfile = "BigSceneBg2";
                 //string CGPrefix = "CG " + cBox_CGCurrChannel.SelectedItem.ToString() + "-" + cBox_CGCurrChannelLayer.SelectedItem.ToString();
 
-                //                PLAY 1 - 0 "BIG_PHOT_BG1" SLIDE 1 Linear RIGHT   LOOP
+//                PLAY 1 - 0 "BIG_PHOT_BG1" SLIDE 1 Linear RIGHT   LOOP
                 TellToCaspar("PLAY " + cBox_CGScoreBoardCurrChannel.SelectedItem.ToString() + "-0 \"" + bgfile + "\" SLIDE 1 Linear RIGHT LOOP");
 
-                TellToCaspar(CGPrefixScoreBoard + " ADD 1 \"html2020/DidiScena/Z2\" 0");
+                TellToCaspar(CGPrefixScoreBoard + " ADD 1 \"html/DidiScena/Z2\" 0");
 
 
                 txtCmdBody.Text = "createItems(" + "'" + txtContestantCount.Text + "',";
@@ -1847,8 +2068,7 @@ namespace CasparCGConfigurator
 
                     //tmpStr = tmpStr + "'" + ListContestant[i].Gvari + "'," + ListContestant[i].Score;
 
-                    //tmpStr = tmpStr + "'" + ContestantDataGrid.Rows[i].Cells[4].Value + "'";
-                    tmpStr = tmpStr + "'" + ContestantDataGrid.Rows[i].Cells[4].Value + ":" + ContestantDataGrid.Rows[i].Cells[5].Value + "'";
+                    tmpStr = tmpStr + "'" + ContestantDataGrid.Rows[i].Cells[4].Value + "'";
                     if (i != (Convert.ToUInt16(txtContestantCount.Text) - 1))
                         tmpStr = tmpStr + ",";
 
@@ -1867,23 +2087,23 @@ namespace CasparCGConfigurator
             //txtCmdBody.Text = "Inv_AllIn(";
 
 
-            //            txtCmdBody.Text = "Inv_updateNamesAnScoresX(";
-            //           for (UInt16 i = 0; i < Convert.ToUInt16(txtContestantCount.Text); i++)
-            //            {
-            //
-            //               //tmpStr = tmpStr + "'" + ListContestant[i].Gvari + "'," + ListContestant[i].Score;
-            //
-            //               tmpStr = tmpStr + "'" + ContestantDataGrid.Rows[i].Cells[2].Value + "'," + ContestantDataGrid.Rows[i].Cells[5].Value;
-            //                if (i != (Convert.ToUInt16(txtContestantCount.Text) - 1))
-            //                   tmpStr = tmpStr + ",";
-            //
-            //           }
-            //            txtCmdBody.Text = txtCmdBody.Text + tmpStr + ")";
-            //
-            //           TellToCaspar(CGPrefixScoreBoard + " INVOKE 0 \"" + txtCmdBody.Text + "\"");
+                //            txtCmdBody.Text = "Inv_updateNamesAnScoresX(";
+                //           for (UInt16 i = 0; i < Convert.ToUInt16(txtContestantCount.Text); i++)
+                //            {
+                //
+                //               //tmpStr = tmpStr + "'" + ListContestant[i].Gvari + "'," + ListContestant[i].Score;
+                //
+                //               tmpStr = tmpStr + "'" + ContestantDataGrid.Rows[i].Cells[2].Value + "'," + ContestantDataGrid.Rows[i].Cells[5].Value;
+                //                if (i != (Convert.ToUInt16(txtContestantCount.Text) - 1))
+                //                   tmpStr = tmpStr + ",";
+                //
+                //           }
+                //            txtCmdBody.Text = txtCmdBody.Text + tmpStr + ")";
+                //
+                //           TellToCaspar(CGPrefixScoreBoard + " INVOKE 0 \"" + txtCmdBody.Text + "\"");
 
 
-        }
+            }
 
         private void btnUnLoadAll_Click(object sender, EventArgs e)
         {
@@ -1904,7 +2124,7 @@ namespace CasparCGConfigurator
 
         private void ContestantDataGrid_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            //lblCurrCont.Text = e.RowIndex.ToString() + " - " + e.ColumnIndex.ToString() + " " + ContestantDataGrid.Rows[e.RowIndex].Cells[0].Value;
+            lblCurrCont.Text = e.RowIndex.ToString() + " - " + e.ColumnIndex.ToString() + " " + ContestantDataGrid.Rows[e.RowIndex].Cells[0].Value;
             lblCurrContestant.ForeColor = Color.Green;
             lblCurrContestant.Text = ListContestant[e.RowIndex].Gvari;
             txtScoreToBeAdded.Text = "0";
@@ -1970,14 +2190,7 @@ namespace CasparCGConfigurator
 
             //CGPrefixScoreBoard = "CG " + cBox_CGCurrChannel.SelectedItem.ToString() + "-" + cBox_CGCurrChannelLayer.SelectedItem.ToString(); ;
             //CGPrefixBonusBoard = "CG " + cBox_CGCurrChannel.SelectedItem.ToString() + "-" + (Convert.ToInt16(cBox_CGCurrChannelLayer.Text) + 1).ToString();
-            //CGPrefixEliminateBoard = "CG " + cBox_CGScoreBoardCurrChannel.SelectedItem.ToString() + "-" + (Convert.ToInt16(cBox_CGCurrScoreBoardChannelLayer.Text) + 2).ToString();
-            CGPrefixEliminateBoard = "CG " + cBox_CGEliminateChannel.SelectedItem.ToString() + "-" + (Convert.ToInt16(cBox_CGEliminateChannelLayer.Text)).ToString();
-
-            //ChannelAndLayerOfJudgesScoresBoardFullFrame = cBox_CGJudgesScoreChannel.SelectedItem.ToString() + "-" + cBox_CGJudgesScoreChannelLayer.SelectedItem.ToString();
-
-            string bgfile = "BigSceneBg";
-
-            TellToCaspar("PLAY " + cBox_CGEliminateChannel.SelectedItem.ToString() + "-" + (Convert.ToInt16(cBox_CGEliminateChannelLayer.Text) - 1).ToString() + " \"" + bgfile + "\" SLIDE 1 Linear RIGHT LOOP");
+            CGPrefixEliminateBoard = "CG " + cBox_CGScoreBoardCurrChannel.SelectedItem.ToString() + "-" + (Convert.ToInt16(cBox_CGCurrScoreBoardChannelLayer.Text) + 2).ToString();
             //CGPrefixLowerThirdBoard = "CG " + cBox_CGCurrChannel.SelectedItem.ToString() + "-" + (Convert.ToInt16(cBox_CGCurrChannelLayer.Text) + 3).ToString();
 
 
@@ -2034,8 +2247,8 @@ namespace CasparCGConfigurator
                 //while (((line = streamReader.ReadLine()) != null) && (i < Convert.ToUInt16(txtContestantCount.Text)))
                 while ((line = streamReader.ReadLine()) != null)
                 {
-                    lineSplited = line.Split('\t');
-                    var PhoneCallObj = new PhoneAndPhoneCalls();
+                    lineSplited = line.Split(',');
+                    var PhoneCallObj = new PhoneAndPhoneCalls();                    
                     PhoneCallObj.Phone = lineSplited[0];
                     PhoneCallObj.PhoneCalls = Convert.ToUInt32(lineSplited[1]);
 
@@ -2053,29 +2266,13 @@ namespace CasparCGConfigurator
 
             }
 
-
-
-
-            //string _ScoreCont00Percent = "0";
-            //string _ScoreCont01Percent = "0";
-
-
-            float total = 0;
-            total = Convert.ToInt32(txtElimContScore0.Text) + Convert.ToInt32(txtElimContScore1.Text);
-
-            txtElimContScoreProcent0.Text = ((100 / total) * Convert.ToInt32(txtElimContScore0.Text)).ToString("00.00");
-
-            txtElimContScoreProcent1.Text = ((100 / total) * Convert.ToInt32(txtElimContScore1.Text)).ToString("00.00");
+            
 
         }
 
         private void btnLoadEliminateScene_Click(object sender, EventArgs e)
         {
-
-
-
-
-            TellToCaspar(CGPrefixEliminateBoard + " ADD 1 \"html2020/DidiScena/eliminate\" 0");
+            TellToCaspar(CGPrefixEliminateBoard + " ADD 1 \"html/DidiScena/eliminate\" 0");
 
 
             txtCmdBody.Text = "createItems(" + "'" + "2" + "','" + txtElimContName0.Text + "','" + txtElimContName1.Text + "')";
@@ -2083,7 +2280,7 @@ namespace CasparCGConfigurator
 
 
 
-
+            
 
 
         }
@@ -2099,17 +2296,10 @@ namespace CasparCGConfigurator
             if (txtElimContScore0.Text == txtElimContScore1.Text)
                 return;
 
-
-
-
-
             if (Convert.ToInt32(txtElimContScore0.Text) > Convert.ToInt32(txtElimContScore1.Text))
-                //txtCmdBody.Text = "reUpdateAndEliminate('_ScoreCont00'," + txtElimContScore0.Text + ", '#contItem00', 1, 'down', '#contItem01')";
-                txtCmdBody.Text = "reUpdateAndEliminate('_ScoreCont00'," + txtElimContScoreProcent0.Text + ", '#contItem00', 1, 'down', '#contItem01')";
+                txtCmdBody.Text = "reUpdateAndEliminate('_ScoreCont00'," + txtElimContScore0.Text + ", '#contItem00', 1, 'down', '#contItem01')";
             else
-                //txtCmdBody.Text = "reUpdateAndEliminate('_ScoreCont01'," + txtElimContScore1.Text + ", '#contItem01', 1, 'up', '#contItem00')";
-                txtCmdBody.Text = "reUpdateAndEliminate('_ScoreCont01'," + txtElimContScoreProcent1.Text + ", '#contItem01', 1, 'up', '#contItem00')";
-
+                txtCmdBody.Text = "reUpdateAndEliminate('_ScoreCont01'," + txtElimContScore1.Text + ", '#contItem01', 1, 'up', '#contItem00')";
 
 
             TellToCaspar(CGPrefixEliminateBoard + " INVOKE 0 \"" + txtCmdBody.Text + "\"");
@@ -2123,15 +2313,14 @@ namespace CasparCGConfigurator
         }
         private void buttonStartListen_Click(object sender, EventArgs e)
         {
+            
 
-            String CurrJudgeIP = "";
             try
             {
                 // Check the port value
                 if (txt_Port.Text == "")
                 {
                     MessageBox.Show("Please enter a Port Number");
-
                     return;
                 }
                 string portStr = txt_Port.Text;
@@ -2141,7 +2330,6 @@ namespace CasparCGConfigurator
                                           SocketType.Stream,
                                           ProtocolType.Tcp);
                 IPEndPoint ipLocal = new IPEndPoint(IPAddress.Any, port);
-                CurrJudgeIP = ipLocal.ToString();
                 // Bind to local IP Address...
                 m_mainSocket.Bind(ipLocal);
                 // Start listening...
@@ -2149,21 +2337,12 @@ namespace CasparCGConfigurator
                 // Create the call back for any client connections...
                 m_mainSocket.BeginAccept(new AsyncCallback(OnClientConnect), null);
 
-                cboxJudjesClientsIPs.Items.Clear();
-                cboxJudjesClientsIPs.Items.Add("All Active Clients");
-                cboxJudjesClientsIPs.SelectedIndex = 0;
-
-
                 UpdateControls(true);
-
-
 
             }
             catch (SocketException se)
             {
-                MessageBox.Show("[ServerStartListen] უკაცრავად, კავშირი დაიკარგა ჟიურისთან, \n" + CurrJudgeIP + "-დან\nError Code:" + se.ErrorCode + ", " + se.Message);
-                //MessageBox.Show(se.Message);
-
+                MessageBox.Show(se.Message);
             }
         }
 
@@ -2172,7 +2351,6 @@ namespace CasparCGConfigurator
 
         public void OnClientConnect(IAsyncResult asyn)
         {
-            String CurrJudgeIP = "";
             try
             {
                 // Here we complete/end the BeginAccept() asynchronous call
@@ -2182,38 +2360,24 @@ namespace CasparCGConfigurator
 
                 string clientIPAddress = (m_workerSocket[m_clientCount].RemoteEndPoint.ToString()).Split(':')[0];
                 string clientProcessId = (m_workerSocket[m_clientCount].RemoteEndPoint.ToString()).Split(':')[1];
-                CurrJudgeIP = clientIPAddress;
 
                 // Let the worker Socket do the further processing for the 
                 // just connected client
                 WaitForData(m_workerSocket[m_clientCount]);
                 // Now increment the client count
                 ++m_clientCount;
-
-
-                if (cboxJudjesClientsIPs.InvokeRequired)
-                {
-                    cboxJudjesClientsIPs.Invoke(new MethodInvoker(delegate { cboxJudjesClientsIPs.Items.Add(clientIPAddress); }));
-
-                }
-                else
-                {
-                    cboxJudjesClientsIPs.Items.Add(clientIPAddress);
-                }
-
-
                 // Display this client connection as a status message on the GUI	
                 String str = String.Format("Client # {0} connected", m_clientCount);
                 if (tabPage7.InvokeRequired)
                 {
-
+                 
                     tabPage7.Invoke((Action)delegate { tabPage7.Text = "VOTTING Server:" + str; });
 
                 }
 
                 if (richTextBoxConnectedClientsMsg.InvokeRequired)
                 {
-                    //                    textBoxMsg.Invoke((Action)delegate { textBoxMsg.Text = str; });
+//                    textBoxMsg.Invoke((Action)delegate { textBoxMsg.Text = str; });
 
                     richTextBoxConnectedClientsMsg.Invoke(new MethodInvoker(delegate { richTextBoxConnectedClientsMsg.AppendText(" \n\nConnected Client From " + clientIPAddress); }));
                     richTextBoxConnectedClientsMsg.Invoke(new MethodInvoker(delegate { richTextBoxConnectedClientsMsg.AppendText(" \nConnected Client ID  " + clientProcessId); }));
@@ -2261,9 +2425,7 @@ namespace CasparCGConfigurator
             }
             catch (SocketException se)
             {
-                //MessageBox.Show("[OnClientConnect] უკაცრავად, კავშირი დაიკარგა ჟიურისთან, \n" + CurrJudgeIP + "-დან\nEr" + se.Message);
-                MessageBox.Show("[OnClientConnect] უკაცრავად, კავშირი დაიკარგა ჟიურისთან, \n" + CurrJudgeIP + "-დან\nError Code:" + se.ErrorCode + ", " + se.Message);
-                //MessageBox.Show(se.Message);
+                MessageBox.Show(se.Message);
             }
 
         }
@@ -2276,7 +2438,6 @@ namespace CasparCGConfigurator
 
         public void WaitForData(System.Net.Sockets.Socket soc)
         {
-            String CurrJudgeIP = "";
             try
             {
                 if (pfnWorkerCallBack == null)
@@ -2288,7 +2449,6 @@ namespace CasparCGConfigurator
                 }
                 SocketPacket theSocPkt = new SocketPacket();
                 theSocPkt.m_currentSocket = soc;
-                CurrJudgeIP = (theSocPkt.m_currentSocket.RemoteEndPoint.ToString()).Split(':')[0];
                 // Start receiving any data written by the connected client
                 // asynchronously
                 soc.BeginReceive(theSocPkt.dataBuffer, 0,
@@ -2299,8 +2459,7 @@ namespace CasparCGConfigurator
             }
             catch (SocketException se)
             {
-                MessageBox.Show("[WaitForData] უკაცრავად, კავშირი დაიკარგა ჟიურისთან, \n" + CurrJudgeIP + "-დან\nError Code:" + se.ErrorCode + ", " + se.Message);
-                //MessageBox.Show(se.Message);
+                MessageBox.Show(se.Message);
             }
 
         }
@@ -2313,24 +2472,19 @@ namespace CasparCGConfigurator
             try
             {
                 SocketPacket socketData = (SocketPacket)asyn.AsyncState;
-                //CurrJudgeIP = socketData.m_currentSocket.RemoteEndPoint.ToString();
-
-                string clientIPAddress = (socketData.m_currentSocket.RemoteEndPoint.ToString()).Split(':')[0];
-                CurrJudgeIP = clientIPAddress;
+                CurrJudgeIP = socketData.m_currentSocket.RemoteEndPoint.ToString();
 
                 int iRx = 0;
                 // Complete the BeginReceive() asynchronous call by EndReceive() method
                 // which will return the number of characters written to the stream 
                 // by the client
-
                 iRx = socketData.m_currentSocket.EndReceive(asyn);
 
-                //string clientIPAddress = (socketData.m_currentSocket.RemoteEndPoint.ToString()).Split(':')[0];
-
+                string clientIPAddress = (socketData.m_currentSocket.RemoteEndPoint.ToString()).Split(':')[0];
 
                 char[] chars = new char[iRx + 1];
                 System.Text.Decoder d = System.Text.Encoding.UTF8.GetDecoder();
-                int charLen = d.GetChars(socketData.dataBuffer, 0, iRx, chars, 0);
+                int charLen = d.GetChars(socketData.dataBuffer,0, iRx, chars, 0);
                 System.String szData = new System.String(chars);
                 if (richTextBoxReceivedMsg.InvokeRequired)
                 {
@@ -2345,7 +2499,7 @@ namespace CasparCGConfigurator
                     {
                         if (txtJudgeValue0.InvokeRequired)
                             txtJudgeValue0.Invoke((Action)delegate { txtJudgeValue0.Text = szData; });
-
+                        
                     }
                     else if (clientIPAddress == (grBoxJiuri1.Text).Split(':')[1])
                     {
@@ -2388,89 +2542,28 @@ namespace CasparCGConfigurator
             }
             catch (SocketException se)
             {
-                //MessageBox.Show("[OnDataReceived] უკაცრავად, კავშირი დაიკარგა ჟიურისთან, \n" + CurrJudgeIP + "-დან\n" + se.Message);
-                MessageBox.Show("[OnDataReceived] უკაცრავად, კავშირი დაიკარგა ჟიურისთან, \n" + CurrJudgeIP + "-დან\nError Code:" + se.ErrorCode + ", " + se.Message);
+                MessageBox.Show("უკაცრავად, კავშირი დაიკარგა ჟიურისთან, \n" + CurrJudgeIP + "-დან\n"+ se.Message);
 
 
             }
         }
 
-
         private void btnSendMessage_Click(object sender, EventArgs e)
         {
-            String CurrJudgeIP = "";
             try
             {
                 Object objData = richTextBoxSendMsg.Text;
                 byte[] byData = System.Text.Encoding.ASCII.GetBytes(objData.ToString());
-                string clientIPAddress;
-                string selectedIPAddress;
-
-                //for (int i = 0; i < m_clientCount; i++)
-                for (int i = 0; i < m_workerSocket.Length; i++)
+                for (int i = 0; i < m_clientCount; i++)
                 {
                     if (m_workerSocket[i] != null)
                     {
                         if (m_workerSocket[i].Connected)
                         {
-                            clientIPAddress = m_workerSocket[i].RemoteEndPoint.ToString().Split(':')[0];
-                            CurrJudgeIP = clientIPAddress;
-                            selectedIPAddress = (string)cboxJudjesClientsIPs.SelectedItem;
-
-                            if (selectedIPAddress.Contains("All Active Clients"))
-                                m_workerSocket[i].Send(byData);
-                            else if (clientIPAddress.Contains(selectedIPAddress))
-                                m_workerSocket[i].Send(byData);
-
+                            m_workerSocket[i].Send(byData);
                         }
                     }
                 }
-
-            }
-            catch (SocketException se)
-            {
-                //MessageBox.Show(se.Message);
-                MessageBox.Show("[SendMessage] უკაცრავად, კავშირი დაიკარგა ჟიურისთან, \n" + CurrJudgeIP + "-დან\nError Code:" + se.ErrorCode + ", " + se.Message);
-            }
-        }
-        /*
-        private void btnSendMessage_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                Object objData = richTextBoxSendMsg.Text;
-                string clientIPAddress;
-                string selectedIPAddress;
-                byte[] byData = System.Text.Encoding.ASCII.GetBytes(objData.ToString());
-                    for (int i = 0; i < m_clientCount; i++)
-                    {
-                        if (cboxJudjesClientsIPs.SelectedItem.ToString() == "All Active Clients")
-                        {
-                            if (m_workerSocket[i] != null)
-                            {
-                                if (m_workerSocket[i].Connected)
-                                {
-                                    m_workerSocket[i].Send(byData);
-                                }
-                            }
-                        }
-                        else
-                        {
-
-                        clientIPAddress = m_workerSocket[i].RemoteEndPoint.ToString().Split(':')[0];
-                        selectedIPAddress = (string)cboxJudjesClientsIPs.SelectedItem; 
-
-                        if ((m_workerSocket[i] != null) && (selectedIPAddress.Contains(clientIPAddress)))
-                                {
-                                if (m_workerSocket[i].Connected)
-                                    {
-                                        m_workerSocket[i].Send(byData);
-                                    }
-
-                        }
-                    }
-
-                    }
 
             }
             catch (SocketException se)
@@ -2479,7 +2572,6 @@ namespace CasparCGConfigurator
             }
         }
 
-        */
         private void buttonStopListen_Click(object sender, EventArgs e)
         {
             CloseSockets();
@@ -2493,8 +2585,7 @@ namespace CasparCGConfigurator
             {
                 m_mainSocket.Close();
             }
-            //            for (int i = 0; i < m_clientCount; i++)
-            for (int i = 0; i < m_workerSocket.Length; i++)
+            for (int i = 0; i < m_clientCount; i++)
             {
                 if (m_workerSocket[i] != null)
                 {
@@ -2522,61 +2613,55 @@ namespace CasparCGConfigurator
                 return;
             }
 
-            txtScoreToBeAdded.Text = (Convert.ToUInt16(txtJudgeValue0.Text) + Convert.ToUInt16(txtJudgeValue1.Text) + Convert.ToUInt16(txtJudgeValue2.Text) + Convert.ToUInt16(txtJudgeValue3.Text) + Convert.ToUInt16(txtJudgeValue4.Text)).ToString();
-            btnPLUS.Enabled = true;
+            txtScoreToBeAdded.Text = (Convert.ToUInt16(txtJudgeValue0.Text) + Convert.ToUInt16(txtJudgeValue1.Text) + Convert.ToUInt16(txtJudgeValue2.Text) + Convert.ToUInt16(txtJudgeValue3.Text) + Convert.ToUInt16(txtJudgeValue4.Text) ).ToString();
+            btnPLUS.Enabled = true;            
             btnPLUS.BackColor = Color.LightGreen;
             btnUpdateFromJudges.BackColor = SystemColors.ButtonFace;
         }
 
         private void btnVoteStart_Click(object sender, EventArgs e)
         {
-           // String CurrJudgeIP = "";
+
             txtJudgeValuesToZero();
 
             if (cBox_JudgesScoreShowNoneFullFrame.Checked)
             {
-                TellToCaspar(CGPrefixJudgesScoresBoard + " ADD 1 \"html2020/DidiScena/judges1\" 0");
+                TellToCaspar(CGPrefixJudgesScoresBoard + " ADD 1 \"html/DidiScena/judges1\" 0");
             }
 
 
             if (cBox_JudgesScoreShowFullFrame.Checked)
-            {
-                string bgfile = "BigSceneBg";
-                TellToCaspar("PLAY " + cBox_CGJudgesScoreChannel.SelectedItem.ToString() + "-" + (Convert.ToInt16(cBox_CGJudgesScoreChannelLayer.Text) - 1).ToString() + " \"" + bgfile + "\" SLIDE 1 Linear RIGHT LOOP");
-                TellToCaspar(CGPrefixJudgesScoresBoardFullFrame + " ADD 1 \"html2020/DidiScena/judgesFullFramehd\" 0");
-                //TellToCaspar(CGPrefixJudgesScoresBoardFullFrame + " INVOKE 0 \"" + "ContestantSlideIn('" + ContestantDataGrid.Rows[ContestantDataGrid.CurrentRow.Index].Cells[6].Value + "')" + "\"");
+            { 
+                string bgfile = "BigSceneBg";                    
+            TellToCaspar("PLAY " + cBox_CGJudgesScoreChannel.SelectedItem.ToString() + "-" + (Convert.ToInt16(cBox_CGJudgesScoreChannelLayer.Text) - 1).ToString() + " \"" + bgfile + "\" SLIDE 1 Linear RIGHT LOOP");
+            TellToCaspar(CGPrefixJudgesScoresBoardFullFrame + " ADD 1 \"html/DidiScena/judgesFullFramehd\" 0");
+            TellToCaspar(CGPrefixJudgesScoresBoardFullFrame + " INVOKE 0 \"" + "ContestantSlideIn('" + ContestantDataGrid.Rows[ContestantDataGrid.CurrentRow.Index].Cells[6].Value + "')" + "\"");
             }
 
             JudgeTurn = 0;
 
-            for (UInt16 i = 0; i < ListVoterJudges.Count; i++)
-            {
-                ListVoterJudges[i].Voted = false;
-//                ListVoterJudges[1].Voted = false;
-//                ListVoterJudges[2].Voted = false;
-//                ListVoterJudges[3].Voted = false;
-            }
+            ListVoterJudges[0].Voted = false;
+            ListVoterJudges[1].Voted = false;
+            ListVoterJudges[2].Voted = false;
+            ListVoterJudges[3].Voted = false;
 
             btnVoteStart.BackColor = SystemColors.ButtonFace;
+            
 
 
-            /*
             try
             {
                 richTextBoxSendMsg.Clear();
                 richTextBoxSendMsg.AppendText("r");
                 Object objData = richTextBoxSendMsg.Text;
                 byte[] byData = System.Text.Encoding.ASCII.GetBytes(objData.ToString());
-                //for (int i = 0; i < m_clientCount; i++)
-
-                for (int i = 0; i < m_workerSocket.Length; i++)
+                for (int i = 0; i < m_clientCount; i++)
                 {
                     if (m_workerSocket[i] != null)
                     {
                         if (m_workerSocket[i].Connected)
                         {
                             m_workerSocket[i].Send(byData);
-                            CurrJudgeIP = m_workerSocket[i].RemoteEndPoint.ToString();
                         }
                     }
                 }
@@ -2584,52 +2669,13 @@ namespace CasparCGConfigurator
             }
             catch (SocketException se)
             {
-                //MessageBox.Show(se.Message);
-                MessageBox.Show("[VoteStart] უკაცრავად, კავშირი დაიკარგა ჟიურისთან, \n" + CurrJudgeIP + "-დან\nError Code:" + se.ErrorCode + ", " + se.Message);
-
+                MessageBox.Show(se.Message);
             }
-
-
-            */
-
-            sendToAllJudges("votingOn\0");
         }
 
         private void ContestantDataGrid_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
-            // MessageBox.Show("შეცდომა გრიდში " + e.ToString());
-
-
-            MessageBox.Show("შეცდომა გრიდში  " + e.Context.ToString());
-
-            if (e.Context == DataGridViewDataErrorContexts.Commit)
-            {
-                MessageBox.Show("Commit error");
-            }
-            else if (e.Context == DataGridViewDataErrorContexts.CurrentCellChange)
-            {
-                MessageBox.Show("Cell change");
-            }
-            else if (e.Context == DataGridViewDataErrorContexts.Parsing)
-            {
-                MessageBox.Show("parsing error");
-            }
-            else if (e.Context == DataGridViewDataErrorContexts.LeaveControl)
-            {
-                MessageBox.Show("leave control error");
-            }
-
-            else if ((e.Exception) is ConstraintException)
-            {
-                DataGridView view = (DataGridView)sender;
-                view.Rows[e.RowIndex].ErrorText = "an error";
-                view.Rows[e.RowIndex].Cells[e.ColumnIndex].ErrorText = "an error";
-
-
-            }
-
-            e.ThrowException = false;
-
+            MessageBox.Show("შეცდომა გრიდში " + e.ToString());
         }
 
         private void btnAddWinnerToList_Click(object sender, EventArgs e)
@@ -2640,21 +2686,13 @@ namespace CasparCGConfigurator
             //{
 
             if (Convert.ToInt32(txtElimContScore0.Text) < Convert.ToInt32(txtElimContScore1.Text))
-            {
-                File.AppendAllText(@"c:\CGData\contestants.txt", Environment.NewLine + txtElimContPhoneNum1.Text + "," + txtElimContName1.Text + ",0,0" + Environment.NewLine);
-                txtAllTitleName.Text = "Allwith_" + txtElimContPhoneNum1.Text;
-            }
-            //streamWriter.WriteLine(txtElimContPhoneNum1.Text + "," + txtElimContName1.Text,true);                    
-            else
-            {
-                File.AppendAllText(@"c:\CGData\contestants.txt", Environment.NewLine + txtElimContPhoneNum0.Text + "," + txtElimContName0.Text + ",0,0" + Environment.NewLine);
-                txtAllTitleName.Text = "Allwith_" + txtElimContPhoneNum0.Text;
-            }
+                    File.AppendAllText(@"c:\CGData\contestants.txt", Environment.NewLine + txtElimContPhoneNum1.Text + "," + txtElimContName1.Text + Environment.NewLine);
+
+                //streamWriter.WriteLine(txtElimContPhoneNum1.Text + "," + txtElimContName1.Text,true);                    
+                else
+                File.AppendAllText(@"c:\CGData\contestants.txt", Environment.NewLine + txtElimContPhoneNum0.Text + "," + txtElimContName0.Text + Environment.NewLine);
             //streamWriter.WriteLine(txtElimContPhoneNum0.Text + "," + txtElimContName0.Text,true);
 
-
-            TellToCaspar("CLEAR " + cBox_CGCurrLowerTitleChannel.SelectedItem.ToString() + "-" + cBox_CGEliminateChannelLayer.SelectedItem.ToString());
-            //TellToCaspar("CLEAR " + CGPrefixEliminateBoard);
             //}
 
         }
@@ -2666,57 +2704,12 @@ namespace CasparCGConfigurator
 
         private void txtJudgeValue0_TextChanged(object sender, EventArgs e)
         {
-            //   if 
-
+         //   if 
+            
 
         }
 
         private void txtJudgeValues_TextChanged(object sender, EventArgs e)
-        {
-
-
-            if ((JudgeTurn < ListVoterJudges.Count + 1) && cBox_JudgesScoreShowFullFrame.Checked)
-            {
-
-
-                for (UInt16 i=0; i < ListVoterJudges.Count; i++)
-                {
-                    if (((sender as TextBox).Name.EndsWith(i.ToString())) && (!ListVoterJudges[i].Voted))
-                    {
-                        JudgeTurn++;
-                        if (cBox_JudgesScoreShowNoneFullFrame.Checked) 
-                            TellToCaspar(CGPrefixJudgesScoresBoard + " INVOKE 0 \"" + "JudgeScoreSlideIn(" + (JudgeTurn - 1).ToString() + ",'" + ListVoterJudges[i].JudgeName + "','" + (sender as TextBox).Text + "'," + ListVoterJudges.Count.ToString() + ")" + "\"");
-                        if (cBox_JudgesScoreShowFullFrame.Checked) 
-                            TellToCaspar(CGPrefixJudgesScoresBoardFullFrame + " INVOKE 0 \"" + "JudgeScoreSlideIn(" + (JudgeTurn - 1).ToString() + ",'" + ListVoterJudges[i].JudgeName + "','" + (sender as TextBox).Text + "'," + ListVoterJudges.Count.ToString() + ")" + "\"");
-
-                        ListVoterJudges[i].Voted = true;
-                    }
-                }
-
-            }
-
-
-            if (ListVoterJudges.Count == 3)
-                if ((Convert.ToInt16(txtJudgeValue0.Text) > 0) && (Convert.ToInt16(txtJudgeValue1.Text) > 0) && (Convert.ToInt16(txtJudgeValue2.Text) > 0)/* && (Convert.ToInt16(txtJudgeValue3.Text) > 0) && (Convert.ToInt16(txtJudgeValue4.Text) > 0)*/)
-                    btnUpdateFromJudges.BackColor = Color.LightGreen;
-                else
-                    btnUpdateFromJudges.BackColor = SystemColors.ButtonFace;
-            else if (ListVoterJudges.Count == 4)
-                if ((Convert.ToInt16(txtJudgeValue0.Text) > 0) && (Convert.ToInt16(txtJudgeValue1.Text) > 0) && (Convert.ToInt16(txtJudgeValue2.Text) > 0) && (Convert.ToInt16(txtJudgeValue3.Text) > 0) )
-                    btnUpdateFromJudges.BackColor = Color.LightGreen;
-                else
-                    btnUpdateFromJudges.BackColor = SystemColors.ButtonFace;
-            else if (ListVoterJudges.Count == 5)
-                if ((Convert.ToInt16(txtJudgeValue0.Text) > 0) && (Convert.ToInt16(txtJudgeValue1.Text) > 0) && (Convert.ToInt16(txtJudgeValue2.Text) > 0) && (Convert.ToInt16(txtJudgeValue3.Text) > 0) && (Convert.ToInt16(txtJudgeValue4.Text) > 0) && (Convert.ToInt16(txtJudgeValue4.Text) > 0))
-                    btnUpdateFromJudges.BackColor = Color.LightGreen;
-                else
-                    btnUpdateFromJudges.BackColor = SystemColors.ButtonFace;
-
-
-
-        }
-
-        private void txtJudgeValues_TextChanged_old(object sender, EventArgs e)
         {
 
 
@@ -2728,10 +2721,8 @@ namespace CasparCGConfigurator
                     if (Convert.ToInt16((sender as TextBox).Text) > 0)
                     {
                         JudgeTurn++;
-//                        if (cBox_JudgesScoreShowNoneFullFrame.Checked) TellToCaspar(CGPrefixJudgesScoresBoard + " INVOKE 0 \"" + "JudgeScoreSlideIn(" + (JudgeTurn - 1).ToString() + ",'" + ListVoterJudges[0].JudgeName + "','" + (sender as TextBox).Text + "')" + "\"");
-//                        if (cBox_JudgesScoreShowFullFrame.Checked) TellToCaspar(CGPrefixJudgesScoresBoardFullFrame + " INVOKE 0 \"" + "JudgeScoreSlideIn(" + (JudgeTurn - 1).ToString() + ",'" + ListVoterJudges[0].JudgeName + "','" + (sender as TextBox).Text + "')" + "\"");
-                        if (cBox_JudgesScoreShowNoneFullFrame.Checked) TellToCaspar(CGPrefixJudgesScoresBoard + " INVOKE 0 \"" + "JudgeScoreSlideIn(" + (JudgeTurn - 1).ToString() + ",'" + ListVoterJudges[0].JudgeName + "','" + (sender as TextBox).Text + "'," + ListVoterJudges.Count.ToString() + ")" + "\"");
-                        if (cBox_JudgesScoreShowFullFrame.Checked) TellToCaspar(CGPrefixJudgesScoresBoardFullFrame + " INVOKE 0 \"" + "JudgeScoreSlideIn(" + (JudgeTurn - 1).ToString() + ",'" + ListVoterJudges[0].JudgeName + "','" + (sender as TextBox).Text + "'," + ListVoterJudges.Count.ToString() + ")" + "\"");
+                        if (cBox_JudgesScoreShowNoneFullFrame.Checked) TellToCaspar(CGPrefixJudgesScoresBoard + " INVOKE 0 \"" + "JudgeScoreSlideIn(" + (JudgeTurn - 1).ToString() + ",'" + ListVoterJudges[0].JudgeName + "','" + (sender as TextBox).Text + "')" + "\"");
+                        if (cBox_JudgesScoreShowFullFrame.Checked) TellToCaspar(CGPrefixJudgesScoresBoardFullFrame + " INVOKE 0 \"" + "JudgeScoreSlideIn(" + (JudgeTurn - 1).ToString() + ",'" + ListVoterJudges[0].JudgeName + "','" + (sender as TextBox).Text + "')" + "\"");
                         ListVoterJudges[0].Voted = true;
                     }
                 }
@@ -2740,10 +2731,8 @@ namespace CasparCGConfigurator
                     if (Convert.ToInt16((sender as TextBox).Text) > 0)
                     {
                         JudgeTurn++;
-//                        if (cBox_JudgesScoreShowNoneFullFrame.Checked) TellToCaspar(CGPrefixJudgesScoresBoard + " INVOKE 0 \"" + "JudgeScoreSlideIn(" + (JudgeTurn - 1).ToString() + ",'" + ListVoterJudges[1].JudgeName + "','" + (sender as TextBox).Text + "')" + "\"");
-//                        if (cBox_JudgesScoreShowFullFrame.Checked) TellToCaspar(CGPrefixJudgesScoresBoardFullFrame + " INVOKE 0 \"" + "JudgeScoreSlideIn(" + (JudgeTurn - 1).ToString() + ",'" + ListVoterJudges[1].JudgeName + "','" + (sender as TextBox).Text + "')" + "\"");
-                        if (cBox_JudgesScoreShowNoneFullFrame.Checked) TellToCaspar(CGPrefixJudgesScoresBoard + " INVOKE 0 \"" + "JudgeScoreSlideIn(" + (JudgeTurn - 1).ToString() + ",'" + ListVoterJudges[1].JudgeName + "','" + (sender as TextBox).Text + "'," + ListVoterJudges.Count.ToString() + ")" + "\"");
-                        if (cBox_JudgesScoreShowFullFrame.Checked) TellToCaspar(CGPrefixJudgesScoresBoardFullFrame + " INVOKE 0 \"" + "JudgeScoreSlideIn(" + (JudgeTurn - 1).ToString() + ",'" + ListVoterJudges[1].JudgeName + "','" + (sender as TextBox).Text + "'," + ListVoterJudges.Count.ToString() + ")" + "\"");
+                        if (cBox_JudgesScoreShowNoneFullFrame.Checked) TellToCaspar(CGPrefixJudgesScoresBoard + " INVOKE 0 \"" + "JudgeScoreSlideIn(" + (JudgeTurn - 1).ToString() + ",'" + ListVoterJudges[1].JudgeName + "','" + (sender as TextBox).Text + "')" + "\"");
+                        if (cBox_JudgesScoreShowFullFrame.Checked) TellToCaspar(CGPrefixJudgesScoresBoardFullFrame + " INVOKE 0 \"" + "JudgeScoreSlideIn(" + (JudgeTurn - 1).ToString() + ",'" + ListVoterJudges[1].JudgeName + "','" + (sender as TextBox).Text + "')" + "\"");
                         ListVoterJudges[1].Voted = true;
                     }
                 }
@@ -2752,11 +2741,8 @@ namespace CasparCGConfigurator
                     if (Convert.ToInt16((sender as TextBox).Text) > 0)
                     {
                         JudgeTurn++;
-//                        if (cBox_JudgesScoreShowNoneFullFrame.Checked) TellToCaspar(CGPrefixJudgesScoresBoard + " INVOKE 0 \"" + "JudgeScoreSlideIn(" + (JudgeTurn - 1).ToString() + ",'" + ListVoterJudges[2].JudgeName + "','" + (sender as TextBox).Text + "')" + "\"");
-//                        if (cBox_JudgesScoreShowFullFrame.Checked) TellToCaspar(CGPrefixJudgesScoresBoardFullFrame + " INVOKE 0 \"" + "JudgeScoreSlideIn(" + (JudgeTurn - 1).ToString() + ",'" + ListVoterJudges[2].JudgeName + "','" + (sender as TextBox).Text + "')" + "\"");
-                        if (cBox_JudgesScoreShowNoneFullFrame.Checked) TellToCaspar(CGPrefixJudgesScoresBoard + " INVOKE 0 \"" + "JudgeScoreSlideIn(" + (JudgeTurn - 1).ToString() + ",'" + ListVoterJudges[2].JudgeName + "','" + (sender as TextBox).Text + "'," + ListVoterJudges.Count.ToString() + ")" + "\"");
-                        if (cBox_JudgesScoreShowFullFrame.Checked) TellToCaspar(CGPrefixJudgesScoresBoardFullFrame + " INVOKE 0 \"" + "JudgeScoreSlideIn(" + (JudgeTurn - 1).ToString() + ",'" + ListVoterJudges[2].JudgeName + "','" + (sender as TextBox).Text + "'," + ListVoterJudges.Count.ToString() + ")" + "\"");
-
+                        if (cBox_JudgesScoreShowNoneFullFrame.Checked) TellToCaspar(CGPrefixJudgesScoresBoard + " INVOKE 0 \"" + "JudgeScoreSlideIn(" + (JudgeTurn - 1).ToString() + ",'" + ListVoterJudges[2].JudgeName + "','" + (sender as TextBox).Text + "')" + "\"");
+                        if (cBox_JudgesScoreShowFullFrame.Checked) TellToCaspar(CGPrefixJudgesScoresBoardFullFrame + " INVOKE 0 \"" + "JudgeScoreSlideIn(" + (JudgeTurn - 1).ToString() + ",'" + ListVoterJudges[2].JudgeName + "','" + (sender as TextBox).Text + "')" + "\"");
                         ListVoterJudges[2].Voted = true;
                     }
                 }
@@ -2765,10 +2751,8 @@ namespace CasparCGConfigurator
                     if (Convert.ToInt16((sender as TextBox).Text) > 0)
                     {
                         JudgeTurn++;
-//                        if (cBox_JudgesScoreShowNoneFullFrame.Checked) TellToCaspar(CGPrefixJudgesScoresBoard + " INVOKE 0 \"" + "JudgeScoreSlideIn(" + (JudgeTurn - 1).ToString() + ",'" + ListVoterJudges[3].JudgeName + "','" + (sender as TextBox).Text + "')" + "\"");
-//                        if (cBox_JudgesScoreShowFullFrame.Checked) TellToCaspar(CGPrefixJudgesScoresBoardFullFrame + " INVOKE 0 \"" + "JudgeScoreSlideIn(" + (JudgeTurn - 1).ToString() + ",'" + ListVoterJudges[3].JudgeName + "','" + (sender as TextBox).Text + "')" + "\"");
-                        if (cBox_JudgesScoreShowNoneFullFrame.Checked) TellToCaspar(CGPrefixJudgesScoresBoard + " INVOKE 0 \"" + "JudgeScoreSlideIn(" + (JudgeTurn - 1).ToString() + ",'" + ListVoterJudges[3].JudgeName + "','" + (sender as TextBox).Text + "'," + ListVoterJudges.Count.ToString() + ")" + "\"");
-                        if (cBox_JudgesScoreShowFullFrame.Checked) TellToCaspar(CGPrefixJudgesScoresBoardFullFrame + " INVOKE 0 \"" + "JudgeScoreSlideIn(" + (JudgeTurn - 1).ToString() + ",'" + ListVoterJudges[3].JudgeName + "','" + (sender as TextBox).Text + "'," + ListVoterJudges.Count.ToString() + ")" + "\"");
+                        if (cBox_JudgesScoreShowNoneFullFrame.Checked) TellToCaspar(CGPrefixJudgesScoresBoard + " INVOKE 0 \"" + "JudgeScoreSlideIn(" + (JudgeTurn - 1).ToString() + ",'" + ListVoterJudges[3].JudgeName + "','" + (sender as TextBox).Text + "')" + "\"");
+                        if (cBox_JudgesScoreShowFullFrame.Checked) TellToCaspar(CGPrefixJudgesScoresBoardFullFrame + " INVOKE 0 \"" + "JudgeScoreSlideIn(" + (JudgeTurn - 1).ToString() + ",'" + ListVoterJudges[3].JudgeName + "','" + (sender as TextBox).Text + "')" + "\"");
                         ListVoterJudges[3].Voted = true;
                     }
                 }
@@ -2776,7 +2760,7 @@ namespace CasparCGConfigurator
 
 
 
-            if ((Convert.ToInt16(txtJudgeValue0.Text) > 0) && (Convert.ToInt16(txtJudgeValue1.Text) > 0) && (Convert.ToInt16(txtJudgeValue2.Text) > 0)/* && (Convert.ToInt16(txtJudgeValue3.Text) > 0) && (Convert.ToInt16(txtJudgeValue4.Text) > 0)*/)
+            if ((Convert.ToInt16(txtJudgeValue0.Text) > 0) && (Convert.ToInt16(txtJudgeValue1.Text) > 0) && (Convert.ToInt16(txtJudgeValue2.Text) > 0) && (Convert.ToInt16(txtJudgeValue3.Text) > 0) && (Convert.ToInt16(txtJudgeValue4.Text) > 0))                
                 btnUpdateFromJudges.BackColor = Color.LightGreen;
             else
                 btnUpdateFromJudges.BackColor = SystemColors.ButtonFace;
@@ -2841,7 +2825,7 @@ namespace CasparCGConfigurator
 
                 }
 
-
+  
             }
             catch (Exception exc)
             {
@@ -2850,6 +2834,10 @@ namespace CasparCGConfigurator
             }
         }
 
+        private void panel6_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
 
         private void panel3_DoubleClick(object sender, EventArgs e)
         {
@@ -2861,8 +2849,8 @@ namespace CasparCGConfigurator
 
         private void SortDataByMultiColumns()
         {
-
-
+           
+            
         }
 
         private void button29_Click_2(object sender, EventArgs e)
@@ -2879,7 +2867,7 @@ namespace CasparCGConfigurator
             //txtJudgeValue3.Text = (r.Next(1, 10)).ToString();
             txtJudgeValue4.Text = (r.Next(1, 10)).ToString();
 
-
+            
 
         }
 
@@ -2892,9 +2880,7 @@ namespace CasparCGConfigurator
         {
             foreach (DataGridViewRow row in ContestantDataGrid.Rows)
             {
-                row.Cells[5].Value = 0;
-                row.Cells[7].Value = 0;
-                row.Cells[8].Value = 0;
+                row.Cells[7].Value = 0 ;
             }
 
         }
@@ -2904,21 +2890,14 @@ namespace CasparCGConfigurator
             ListContestant.Clear();
             //ListContestant.RemoveAll();
             ListVoterJudges.Clear();
-            //ContestantDataGrid.DataBindings.Clear();
             ContestantSource.Clear();
-            ContestantDataGrid.DataBindings.Clear();
-
-
+            //ContestantDataGrid.Rows.Clear();
         }
 
         private void btnALLShow_Click(object sender, EventArgs e)
         {
             //TellToCaspar("CLEAR " + cBox_CGCurrChannel.SelectedItem.ToString());
 
-            rendomizeJudgesVotes();
-            rendomizePhoneCals();
-
-            /*
             ClearLayers();
 
             TellToCaspar("CLEAR " + ChannelAndLayerOfScoreBoard);
@@ -2927,7 +2906,7 @@ namespace CasparCGConfigurator
             string tmpStr = "";
             //string CGPrefix = "CG " + cBox_CGCurrChannel.SelectedItem.ToString() + "-" + cBox_CGCurrChannelLayer.SelectedItem.ToString();
 
-            TellToCaspar(CGPrefixScoreBoard + " ADD 1 \"html2020/DidiScena/Z2\" 0");
+            TellToCaspar(CGPrefixScoreBoard + " ADD 1 \"html/DidiScena/Z2\" 0");
 
 
             txtCmdBody.Text = "createItemsNext(" ;
@@ -2977,7 +2956,6 @@ namespace CasparCGConfigurator
             txtCmdBody.Text = txtCmdBody.Text + tmpStr + ")";
             TellToCaspar(CGPrefixScoreBoard + " INVOKE 0 \"" + txtCmdBody.Text + "\"");
 
-            */
 
 
 
@@ -2990,14 +2968,12 @@ namespace CasparCGConfigurator
 
         private void btnGO_2_CG_Click(object sender, EventArgs e)
         {
-            if (cBoxAMPCcmd.SelectedItem.ToString() == "---")
-                TellToCaspar(txtCmdBody.Text);
-            else if (cBoxAMPCcmd.SelectedItem.ToString() == "INVOKE")
+            if (cBoxAMPCcmd.SelectedItem.ToString() == "INVOKE")
                 TellToCaspar("CG " + cBox_CGScoreBoardCurrChannel.SelectedItem.ToString() + "-" + cBox_CGCurrScoreBoardChannelLayer.SelectedItem.ToString() + " INVOKE 0 \"" + txtCmdBody.Text + "\"");
             else if (cBoxAMPCcmd.SelectedItem.ToString() == "ADD & PLAY")
-                TellToCaspar("CG " + cBox_CGScoreBoardCurrChannel.SelectedItem.ToString() + "-" + cBox_CGCurrScoreBoardChannelLayer.SelectedItem.ToString() + " ADD " + cBox_CGCurrScoreBoardChannelLayer.SelectedItem.ToString() + " \"html2020/DidiScena/" + txtCmdBody.Text + "\" 1");
+                TellToCaspar("CG " + cBox_CGScoreBoardCurrChannel.SelectedItem.ToString() + "-" + cBox_CGCurrScoreBoardChannelLayer.SelectedItem.ToString() + " ADD " + cBox_CGCurrScoreBoardChannelLayer.SelectedItem.ToString() + " \"html/DidiScena/" + txtCmdBody.Text + "\" 1");
             else if (cBoxAMPCcmd.SelectedItem.ToString() == "ADD")
-                TellToCaspar("CG " + cBox_CGScoreBoardCurrChannel.SelectedItem.ToString() + "-" + cBox_CGCurrScoreBoardChannelLayer.SelectedItem.ToString() + " ADD " + cBox_CGCurrScoreBoardChannelLayer.SelectedItem.ToString() + " \"html2020/DidiScena/" + txtCmdBody.Text + "\" 0");
+                TellToCaspar("CG " + cBox_CGScoreBoardCurrChannel.SelectedItem.ToString() + "-" + cBox_CGCurrScoreBoardChannelLayer.SelectedItem.ToString() + " ADD " + cBox_CGCurrScoreBoardChannelLayer.SelectedItem.ToString() + " \"html/DidiScena/" + txtCmdBody.Text + "\" 0");
 
 
         }
@@ -3028,17 +3004,16 @@ namespace CasparCGConfigurator
 
         private void btn_title_Out_Click(object sender, EventArgs e)
         {
+ 
 
 
 
-
-
+            
         }
 
         private void button33_Click(object sender, EventArgs e)
         {
-            //TellToCaspar("CLEAR " + ChannelAndLayerOfEliminateBoard);
-            TellToCaspar("CLEAR " + cBox_CGJudgesScoreChannel.SelectedItem.ToString());
+            TellToCaspar("CLEAR " + ChannelAndLayerOfEliminateBoard);
         }
 
 
@@ -3051,17 +3026,17 @@ namespace CasparCGConfigurator
         {
 
 
-            /*
-                        ChannelAndLayerOfScoreBoard = cBox_CGCurrChannel.SelectedItem.ToString() + "-" + cBox_CGCurrChannelLayer.SelectedItem.ToString();
-                        ChannelAndLayerOfBonusBoard = cBox_CGCurrChannel.SelectedItem.ToString() + "-" + (Convert.ToInt16(cBox_CGCurrChannelLayer.Text) + 1).ToString();
-                        ChannelAndLayerOfEliminateBoard = cBox_CGCurrChannel.SelectedItem.ToString() + "-" + (Convert.ToInt16(cBox_CGCurrChannelLayer.Text) + 2).ToString();
-                        ChannelAndLayerOfLowerThirdBoard = cBox_CGCurrLowerTitleChannel.SelectedItem.ToString() + "-" + cBox_CGCurrLowerTitleChannelLayer.SelectedItem.ToString();
-                        ChannelAndLayerOfJudgesScoresBoardFullFrame = cBox_CGJudgesScoreChannel.SelectedItem.ToString() + "-" + cBox_CGJudgesScoreChannelLayer.SelectedItem.ToString();
-                        ChannelAndLayerOfJudgesScoresBoard = cBox_CGCurrLowerTitleChannel.SelectedItem.ToString() + "-" + (Convert.ToInt16(cBox_CGCurrLowerTitleChannelLayer.Text) + 2).ToString();
-            */
+/*
+            ChannelAndLayerOfScoreBoard = cBox_CGCurrChannel.SelectedItem.ToString() + "-" + cBox_CGCurrChannelLayer.SelectedItem.ToString();
+            ChannelAndLayerOfBonusBoard = cBox_CGCurrChannel.SelectedItem.ToString() + "-" + (Convert.ToInt16(cBox_CGCurrChannelLayer.Text) + 1).ToString();
+            ChannelAndLayerOfEliminateBoard = cBox_CGCurrChannel.SelectedItem.ToString() + "-" + (Convert.ToInt16(cBox_CGCurrChannelLayer.Text) + 2).ToString();
+            ChannelAndLayerOfLowerThirdBoard = cBox_CGCurrLowerTitleChannel.SelectedItem.ToString() + "-" + cBox_CGCurrLowerTitleChannelLayer.SelectedItem.ToString();
+            ChannelAndLayerOfJudgesScoresBoardFullFrame = cBox_CGJudgesScoreChannel.SelectedItem.ToString() + "-" + cBox_CGJudgesScoreChannelLayer.SelectedItem.ToString();
+            ChannelAndLayerOfJudgesScoresBoard = cBox_CGCurrLowerTitleChannel.SelectedItem.ToString() + "-" + (Convert.ToInt16(cBox_CGCurrLowerTitleChannelLayer.Text) + 2).ToString();
+*/
 
             String tmpstring = cBox_CGJudgesScoreChannel.SelectedItem.ToString() + "-" + (Convert.ToInt16(cBox_CGJudgesScoreChannelLayer.Text) - 1).ToString();
-
+        
             TellToCaspar(CGPrefixJudgesScoresBoard + " INVOKE 0 \"" + "goOutJudgeBoxes()" + "\"");
 
             TellToCaspar("CLEAR " + ChannelAndLayerOfJudgesScoresBoard);
@@ -3072,27 +3047,19 @@ namespace CasparCGConfigurator
             JudgeTurn = 0;
 
 
-            for (UInt16 i=0; i<ListVoterJudges.Count; i++)
-            {
-                ListVoterJudges[i].Voted = false;
-            }
-            
-
-            sendToAllJudges("logo\0");
-        }
+            ListVoterJudges[0].Voted = false;
+            ListVoterJudges[1].Voted = false;
+            ListVoterJudges[2].Voted = false;
+            ListVoterJudges[3].Voted = false;
 
 
-        private void sendToAllJudges(String message)
-        {
             try
             {
                 richTextBoxSendMsg.Clear();
-                //richTextBoxSendMsg.AppendText("n");
-                richTextBoxSendMsg.AppendText(message);
+                richTextBoxSendMsg.AppendText("n");
                 Object objData = richTextBoxSendMsg.Text;
                 byte[] byData = System.Text.Encoding.ASCII.GetBytes(objData.ToString());
-                //for (int i = 0; i < m_clientCount; i++)
-                for (int i = 0; i < m_workerSocket.Length; i++)
+                for (int i = 0; i < m_clientCount; i++)
                 {
                     if (m_workerSocket[i] != null)
                     {
@@ -3107,10 +3074,10 @@ namespace CasparCGConfigurator
             catch (SocketException se)
             {
                 MessageBox.Show(se.Message);
-                MessageBox.Show("[VoteStandBy] უკაცრავად, კავშირი დაიკარგა ჟიურისთან, \n" + "-დან\nError Code:" + se.ErrorCode + ", " + se.Message);
             }
-
         }
+
+
 
 
 
@@ -3175,7 +3142,7 @@ namespace CasparCGConfigurator
 
 
 
-        public void TitleInOut()
+        public void  TitleInOut()
         {
 
 
@@ -3193,17 +3160,17 @@ namespace CasparCGConfigurator
 
                 //lblCurrCont.Text = e.RowIndex.ToString() + " - " + e.ColumnIndex.ToString() + " " + ContestantDataGrid.Rows[e.RowIndex].Cells[0].Value;
 
-                TellToCaspar("PLAY " + ChannelAndLayerOfLowerThirdBoard + " \"2 LIVE/" + ContestantDataGrid.Rows[ContestantDataGrid.CurrentRow.Index].Cells[6].Value + "\" CUT 1 Linear RIGHT LOOP");
-                //TellToCaspar(CGPrefixLowerThirdBoard + " ADD 1 \"html2020/DidiScena/lowertitle\" 0");
-                //TellToCaspar(CGPrefixLowerThirdBoard + " INVOKE 0 \"" + "createTitleBoxItems(" + ContestantDataGrid.Rows[ContestantDataGrid.CurrentRow.Index].Cells[6].Value + ")" + "\"");
-                //TellToCaspar(CGPrefixLowerThirdBoard + " INVOKE 0 \"" + "go1()" + "\"");
+
+                TellToCaspar(CGPrefixLowerThirdBoard + " ADD 1 \"html/DidiScena/lowertitle\" 0");
+                TellToCaspar(CGPrefixLowerThirdBoard + " INVOKE 0 \"" + "createTitleBoxItems(" + ContestantDataGrid.Rows[ContestantDataGrid.CurrentRow.Index].Cells[6].Value + ")" + "\"");
+                TellToCaspar(CGPrefixLowerThirdBoard + " INVOKE 0 \"" + "go1()" + "\"");
 
                 btn_title_InOut.Text = "TITLE OUT";
             }
             else
             {
-                TellToCaspar("CLEAR " + ChannelAndLayerOfLowerThirdBoard);
-                //TellToCaspar(CGPrefixLowerThirdBoard + " INVOKE 0 \"" + "TitleBoxGoAway(1)" + "\"");
+                //TellToCaspar("CLEAR " + ChannelAndLayerOfLowerThirdBoard);
+                TellToCaspar(CGPrefixLowerThirdBoard + " INVOKE 0 \"" + "TitleBoxGoAway(1)" + "\"");
                 btn_title_InOut.Text = "TITLE IN";
 
             }
@@ -3227,19 +3194,17 @@ namespace CasparCGConfigurator
 
                 //lblCurrCont.Text = e.RowIndex.ToString() + " - " + e.ColumnIndex.ToString() + " " + ContestantDataGrid.Rows[e.RowIndex].Cells[0].Value;
 
-                TellToCaspar("PLAY " + ChannelAndLayerOfLowerThirdBoard + " \"2 LIVE/" + txtAllTitleName.Text + "\" CUT 1 Linear RIGHT LOOP");
 
-                //TellToCaspar(CGPrefixLowerThirdBoard + " ADD 1 \"html2020/DidiScena/lowertitle\" 0");
-                //TellToCaspar(CGPrefixLowerThirdBoard + " INVOKE 0 \"" + "createTitleBoxItems(" + "MZA-ALL" + ")" + "\"");
-                //TellToCaspar(CGPrefixLowerThirdBoard + " INVOKE 0 \"" + "go1()" + "\"");
+                TellToCaspar(CGPrefixLowerThirdBoard + " ADD 1 \"html/DidiScena/lowertitle\" 0");
+                TellToCaspar(CGPrefixLowerThirdBoard + " INVOKE 0 \"" + "createTitleBoxItems(" + "MZA-ALL" + ")" + "\"");
+                TellToCaspar(CGPrefixLowerThirdBoard + " INVOKE 0 \"" + "go1()" + "\"");
 
                 btn_Looptitle_InOut.Text = "LOOP TITLE OUT";
             }
             else
             {
-                TellToCaspar("CLEAR " + ChannelAndLayerOfLowerThirdBoard);
-
-                //TellToCaspar(CGPrefixLowerThirdBoard + " INVOKE 0 \"" + "TitleBoxGoAway(1)" + "\"");
+                //TellToCaspar("CLEAR " + ChannelAndLayerOfLowerThirdBoard);
+                TellToCaspar(CGPrefixLowerThirdBoard + " INVOKE 0 \"" + "TitleBoxGoAway(1)" + "\"");
                 btn_Looptitle_InOut.Text = "LOOP TITLE IN";
 
             }
@@ -3257,861 +3222,31 @@ namespace CasparCGConfigurator
 
         private void button14_Click_1(object sender, EventArgs e)
         {
-            ListVoterJudges[cboxDudgesIpList.SelectedIndex].JudgeName = txtDudgeName.Text;
-            (tabPage5.Controls["grBoxJiuri" + (cboxDudgesIpList.SelectedIndex).ToString()] as GroupBox).Text = ListVoterJudges[cboxDudgesIpList.SelectedIndex].JudgeName + ":" + cboxDudgesIpList.Text;
-
+            grBoxJiuri0.Text = ListVoterJudges[0].JudgeName + ":" + txt_IPJiuri0.Text;
+            
 
         }
 
         private void button31_Click(object sender, EventArgs e)
         {
-            //grBoxJiuri1.Text = ListVoterJudges[1].JudgeName + ":" + txt_IPJiuri1.Text;
+            grBoxJiuri1.Text = ListVoterJudges[1].JudgeName + ":" + txt_IPJiuri1.Text;
         }
 
         private void button32_Click_1(object sender, EventArgs e)
         {
-            //grBoxJiuri2.Text = ListVoterJudges[2].JudgeName + ":" + txt_IPJiuri2.Text;
+            grBoxJiuri2.Text = ListVoterJudges[2].JudgeName + ":" + txt_IPJiuri2.Text;
         }
 
         private void button34_Click_1(object sender, EventArgs e)
         {
-            //grBoxJiuri3.Text = ListVoterJudges[3].JudgeName + ":" + txt_IPJiuri3.Text;
-        }
-
-        private void btn_loadRefreshJudges_Click(object sender, EventArgs e)
-        {
-            ListVoterJudges.Clear();
-            cboxDudgesIpList.Items.Clear();
-            ChannelAndLayerOfJudgesScoresBoardFullFrame = cBox_CGJudgesScoreChannel.SelectedItem.ToString() + "-" + cBox_CGJudgesScoreChannelLayer.SelectedItem.ToString();
-            ChannelAndLayerOfJudgesScoresBoard = cBox_CGCurrLowerTitleChannel.SelectedItem.ToString() + "-" + (Convert.ToInt16(cBox_CGCurrLowerTitleChannelLayer.Text) + 2).ToString();
-
-
-            TellToCaspar("CLEAR " + ChannelAndLayerOfJudgesScoresBoardFullFrame);
-            TellToCaspar("CLEAR " + ChannelAndLayerOfJudgesScoresBoard);
-
-
-            CGPrefixJudgesScoresBoard = "CG " + ChannelAndLayerOfJudgesScoresBoard;
-            CGPrefixJudgesScoresBoardFullFrame = "CG " + ChannelAndLayerOfJudgesScoresBoardFullFrame;
-
-
-            var fileStream = new FileStream(@"c:\CGData\judges.txt", FileMode.Open, FileAccess.Read);
-            using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
-            {
-                string line;
-                string[] lineSplited = { "", "" };
-
-                while ((line = streamReader.ReadLine()) != null)
-                {
-                    lineSplited = line.Split(',');
-                    var VoterObj = new Voters();
-                    VoterObj.JudgeIP = lineSplited[0];
-                    VoterObj.JudgeName = lineSplited[1];
-                    VoterObj.Voted = false;
-                    ListVoterJudges.Add(VoterObj);
-                    cboxDudgesIpList.Items.Add(VoterObj.JudgeIP);
-                    (tabPage5.Controls["grBoxJiuri" + (ListVoterJudges.Count - 1).ToString()] as GroupBox).Enabled = true;
-                    (tabPage5.Controls["grBoxJiuri" + (ListVoterJudges.Count - 1).ToString()] as GroupBox).Text = ListVoterJudges[ListVoterJudges.Count - 1].JudgeName + ":" + ListVoterJudges[ListVoterJudges.Count - 1].JudgeIP; ;
-
-                }
-
-            }
-
-
-
-            /*
-            grBoxJiuri0.Text = ListVoterJudges[0].JudgeName + ":" + ListVoterJudges[0].JudgeIP;
-
-            grBoxJiuri1.Text = ListVoterJudges[1].JudgeName + ":" + ListVoterJudges[1].JudgeIP;
-
-            grBoxJiuri2.Text = ListVoterJudges[2].JudgeName + ":" + ListVoterJudges[2].JudgeIP;
-
-            grBoxJiuri3.Text = ListVoterJudges[3].JudgeName + ":" + ListVoterJudges[3].JudgeIP;
-
-            grBoxJiuri4.Text = ListVoterJudges[4].JudgeName + ":" + ListVoterJudges[4].JudgeIP;
-
-            */
-
-
-
-
-        }
-
-        private void btnLoadFrom_Click(object sender, EventArgs e)
-        {
-
-            if (txtContestantCount1.SelectedItem.ToString() == "Value From File")
-            {
-                var lineCount = File.ReadLines(@"c:\CGData\contestants.txt").Count();
-                txtContestantCount.Text = lineCount.ToString();
-            }
-            else
-            {
-                txtContestantCount.Text = txtContestantCount1.SelectedItem.ToString();
-            }
-
-
-            string[] momgerali = new string[Convert.ToUInt16(txtContestantCount.Text)];
-            string[] phoneNum = new string[Convert.ToUInt16(txtContestantCount.Text)];
-            string[] score = new string[Convert.ToUInt16(txtContestantCount.Text)];
-            string[] phoneCalls = new string[Convert.ToUInt16(txtContestantCount.Text)];
-
-
-            ListContestant.Clear();
-            //ListContestantInStart.Clear();
-            //ListContestant.RemoveAll();
-            //ListVoterJudges.Clear();
-            ContestantSource.Clear();
-            //ContestantDataGrid.Rows.Clear();
-            //dataGridView1.Rows.Clear();
-
-
-            ChannelAndLayerOfScoreBoard = cBox_CGScoreBoardCurrChannel.SelectedItem.ToString() + "-" + cBox_CGCurrScoreBoardChannelLayer.SelectedItem.ToString();
-            ChannelAndLayerOfBonusBoard = cBox_CGScoreBoardCurrChannel.SelectedItem.ToString() + "-" + (Convert.ToInt16(cBox_CGCurrScoreBoardChannelLayer.Text) + 1).ToString();
-            //ChannelAndLayerOfEliminateBoard = cBox_CGScoreBoardCurrChannel.SelectedItem.ToString() + "-" + (Convert.ToInt16(cBox_CGCurrScoreBoardChannelLayer.Text) + 2).ToString();
-            ChannelAndLayerOfLowerThirdBoard = cBox_CGCurrLowerTitleChannel.SelectedItem.ToString() + "-" + cBox_CGCurrLowerTitleChannelLayer.SelectedItem.ToString();
-            //ChannelAndLayerOfJudgesScoresBoardFullFrame = cBox_CGJudgesScoreChannel.SelectedItem.ToString() + "-" + cBox_CGJudgesScoreChannelLayer.SelectedItem.ToString();
-            //ChannelAndLayerOfJudgesScoresBoard = cBox_CGCurrLowerTitleChannel.SelectedItem.ToString() + "-" + (Convert.ToInt16(cBox_CGCurrLowerTitleChannelLayer.Text) + 2).ToString();
-
-
-            TellToCaspar("CLEAR " + ChannelAndLayerOfScoreBoard);
-            TellToCaspar("CLEAR " + ChannelAndLayerOfBonusBoard);
-            TellToCaspar("CLEAR " + ChannelAndLayerOfEliminateBoard);
-            TellToCaspar("CLEAR " + ChannelAndLayerOfLowerThirdBoard);
-            TellToCaspar("CLEAR " + ChannelAndLayerOfJudgesScoresBoardFullFrame);
-            TellToCaspar("CLEAR " + ChannelAndLayerOfJudgesScoresBoard);
-
-
-            CGPrefixScoreBoard = "CG " + ChannelAndLayerOfScoreBoard;
-            CGPrefixBonusBoard = "CG " + ChannelAndLayerOfBonusBoard;
-            //CGPrefixEliminateBoard = "CG " + ChannelAndLayerOfEliminateBoard;
-            CGPrefixLowerThirdBoard = "CG " + ChannelAndLayerOfLowerThirdBoard;
-            //CGPrefixJudgesScoresBoard = "CG " + ChannelAndLayerOfJudgesScoresBoard;
-            //CGPrefixJudgesScoresBoardFullFrame = "CG " + ChannelAndLayerOfJudgesScoresBoardFullFrame;
-
-
-
-            var fileStream = new FileStream(@"c:\CGData\contestants.txt", FileMode.Open, FileAccess.Read);
-            using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
-            {
-                string line;
-                string[] lineSplited = { "", "" };
-                UInt16 i = 0;
-                while (((line = streamReader.ReadLine()) != null) && (i < Convert.ToUInt16(txtContestantCount.Text)))
-                {
-                    lineSplited = line.Split(',');
-                    phoneNum[i] = lineSplited[0];
-                    momgerali[i] = lineSplited[1];
-                    score[i] = lineSplited[2];
-                    phoneCalls[i] = lineSplited[3];
-                    i++;
-
-                    //var PhoneCallObj = new PhoneAndPhoneCalls();
-                    //PhoneCallObj.Phone = lineSplited[0];
-                    //PhoneCallObj.PhoneCalls = Convert.ToUInt32(lineSplited[1]);
-                    //ListPhoneCalls.Add(PhoneCallObj);
-
-                }
-
-
-                if (Convert.ToUInt16(txtContestantCount.Text) > 2)
-                {
-                    fileStream = new FileStream(@"c:\CGData\bonuses.txt", FileMode.Open, FileAccess.Read);
-                    using (var strmRdr = new StreamReader(fileStream, Encoding.UTF8))
-                    {
-                        string lineBonus;
-                        string[] lineBonusSplited = { "", "" };
-
-                        while ((lineBonus = strmRdr.ReadLine()) != null)
-                        {
-                            lineSplited = lineBonus.Split(',');
-                            //                    var BonusButtonObj = new Voters();
-                            btnBonus_0.Text = lineSplited[0];
-                            btnBonus_1.Text = lineSplited[1];
-                            btnBonus_2.Text = lineSplited[2];
-                            btnBonus_3.Text = lineSplited[3];
-                            btnBonus_4.Text = lineSplited[4];
-                            btnBonus_5.Text = lineSplited[5];
-                            btnBonus_6.Text = lineSplited[6];
-                            btnBonus_7.Text = lineSplited[7];
-                            btnBonus_8.Text = lineSplited[8];
-                            btnBonus_9.Text = lineSplited[9];
-
-                        }
-
-                    }
-
-                    btbBoxesIn.Enabled = true;
-                    btnCallsImport.Enabled = true;
-                }
-                else
-                {
-                    btbBoxesIn.Enabled = false;
-                    btnCallsImport.Enabled = false;
-                }
-
-                buttonStartListen.PerformClick();
-                btn_loadRefreshJudges.PerformClick();
-
-
-                /*
-
-                fileStream = new FileStream(@"c:\CGData\judges.txt", FileMode.Open, FileAccess.Read);
-                using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
-                {
-                    string line;
-                    string[] lineSplited = { "", "" };
-
-                    while ((line = streamReader.ReadLine()) != null)
-                    {
-                        lineSplited = line.Split(',');
-                        var VoterObj = new Voters();
-                        VoterObj.JudgeIP = lineSplited[0];
-                        VoterObj.JudgeName = lineSplited[1];
-                        VoterObj.Voted = false;
-                        ListVoterJudges.Add(VoterObj);
-
-                    }
-
-                }
-
-
-
-
-                grBoxJiuri0.Text = ListVoterJudges[0].JudgeName + ":" + ListVoterJudges[0].JudgeIP;
-                txt_IPJiuri0.Text = ListVoterJudges[0].JudgeIP;
-                grBoxJiuri1.Text = ListVoterJudges[1].JudgeName + ":" + ListVoterJudges[1].JudgeIP;
-                txt_IPJiuri1.Text = ListVoterJudges[1].JudgeIP;
-                grBoxJiuri2.Text = ListVoterJudges[2].JudgeName + ":" + ListVoterJudges[2].JudgeIP;
-                txt_IPJiuri2.Text = ListVoterJudges[2].JudgeIP;
-                grBoxJiuri3.Text = ListVoterJudges[3].JudgeName + ":" + ListVoterJudges[3].JudgeIP;
-                txt_IPJiuri3.Text = ListVoterJudges[3].JudgeIP;
-                grBoxJiuri4.Text = ListVoterJudges[4].JudgeName + ":" + ListVoterJudges[4].JudgeIP;
-
-                */
-
-
-
-            }
-
-
-
-
-
-            //momgerali[0] = "John Lenon";
-            //momgerali[1] = "ნატო მეტონიძე";
-            //momgerali[2] = "დონალდ ტრამპი";
-            //momgerali[3] = "სინატრა";
-            //momgerali[4] = "ვიღაცა მომღერალი";
-            //           momgerali[5] = "პაპუნა ჩადუნელი";
-            //           momgerali[6] = "ბიძინა ივანიშვილი";
-            //           momgerali[7] = "ნანა ბელქანია";
-            //           momgerali[8] = "ალ ბანო";
-            //           momgerali[9] = "jeckson";
-
-            /*            
-                       phoneNum[1] = "99510000002";
-                        phoneNum[2] = "99510000003";
-                        phoneNum[3] = "99510000004";
-                        phoneNum[4] = "99510000005";
-                        phoneNum[5] = "99510000006";
-                        phoneNum[6] = "99510000007";
-                        phoneNum[7] = "99510000008";
-                        phoneNum[8] = "99510000009";
-                        phoneNum[9] = "99510000010";
-            */
-
-            //for (UInt16 i = 0; i < Convert.ToUInt16(txtContestantCount.Text); i++)
-            //{
-            //    phoneNum[i] = "995100000" + i.ToString("00");
-
-            //    //momgerali[i] = "მომღერალი" + i.ToString("00"); 
-            //}
-
-
-
-
-
-            for (UInt16 i = 0; i < Convert.ToUInt16(txtContestantCount.Text); i++)
-            {
-                var ContestantObj = new Contestant();
-                ContestantObj.ContItemID = "contItem" + i.ToString("00");
-                ContestantObj.NameID = "_NameCont" + i.ToString("00");
-                ContestantObj.ScoreID = "_ScoreCont" + i.ToString("00");
-                ContestantObj.Position = i + 1;
-                //ContestantObj.Position = i ;
-                ContestantObj.Gvari = momgerali[i];
-                ContestantObj.Phone = phoneNum[i];
-                ContestantObj.Score = Convert.ToInt16(score[i]);
-                //ContestantObj.Score = 100 - (i * 10);
-                ContestantObj.PhoneCalls = Convert.ToInt32(phoneCalls[i]);
-                ContestantObj.PhoneCallsPercent = 0;
-
-                ListContestant.Add(ContestantObj);
-                //ListContestantInStart.Add(ContestantObj);
-
-
-            }
-
-
-
-            ContestantSource.ResetBindings(true);
-            ContestantDataGrid.Columns[ContestantDataGrid.ColumnCount - 1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-
-            btnCallsImport.Text = "ზარების იმპორტი";
-        }
-
-        private void btn_showOutsiders_Click(object sender, EventArgs e)
-        {
-            /*
-            txtElimContName1.Text = ContestantDataGrid.Rows[ContestantDataGrid.RowCount-1].Cells[4].Value.ToString();
-            txtElimContPhoneNum1.Text = ContestantDataGrid.Rows[ContestantDataGrid.RowCount - 1].Cells[6].Value.ToString();
-            txtElimContName0.Text = ContestantDataGrid.Rows[ContestantDataGrid.RowCount-2].Cells[4].Value.ToString();
-            txtElimContPhoneNum0.Text = ContestantDataGrid.Rows[ContestantDataGrid.RowCount - 2].Cells[6].Value.ToString();
-
-            File.WriteAllText(@"c:\CGData\ElimContestants.txt", txtElimContPhoneNum0.Text + "," + txtElimContName0.Text + Environment.NewLine + txtElimContPhoneNum1.Text + "," + txtElimContName1.Text + Environment.NewLine);
-
-            btnLoadEliminateConts.PerformClick();
-            btnLoadEliminateScene.PerformClick();
-            btnEliminateAllIn.PerformClick();
-            */
-            var outsiderCount = 3;
-            string tmpStr = "'";
-
-                for (UInt16 i=1; i < outsiderCount+1; i++)
-                {
-                    tmpStr = tmpStr + "'" + ContestantDataGrid.Rows[(Convert.ToUInt16(txtContestantCount.Text) - i )].Cells[0].Value + "'";//"'," + dataGridView1.Rows[i].Cells[5].Value;
-                    if (i != outsiderCount + 1)
-                        tmpStr = tmpStr + ",";
-
-                }
-            /*
-
-
-            string tmpStr = "'" + ContestantDataGrid.Rows[(Convert.ToUInt16(txtContestantCount.Text) - 1)].Cells[0].Value + "','" + 
-                                      ContestantDataGrid.Rows[(Convert.ToUInt16(txtContestantCount.Text) - 2)].Cells[0].Value + "','" +
-                                      ContestantDataGrid.Rows[(Convert.ToUInt16(txtContestantCount.Text) - 3)].Cells[0].Value +
-                                      "'";
-*/
-
-            txtCmdBody.Text = "colorOutsider(" + tmpStr + ")";
-            TellToCaspar(CGPrefixScoreBoard + " INVOKE 0 \"" + txtCmdBody.Text + "\"");
-
-            tmpStr = "'" + ContestantDataGrid.Rows[0].Cells[0].Value + "'";
-            txtCmdBody.Text = "zoomLeader(" + tmpStr + ")";
-            TellToCaspar(CGPrefixScoreBoard + " INVOKE 0 \"" + txtCmdBody.Text + "\"");
-
-
-
-        }
-
-        private void btnSaveState_Click(object sender, EventArgs e)
-        {
-            string tmpStr = "";
-
-            for (UInt16 i = 0; i < Convert.ToUInt16(txtContestantCount.Text); i++)
-            {
-                tmpStr = tmpStr + ContestantDataGrid.Rows[i].Cells[6].Value + "," + ContestantDataGrid.Rows[i].Cells[4].Value + "," + ContestantDataGrid.Rows[i].Cells[5].Value + "," + "0";
-                if (i != (Convert.ToUInt16(txtContestantCount.Text) - 1))
-                {
-                    tmpStr += Environment.NewLine;
-                }
-
-
-            }
-
-            File.Copy(@"c:\CGData\contestants.txt", @"c:\CGData\precontestants.txt", true);
-            File.WriteAllText(@"c:\CGData\contestants.txt", tmpStr);
-
-            btnLoadPreviewsState.Enabled = true;
-
-
-        }
-
-        private void button15_Click(object sender, EventArgs e)
-        {
-            string[] allLines = textBox8.Text.Split('\n');
-            UInt16 totalCount = 0;
-
-            for (totalCount = 0; totalCount < allLines.Length; totalCount++)
-            {
-                TellToCaspar(allLines[totalCount]);
-            }
-            //listBox3.Items.AddRange(allLines);
-        }
-
-        private void cboxJudjesClientsIPs_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            textBoxMsg.Text = (string)cboxJudjesClientsIPs.SelectedItem;
-        }
-
-        private void btnKillDudje1_Click(object sender, EventArgs e)
-        {
-            string clientIPAddress = "";
-            string selectedIPAddress;
-
-            if (!((Control.ModifierKeys & Keys.Shift) == Keys.Shift))
-                return;
-
-
-
-            try
-            {
-                //Object objData = richTextBoxSendMsg.Text = "q";
-
-                Object objData;
-                if ((sender as Button).Text == "Kill")
-                    //Object objData = richTextBoxSendMsg.Text = "q";
-                    objData = richTextBoxSendMsg.Text = "kill\0";
-                else
-                    objData = richTextBoxSendMsg.Text = "restart\0";
-
-                byte[] byData = System.Text.Encoding.ASCII.GetBytes(objData.ToString());
-
-
-
-
-                //for (int i = 0; i < m_clientCount; i++)
-                for (int i = 0; i < m_workerSocket.Length; i++)
-                {
-                    if (m_workerSocket[i] != null)
-                    {
-                        if (m_workerSocket[i].Connected)
-                        {
-
-                            clientIPAddress = m_workerSocket[i].RemoteEndPoint.ToString().Split(':')[0];
-                            selectedIPAddress = grBoxJiuri0.Text.Split(':')[1];
-
-
-                            if (clientIPAddress.Contains(selectedIPAddress))
-                            {
-                                m_workerSocket[i].Send(byData);
-                                grBoxJiuri0.ForeColor = Color.Black;
-                            }
-
-                        }
-                    }
-                }
-
-            }
-            catch (SocketException se)
-            {
-                //MessageBox.Show(se.Message);
-                MessageBox.Show("[ServerStartListen] უკაცრავად, კავშირი დაიკარგა ჟიურისთან, \n" + clientIPAddress + "-დან\nError Code:" + se.ErrorCode + ", " + se.Message);
-            }
-        }
-
-        private void btnKillDudje2_Click(object sender, EventArgs e)
-        {
-            if (!((Control.ModifierKeys & Keys.Shift) == Keys.Shift))
-                return;
-
-
-            try
-            {
-                Object objData;
-                if ((sender as Button).Text == "Kill")
-                    //Object objData = richTextBoxSendMsg.Text = "q";
-                    objData = richTextBoxSendMsg.Text = "kill\0";
-                else
-                    objData = richTextBoxSendMsg.Text = "restart\0";
-
-                byte[] byData = System.Text.Encoding.ASCII.GetBytes(objData.ToString());
-                string clientIPAddress;
-                string selectedIPAddress;
-
-
-
-
-                //for (int i = 0; i < m_clientCount; i++)
-                for (int i = 0; i < m_workerSocket.Length; i++)
-                {
-                    if (m_workerSocket[i] != null)
-                    {
-                        if (m_workerSocket[i].Connected)
-                        {
-
-                            clientIPAddress = m_workerSocket[i].RemoteEndPoint.ToString().Split(':')[0];
-                            selectedIPAddress = grBoxJiuri1.Text.Split(':')[1];
-
-
-                            if (clientIPAddress.Contains(selectedIPAddress))
-                            {
-                                m_workerSocket[i].Send(byData);
-                                grBoxJiuri1.ForeColor = Color.Black;
-                            }
-
-                        }
-                    }
-                }
-
-            }
-            catch (SocketException se)
-            {
-                MessageBox.Show(se.Message);
-            }
-        }
-
-        private void btnKillDudje3_Click(object sender, EventArgs e)
-        {
-
-            if (!((Control.ModifierKeys & Keys.Shift) == Keys.Shift))
-                return;
-
-            try
-            {
-                Object objData;
-                if ((sender as Button).Text == "Kill")
-                    //Object objData = richTextBoxSendMsg.Text = "q";
-                    objData = richTextBoxSendMsg.Text = "kill\0";
-                else
-                    objData = richTextBoxSendMsg.Text = "restart\0";
-
-                byte[] byData = System.Text.Encoding.ASCII.GetBytes(objData.ToString());
-                string clientIPAddress;
-                string selectedIPAddress;
-
-
-
-
-                //for (int i = 0; i < m_clientCount; i++)
-                for (int i = 0; i < m_workerSocket.Length; i++)
-                {
-                    if (m_workerSocket[i] != null)
-                    {
-                        if (m_workerSocket[i].Connected)
-                        {
-
-                            clientIPAddress = m_workerSocket[i].RemoteEndPoint.ToString().Split(':')[0];
-                            selectedIPAddress = grBoxJiuri2.Text.Split(':')[1];
-
-
-                            if (clientIPAddress.Contains(selectedIPAddress))
-                            {
-                                m_workerSocket[i].Send(byData);
-                                grBoxJiuri2.ForeColor = Color.Black;
-                            }
-
-                        }
-                    }
-                }
-
-            }
-            catch (SocketException se)
-            {
-                MessageBox.Show(se.Message);
-            }
-        }
-
-        private void btnKillDudje4_Click(object sender, EventArgs e)
-        {
-
-            if (!((Control.ModifierKeys & Keys.Shift) == Keys.Shift))
-                return;
-
-            try
-            {
-                Object objData;
-                if ((sender as Button).Text == "Kill")
-                    //Object objData = richTextBoxSendMsg.Text = "q";
-                    objData = richTextBoxSendMsg.Text = "kill\0";
-                else
-                    objData = richTextBoxSendMsg.Text = "restart\0";
-
-                byte[] byData = System.Text.Encoding.ASCII.GetBytes(objData.ToString());
-                string clientIPAddress;
-                string selectedIPAddress;
-
-
-
-
-                //for (int i = 0; i < m_clientCount; i++)
-                for (int i = 0; i < m_workerSocket.Length; i++)
-                {
-                    if (m_workerSocket[i] != null)
-                    {
-                        if (m_workerSocket[i].Connected)
-                        {
-
-                            clientIPAddress = m_workerSocket[i].RemoteEndPoint.ToString().Split(':')[0];
-                            selectedIPAddress = grBoxJiuri3.Text.Split(':')[1];
-
-
-                            if (clientIPAddress.Contains(selectedIPAddress))
-                            {
-                                m_workerSocket[i].Send(byData);
-                                grBoxJiuri3.ForeColor = Color.Black;
-                            }
-
-                        }
-                    }
-                }
-
-            }
-            catch (SocketException se)
-            {
-                MessageBox.Show(se.Message);
-            }
-        }
-
-        private void btnKillDudje5_Click(object sender, EventArgs e)
-        {
-
-            if (!((Control.ModifierKeys & Keys.Shift) == Keys.Shift))
-                return;
-
-            try
-            {
-                Object objData = richTextBoxSendMsg.Text = "q";
-                byte[] byData = System.Text.Encoding.ASCII.GetBytes(objData.ToString());
-                string clientIPAddress;
-                string selectedIPAddress;
-
-
-
-
-                //for (int i = 0; i < m_clientCount; i++)
-                for (int i = 0; i < m_workerSocket.Length; i++)
-                {
-                    if (m_workerSocket[i] != null)
-                    {
-                        if (m_workerSocket[i].Connected)
-                        {
-
-                            clientIPAddress = m_workerSocket[i].RemoteEndPoint.ToString().Split(':')[0];
-                            selectedIPAddress = grBoxJiuri4.Text.Split(':')[1];
-
-
-                            if (clientIPAddress.Contains(selectedIPAddress))
-                            {
-                                m_workerSocket[i].Send(byData);
-                                grBoxJiuri4.ForeColor = Color.Black;
-                            }
-
-                        }
-                    }
-                }
-
-            }
-            catch (SocketException se)
-            {
-                MessageBox.Show(se.Message);
-            }
-        }
-
-        private void btnUseVeto_Click(object sender, EventArgs e)
-        {
-
-            File.AppendAllText(@"c:\CGData\contestants.txt", Environment.NewLine + txtElimContPhoneNum1.Text + "," + txtElimContName1.Text + ",0,0");
-            File.AppendAllText(@"c:\CGData\contestants.txt", Environment.NewLine + txtElimContPhoneNum0.Text + "," + txtElimContName0.Text + ",0,0");
-
-
-
-            TellToCaspar("CLEAR " + cBox_CGCurrLowerTitleChannel.SelectedItem.ToString() + "-" + cBox_CGEliminateChannelLayer.SelectedItem.ToString());
-            //TellToCaspar("CLEAR " + CGPrefixEliminateBoard);
-            //}
-        }
-
-        private void btnConnectBackUpCG_Click(object sender, EventArgs e)
-        {
-
-            if (txtBackUpCasparServer.Text == txtCasparServer.Text)
-                return;
-            else
-
-                try
-                {
-                    casparBackUpClient.Connect(txtBackUpCasparServer.Text, int.Parse(txtBackUpCasparPort.Text));
-                    if (casparBackUpClient.Connected)
-                    {
-                        lblBackUpStatus.Text = "CONNECTED";
-                        lblBackUpStatus.ForeColor = Color.Green;
-                        txtConsole.Text += Environment.NewLine + " BackUp Caspar სერვერი კავშირზეა! " + Environment.NewLine;
-
-                        UseBackUpCG = true;
-
-                    }
-                    else
-                    {
-                        lblBackUpStatus.Text = "NOT CONNECTED";
-                        lblBackUpStatus.ForeColor = Color.Green;
-                        txtConsole.Text += Environment.NewLine + "BackUp Caspar სერვერთან კავშირი არ არის! " + Environment.NewLine;
-                        UseBackUpCG = false;
-                    }
-                }
-                catch (Exception)
-                {
-                    txtConsole.Text += Environment.NewLine + "BackUp Caspar სერვერთან კავშირი ვერ მყარდება, არ მუშაობს ან არ გვიშვებს! " + Environment.NewLine;
-                    UseBackUpCG = false;
-                }
-
-
-
-
-
-
-        }
-
-        private void button13_Click(object sender, EventArgs e)
-        {
-            if (casparClient.Connected)
-            {
-                //TellToCaspar("restart");
-                //btnConnectCG.PerformClick();
-                casparClient.Close();
-            }
-        }
-
-        private void btnLoadPreviewsState_Click(object sender, EventArgs e)
-        {
-            
-            File.Copy(@"c:\CGData\contestants.txt", @"c:\CGData\contestantsOLD.txt", true);
-            File.Copy( @"c:\CGData\precontestants.txt", @"c:\CGData\contestants.txt", true);
-
-
-            btnLoadFrom.PerformClick();
-            btnLoadScene.PerformClick();
-            btnLoadScene.PerformClick();
-
-            btnAllIn.PerformClick();
-        }
-
-        private void btnSendJudgesLogo_Click(object sender, EventArgs e)
-        {
-            sendToAllJudges("logo");
-        }
-
-        private void btnSendJudgesSponsor1Logo_Click(object sender, EventArgs e)
-        {
-            sendToAllJudges("sponsor");
-        }
-
-        private void button16_Click(object sender, EventArgs e)
-        {
-            Serial.UpdatePorts(this);
-        }
-
-        private void btnConnectOrDisConnect_Click(object sender, EventArgs e)
-        {
-
-            if (btnConnectOrDisConnect.Text == "CONNECT")
-            {
-                if (Serial.ConnectSerialPort(this))
-                //if (!Serial.ConnectOnePortInForm(cmbPortName.SelectedIndex, cmbBoudRate.Text, cmbParity.Text, cmbDataBits.Text, cmbStopBits.Text, this))
-                //if (!Serial.ConnectOnePort(serialPort1, cmbPortName.SelectedIndex, cmbBoudRate.Text, cmbParity.Text, cmbDataBits.Text, cmbStopBits.Text))
-                {
-                    btnConnectOrDisConnect.Text = "DISCONNECT";
-                    groupBox6.Enabled = false;
-                }
-                else
-                {
-                    MessageBox.Show(this, "სერიალ პორტი არ გაიხსნა ", "შეცდომა");
-                }
-            }
-            else
-            {
-
-                if (Serial.DisconnectPort(this))
-                {
-                    btnConnectOrDisConnect.Text = "CONNECT";
-                    groupBox6.Enabled = true;
-                }
-                else
-                {
-                    MessageBox.Show(this, "სერიალ პორტი არ დაიხურა ", "შეცდომა");
-                }
-               
-               
-
-               
-            }
-
-        }
-
-        private void serialPort1_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
-        {
-            Serial.SerialPort_DataReceived(sender, e, this);
-        }
-
-        private void btExit_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void gBoxSerai_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button12_Click_1(object sender, EventArgs e)
-        {
-            if (CheckBox_MidiOutEnable.Checked)
-                Midi.outDevice_Send_Midi(9,60,40);
-        }
-
-        private void CheckBox_MidiInEnable_CheckedChanged(object sender, EventArgs e)
-        {
-            btnInitMIDIinDev.Enabled = CheckBox_MidiInEnable.Checked;
-        }
-
-        private void CheckBox_MidiInEnable_CheckStateChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void CheckBox_MidiOutEnable_CheckedChanged(object sender, EventArgs e)
-        {
-            btnInitMIDIOutDev.Enabled = CheckBox_MidiOutEnable.Checked;
-        }
-
-        private void btnInitMIDIinDev_Click(object sender, EventArgs e)
-        {
-            Midi.InitMidi_In_Midi(this);
-            
-
-        }
-
-        private void btnInitMIDIOutDev_Click(object sender, EventArgs e)
-        {
-            if (Midi.initMidi_Out_Midi(this) > 0)
-            {
-                btnSetWorkingMidiOutDev.Enabled = true;
-                cboBMidiOutDevs.Enabled = true;
-            }
-            else
-            {
-                btnSetWorkingMidiOutDev.Enabled = false;
-                cboBMidiOutDevs.Enabled = false;
-            }
-                
-            
-        }
-
-        private void btnSetWorkingMidiOutDev_Click(object sender, EventArgs e)
-        {
-            btnTestWorkingMidiOutDev.Enabled = Midi.setMidi_Out_Midi(this);
-
-        }
-
-        private void btnInitMIDIOutDev_EnabledChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnTestWorkingMidiOutDev_Click(object sender, EventArgs e)
-        {
-            if (CheckBox_MidiOutEnable.Checked)
-                Midi.outDevice_Send_Midi(9, 60, 40);
-        }
-
-        private void configurationBindingSource_CurrentChanged(object sender, EventArgs e)
-        {
-
+            grBoxJiuri3.Text = ListVoterJudges[3].JudgeName + ":" + txt_IPJiuri3.Text;
         }
     }
-    }
 
 
 
+    //private String TellToCaspar(String CGCmd)
+}
 
 
 
